@@ -9,6 +9,7 @@
 
 #define VERTICES_SIZE 20
 #define FLOATS_PER_VERTEX 5
+
 static float vertices[] = {
 	// position            tex coordinates
 	1.0f,  1.0f, 0.0f,      1.0f, 0.0f,   // top right
@@ -20,7 +21,7 @@ static const unsigned int indices[] = {  // note that we start from 0!
 	0, 1, 3,   // first triangle
 	1, 2, 3    // second triangle
 };
-struct BG_TileSet {
+struct TileSet {
 	std::string     imgpath;
 	std::string     name;
 	unsigned int    columns;
@@ -44,19 +45,18 @@ struct BG_Layer {
 class Background
 {
 public:
-	friend class BackgroundLoader;
+	friend class AreaLoader;
 	Background();
-	~Background();
+	~Background() { freeData(); }
 	void debugPrint();
 	void draw(Shader& s, const Camera& camera);
 	glm::vec2      get_base_scale() { return glm::vec2(base_scale); }
+	void           freeData();
 private:
-	void loadTilesets();
 	BG_Layer*      layers;
-	BG_TileSet*    tilesets;
-	void           getTileBytes(unsigned int tilenum, BG_TileSet& tileset, unsigned char* output);
-	void           tileDirectMemCpy(unsigned int tilenum, BG_TileSet& tileset, unsigned char* output);
-	void           genLayersTextures();
+	void           getTileBytes(unsigned int tilenum, TileSet& tileset, unsigned char* output);
+	void           tileDirectMemCpy(unsigned int tilenum, TileSet& tileset, unsigned char* output);
+	void           genLayersTextures(TileSet& tileset);
 	void           genBuffers();
 	GLuint         VAO;
 	unsigned int   numlayers;
@@ -67,6 +67,6 @@ private:
 	unsigned int   tileheight;
 	void           setInitialScale();
 	glm::vec3      base_scale;
-
+	glm::vec2      position = glm::vec2(0.0);
 };
 

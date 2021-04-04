@@ -125,8 +125,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Area.cpp" />
+    <ClCompile Include="AreaLoader.cpp" />
     <ClCompile Include="Background.cpp" />
-    <ClCompile Include="BackgroundLoader.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="GLTextureHelper.cpp" />
     <ClCompile Include="Input.cpp" />
@@ -135,17 +136,20 @@
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\GL\glm;C:\GL\glew\include;C:\GL\glfw\include</AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\GL\glm;C:\GL\glew\include;C:\GL\glfw\include</AdditionalIncludeDirectories>
     </ClCompile>
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="stb_image.cpp" />
     <ClCompile Include="stb_image_write.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Area.h" />
+    <ClInclude Include="AreaLoader.h" />
     <ClInclude Include="Background.h" />
-    <ClInclude Include="BackgroundLoader.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="GLTextureHelper.h" />
     <ClInclude Include="gl_error_handling.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="jsonhelper.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="stb_image_write.h" />

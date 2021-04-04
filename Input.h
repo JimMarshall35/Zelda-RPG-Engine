@@ -64,6 +64,8 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 			keys &= ~(1 << ZOOM_IN_BIT);
 		}
 		break;
+	case GLFW_KEY_1:
+		break;
 	}
 	
 	

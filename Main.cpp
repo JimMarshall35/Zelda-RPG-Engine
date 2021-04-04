@@ -8,7 +8,7 @@
 
 #include "Shader.h"
 #include "Input.h"
-#include "BackgroundLoader.h"
+#include "AreaLoader.h"
 
 GLFWwindow* window;
 using namespace glm;
@@ -23,9 +23,9 @@ int main(void)
 	inputInit(window);
 	Shader shader("shaders/background_vert.glsl", "shaders/background_frag.glsl");
 	Camera camera;
-	Background b;
+	Area b;
 	std::chrono::high_resolution_clock::time_point t0 = std::chrono::high_resolution_clock::now();
-	if (!BackgroundLoader::Instance()->loadBackground("json","lvl1_test.json", b)) {
+	if (!AreaLoader::Instance()->loadArea("json","lvl1_test.json", b)) {
 		std::cout << "failed to load level" << std::endl;
 	}
 	std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
@@ -36,12 +36,15 @@ int main(void)
 	double delta;
 	double last = glfwGetTime();
 	do {
+		if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS) {
+			AreaLoader::Instance()->loadArea("json", "lvl1_test2.json", b);
+		}
 		//delta time
 		double now = glfwGetTime();
 		delta = now - last;
 		last = now;
 		//update
-		camera.testUpdate(keys, delta, b.get_base_scale());
+		camera.testUpdate(keys, delta, b.getBackGround()->get_base_scale());
 		//render
 		glClear(GL_COLOR_BUFFER_BIT);
 		b.draw(shader,camera);

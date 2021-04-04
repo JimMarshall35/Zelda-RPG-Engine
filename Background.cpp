@@ -8,41 +8,22 @@ Background::Background()
 }
 
 
-Background::~Background()
+void Background::freeData()
 {
+	GLClearErrors();
 	for (size_t i = 0; i < numlayers; i++) {
-		delete[] layers[i].tiles;
+		BG_Layer layer = layers[i];
+		glDeleteTextures(1, &layer.textureID);
+		GLPrintErrors("glDeleteTextures(1, &layer.textureID);");
+		delete[] layer.tiles;
 	}
 	delete[] layers;
-	for (size_t i = 0; i < numtilesets; i++) {
-		delete[] tilesets[i].imgdata;
-	}
-	delete[] tilesets;
+	glDeleteVertexArrays(1, &VAO);
 }
 
 void Background::debugPrint()
 {
-	std::cout << "width: " << width <<" height: "<< height << std::endl;
-	for (size_t i = 0; i < numlayers; i++)
-	{
-		std::cout << "___________________"<<layers[i].name << "___________________" << std::endl;
-		std::cout << std::endl;
-		std::cout << "[";
-		for (size_t j = 0; j < (layers[i].width * layers[i].height); j++) {
-			std::cout << layers[i].tiles[j] << ",";
-		}
-		std::cout << "]" << std::endl;
-		std::cout << std::endl;
-	}
-	std::cout << "TILE SETS!!" << std::endl;
-	for (size_t i = 0; i < numtilesets; i++) {
-		std::cout << "___________________" << tilesets[i].name << "___________________" << std::endl;
-		std::cout << "source: " << tilesets[i].imgpath << std::endl;
-		std::cout << "columns: " << tilesets[i].columns << std::endl;
-		std::cout << "imagewidth: " << tilesets[i].imgwidth << " imageheight: " << tilesets[i].imgheight << std::endl;
-		std::cout << "tilecount: " << tilesets[i].tilecount << std::endl;
 
-	}
 }
 
 void Background::draw(Shader& s, const Camera& camera)
@@ -59,6 +40,9 @@ void Background::draw(Shader& s, const Camera& camera)
 
 		s.setVec3("base_scale", base_scale);
 		GLPrintErrors("s.setVec3(\"base_scale\", base_scale);");
+
+		s.setVec2("position",position);
+		GLPrintErrors("s.setVec2(\"position\",position);");
 
 		s.setVec2("camera_pos", camera.position);
 		GLPrintErrors("s.setVec2(\"camera_pos\", camera.position);");
@@ -78,16 +62,9 @@ void Background::draw(Shader& s, const Camera& camera)
 	}
 }
 
-void Background::loadTilesets()
-{
-	for (size_t i = 0; i < numtilesets; i++) {
-		int x, y, n;
-		std::string path = tilesets[i].imgpath;
-		tilesets[i].imgdata = stbi_load(path.c_str(), &x, &y, &n, 0);
-	}
-}
 
-void Background::getTileBytes(unsigned int tilenum, BG_TileSet & tileset, unsigned char * output)
+
+void Background::getTileBytes(unsigned int tilenum, TileSet & tileset, unsigned char * output)
 {
 	unsigned int tileset_width_px = (tileset.tilewidth + tileset.spacing) * tileset.columns;
 	unsigned int start_pixel_x = ((tileset.tilewidth + tileset.spacing) * (tilenum-1)) % tileset_width_px;
@@ -104,15 +81,14 @@ void Background::getTileBytes(unsigned int tilenum, BG_TileSet & tileset, unsign
 	//stbi_write_png("test.png", tileset.tilewidth, tileset.tileheight, 4, output, tileset.tilewidth *NUM_CHANNELS);
 }
 
-void Background::tileDirectMemCpy(unsigned int tilenum, BG_TileSet& tileset, unsigned char* output) {
+void Background::tileDirectMemCpy(unsigned int tilenum, TileSet& tileset, unsigned char* output) {
 	// will copy tile data direct to a texture being generated - unlike method above which transfers it to a buffer first
 	// was done the way above because i planned to use glTextureSubImage2D to modify the background texture once uploaded to gpu
 }
 
-void Background::genLayersTextures()
+void Background::genLayersTextures(TileSet& tileset)
 {
-	// do this for now, until multiple tilesets supported
-	BG_TileSet& tileset = tilesets[0];
+
 	// alocate a single tiles worth of pixel bytes to be used to copy from spritesheet to our generated texture
 	unsigned char* single_tile_buffer = new unsigned char[tileset.tileheight*tileset.tilewidth * NUM_CHANNELS];    
 	for (size_t i = 0; i < numlayers; i++) {
@@ -145,17 +121,10 @@ void Background::genLayersTextures()
 		}
 		// upload to gpu, setting layer.textureID 
 		GPULoadTexture(tex_data, layer.width*tileset.tilewidth, layer.height*tileset.tileheight, &layer.textureID);
+		std::cout << "layer " << layer.name << " has texture id " << layer.textureID << std::endl;
 		// for debugging
-		/*
-		stbi_write_png(
-			(layer.name+".png").c_str(), 
-			tileset.tilewidth*layer.width, 
-			tileset.tileheight*layer.height, 
-			NUM_CHANNELS, 
-			tex_data, 
-			tileset.tilewidth*layer.width * NUM_CHANNELS
-		);
-		*/
+		//stbi_write_png((layer.name+".png").c_str(), tileset.tilewidth*layer.width, tileset.tileheight*layer.height, NUM_CHANNELS, tex_data, tileset.tilewidth*layer.width * NUM_CHANNELS);
+		
 		delete[] tex_data;
 	}
 	delete[] single_tile_buffer;
@@ -207,5 +176,6 @@ void Background::genBuffers()
 	GLPrintErrors("glBindBuffer(GL_ARRAY_BUFFER, 0);");
 	glBindVertexArray(0); // Unbind VAO (it's always a good thing to unbind any buffer/array to prevent strange bugs)
 	GLPrintErrors("glBindVertexArray(0);");
+	std::cout << "VAO = " << VAO << std::endl;
 }
 
