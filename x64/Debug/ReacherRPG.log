@@ -1,3 +1,10 @@
-﻿  Main.cpp
+﻿  Background.cpp
+c:\users\user1\source\repos\reacherrpg\reacherrpg\shader.h(58): warning C4101: 'e': unreferenced local variable
+c:\users\user1\source\repos\reacherrpg\reacherrpg\background.cpp(114): warning C4018: '<': signed/unsigned mismatch
+  BackgroundLoader.cpp
+c:\users\user1\source\repos\reacherrpg\reacherrpg\shader.h(58): warning C4101: 'e': unreferenced local variable
+c:\users\user1\source\repos\reacherrpg\reacherrpg\backgroundloader.cpp(115): warning C4101: 'testdata': unreferenced local variable
+  Generating Code...
+  Main.cpp
 c:\users\user1\source\repos\reacherrpg\reacherrpg\shader.h(58): warning C4101: 'e': unreferenced local variable
   ReacherRPG.vcxproj -> C:\Users\User1\source\repos\ReacherRPG\x64\Debug\ReacherRPG.exe

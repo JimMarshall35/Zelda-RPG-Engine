@@ -128,7 +128,7 @@
     <ClCompile Include="Background.cpp" />
     <ClCompile Include="BackgroundLoader.cpp" />
     <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="GLTextureHelpercpp.cpp" />
+    <ClCompile Include="GLTextureHelper.cpp" />
     <ClCompile Include="jsonhelper.cpp" />
     <ClCompile Include="Main.cpp">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\GL\glm;C:\GL\glew\include;C:\GL\glfw\include</AdditionalIncludeDirectories>

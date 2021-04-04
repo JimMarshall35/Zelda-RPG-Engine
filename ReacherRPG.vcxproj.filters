@@ -33,10 +33,10 @@
     <ClCompile Include="stb_image_write.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GLTextureHelpercpp.cpp">
+    <ClCompile Include="Camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Camera.cpp">
+    <ClCompile Include="GLTextureHelper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

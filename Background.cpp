@@ -92,6 +92,11 @@ void Background::getTileBytes(unsigned int tilenum, BG_TileSet & tileset, unsign
 	//stbi_write_png("test.png", tileset.tilewidth, tileset.tileheight, 4, output, tileset.tilewidth *NUM_CHANNELS);
 }
 
+void Background::tileDirectMemCpy(unsigned int tilenum, BG_TileSet& tileset, unsigned char* output) {
+	// will copy tile data direct to a texture being generated - unlike method above which transfers it to a buffer first
+	// was done the way above because i planned to use glTextureSubImage2D to modify the background texture once uploaded to gpu
+}
+
 void Background::genLayersTextures()
 {
 	// do this for now, until multiple tilesets supported
@@ -203,3 +208,4 @@ void Background::genBuffers()
 	glBindVertexArray(0); // Unbind VAO (it's always a good thing to unbind any buffer/array to prevent strange bugs)
 	GLPrintErrors("glBindVertexArray(0);");
 }
+

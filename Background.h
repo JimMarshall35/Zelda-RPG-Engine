@@ -53,6 +53,7 @@ private:
 	BG_Layer*      layers;
 	BG_TileSet*    tilesets;
 	void           getTileBytes(unsigned int tilenum, BG_TileSet& tileset, unsigned char* output);
+	void           tileDirectMemCpy(unsigned int tilenum, BG_TileSet& tileset, unsigned char* output);
 	void           genLayersTextures();
 	void           genBuffers();
 	GLuint         VAO;
