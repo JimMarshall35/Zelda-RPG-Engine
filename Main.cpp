@@ -20,7 +20,9 @@ int main(void)
 	if (GLFWInit() < 0) {
 		return -1;
 	}
+	inputInit(window);
 	Shader shader("shaders/background_vert.glsl", "shaders/background_frag.glsl");
+	Camera camera;
 	Background b;
 	std::chrono::high_resolution_clock::time_point t0 = std::chrono::high_resolution_clock::now();
 	if (!BackgroundLoader::Instance()->loadBackground("json","lvl1_test.json", b)) {
@@ -31,12 +33,18 @@ int main(void)
 	std::cout << "background loading done in " << time_span.count() * 1000 << " ms" << std::endl;
 	//b.debugPrint();
 	glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
-
+	double delta;
+	double last = glfwGetTime();
 	do {
+		//delta time
+		double now = glfwGetTime();
+		delta = now - last;
+		last = now;
+		//update
+		camera.testUpdate(keys, delta, b.get_base_scale());
+		//render
 		glClear(GL_COLOR_BUFFER_BIT);
-
-		b.draw(shader);
-
+		b.draw(shader,camera);
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 
@@ -91,6 +99,6 @@ int GLFWInit() {
 
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	inputInit(window);
+	
 	return 0;
 }

@@ -5,6 +5,7 @@
 // Include GLEW
 #include "Shader.h"
 #include "gl_error_handling.h"
+#include "Camera.h"
 
 #define VERTICES_SIZE 20
 #define FLOATS_PER_VERTEX 5
@@ -47,7 +48,8 @@ public:
 	Background();
 	~Background();
 	void debugPrint();
-	void draw(Shader& s);
+	void draw(Shader& s, const Camera& camera);
+	glm::vec2      get_base_scale() { return glm::vec2(base_scale); }
 private:
 	void loadTilesets();
 	BG_Layer*      layers;
@@ -63,8 +65,8 @@ private:
 	unsigned int   height;
 	unsigned int   tilewidth;
 	unsigned int   tileheight;
-	void           setVertexPositions();
-
+	void           setInitialScale();
+	glm::vec3      base_scale;
 
 };
 

@@ -45,7 +45,7 @@ void Background::debugPrint()
 	}
 }
 
-void Background::draw(Shader& s)
+void Background::draw(Shader& s, const Camera& camera)
 {	
 	GLClearErrors();
 	s.use();
@@ -53,12 +53,24 @@ void Background::draw(Shader& s)
 	
 	for (size_t i = 0; i < numlayers; i++) {
 		BG_Layer layer = layers[i];
+
 		s.setInt("Texture", 0);
 		GLPrintErrors("s.setInt(\"Texture\", 0);");
+
+		s.setVec3("base_scale", base_scale);
+		GLPrintErrors("s.setVec3(\"base_scale\", base_scale);");
+
+		s.setVec2("camera_pos", camera.position);
+		GLPrintErrors("s.setVec2(\"camera_pos\", camera.position);");
+
+		s.setFloat("camera_zoom", camera.zoom);
+		GLPrintErrors("s.setFloat(\"camera_zoom\", camera.zoom);");
+
 		glActiveTexture(GL_TEXTURE0);
 		GLPrintErrors("glActiveTexture(GL_TEXTURE0);");
 		glBindTexture(GL_TEXTURE_2D, layer.textureID);
 		GLPrintErrors("glBindTexture(GL_TEXTURE_2D, layer.textureID);");
+
 		glBindVertexArray(VAO);
 		GLPrintErrors("glBindVertexArray(VAO);");
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
@@ -149,25 +161,13 @@ void Background::genLayersTextures()
 	delete[] single_tile_buffer;
 }
 
-void Background::setVertexPositions() {
-	for (size_t i = 0; i < VERTICES_SIZE; i += FLOATS_PER_VERTEX) {
-		glm::vec3 pos(
-			vertices[i],
-			vertices[i + 1],
-			vertices[i + 2]
-		);
-		glm::vec3 scalevec(
-			static_cast<float>(width) / 40.0f,
-			static_cast<float>(height) / 40.0f,
-			0.0f
-		);
-		glm::mat4 scale = glm::scale(glm::mat4(1.0), scalevec);
-		pos = glm::vec4(pos,1.0) * scale;
-		vertices[i] = pos.x;
-		vertices[i + 1] = pos.y;
-		vertices[i + 2] = pos.z;
-
-	}
+void Background::setInitialScale() {
+	base_scale = glm::vec3(
+		static_cast<float>(width) / 40.0f,
+		static_cast<float>(height) / 40.0f,
+		0.0f
+	);
+	  
 }
 
 void Background::genBuffers()

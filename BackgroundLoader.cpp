@@ -22,16 +22,20 @@ bool BackgroundLoader::tilesetFileChecks(const rapidjson::Value& val) {
 }
 bool BackgroundLoader::layersChecks(const rapidjson::Value& val) {
 	if (!val.IsObject()) { std::cerr << "a layer value is not an object" << std::endl; return false; }
-	if (!checkJSONValue("data",    JSONTYPE::ARRAY,  val)) { return false; }
-	if (!checkJSONValue("height",  JSONTYPE::NUMBER, val)) { return false; }
+	
 	if (!checkJSONValue("id",      JSONTYPE::INT,    val)) { return false; }
 	if (!checkJSONValue("name",    JSONTYPE::STRING, val)) { return false; }
 	if (!checkJSONValue("opacity", JSONTYPE::NUMBER, val)) { return false; }
 	if (!checkJSONValue("type",    JSONTYPE::STRING, val)) { return false; }
-	if (!checkJSONValue("visible", JSONTYPE::BOOL,   val)) { return false; }
-	if (!checkJSONValue("width",   JSONTYPE::NUMBER, val)) { return false; }
-	if (!checkJSONValue("x",       JSONTYPE::NUMBER, val)) { return false; }
-	if (!checkJSONValue("y",       JSONTYPE::NUMBER, val)) { return false; }
+	if (!checkJSONValue("visible", JSONTYPE::BOOL, val)) { return false; }
+	if (!checkJSONValue("x", JSONTYPE::NUMBER, val)) { return false; }
+	if (!checkJSONValue("y", JSONTYPE::NUMBER, val)) { return false; }
+	if (val["type"].GetString() == "tilelayer") {
+		if (!checkJSONValue("data", JSONTYPE::ARRAY, val)) { return false; }
+		if (!checkJSONValue("height", JSONTYPE::NUMBER, val)) { return false; }
+		if (!checkJSONValue("width", JSONTYPE::NUMBER, val)) { return false; }
+	}
+	
 	return true;
 }
 bool BackgroundLoader::tilesetChecks(const rapidjson::Value& val) {
@@ -76,19 +80,37 @@ bool BackgroundLoader::loadLayers(const rapidjson::Document & doc, Background & 
 {
 	using namespace rapidjson;
 	if (!checkJSONValue("layers", JSONTYPE::ARRAY, doc)) { return false; }
-	backgroundref.numlayers = doc["layers"].Size();
-	backgroundref.layers = new BG_Layer[backgroundref.numlayers];
-	for (SizeType i = 0; i < backgroundref.numlayers; i++) {
+	int total_layers = doc["layers"].Size();
+	backgroundref.numlayers = 0;
+	for (SizeType i = 0; i < total_layers; i++) {
 		const Value& val = doc["layers"][i];
 		if (!layersChecks(val)) { return false; }
+		std::string type = val["type"].GetString();
+		if(type == "tilelayer") {
+			backgroundref.numlayers++;
+		}
+	}
+	backgroundref.layers = new BG_Layer[backgroundref.numlayers];
+	int ontilelayer = 0;
+	
+	for (SizeType i = 0; i < backgroundref.numlayers; i++) {
+		const Value& val = doc["layers"][i];
+		std::string type = val["type"].GetString();
+		if ( type == "tilelayer") {
+			
+			BG_Layer& layer = backgroundref.layers[ontilelayer];
+			layer.width = val["width"].GetInt();
+			layer.height = val["height"].GetInt();
+			layer.tiles = new unsigned int[layer.width * layer.height];
+			layer.name = val["name"].GetString();
+			for (SizeType j = 0; j < val["data"].Size(); j++) {
+				layer.tiles[j] = val["data"][j].GetInt();
+			}
+			ontilelayer++;
+		}
+		
+		else if (type == "objectgroup" && val["name"].GetString() == "gameobjects") {
 
-		BG_Layer& layer = backgroundref.layers[i];
-		layer.width = val["width"].GetInt();
-		layer.height = val["height"].GetInt();
-		layer.tiles = new unsigned int[layer.width * layer.height];
-		layer.name = val["name"].GetString();
-		for (SizeType j = 0; j < val["data"].Size(); j++) {
-			layer.tiles[j] = val["data"][j].GetInt();
 		}
 	}
 	return true;
@@ -114,7 +136,7 @@ bool BackgroundLoader::loadBackground(std::string folder, std::string file, Back
 	backgroundref.loadTilesets();
 	unsigned char testdata[16 * 16 * 4];
 	backgroundref.genLayersTextures();
-	backgroundref.setVertexPositions();
+	backgroundref.setInitialScale();
 	backgroundref.genBuffers();
 	return true;
 }
