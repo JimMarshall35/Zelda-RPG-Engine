@@ -111,6 +111,10 @@ bool AreaLoader::loadTilesetImgData(Area& arearef)
 		int x, y, n;
 		std::string path = arearef.tilesets[i].imgpath;
 		arearef.tilesets[i].imgdata = stbi_load(path.c_str(), &x, &y, &n, 0);
+		if (arearef.tilesets[i].imgdata == NULL) {
+			std::cerr << "problem loading image at " << path.c_str() << std::endl;
+			return false;
+		}
 	}
 	return true;
 }
