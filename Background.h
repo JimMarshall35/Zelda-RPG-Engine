@@ -28,9 +28,10 @@ public:
 	Background();
 	~Background() { freeData(); }
 	void debugPrint();
-	void draw(Shader& s, const Camera& camera);
+	void draw(Shader& s, const Camera* camera);
 	glm::vec2      get_base_scale() { return glm::vec2(base_scale); }
 	void           freeData();
+	unsigned int   getTileAtPosition(glm::vec2 pos, std::string layername);
 private:
 	BG_Layer*      layers;
 	void           tileDirectMemCpy(unsigned int tilenum, TileSet& tileset, unsigned char* output);

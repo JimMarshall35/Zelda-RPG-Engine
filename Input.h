@@ -8,11 +8,12 @@
 #define RIGHT_BIT 3
 #define ZOOM_IN_BIT 4
 #define ZOOM_OUT_BIT 5
+
 void window_size_callback(GLFWwindow* window, int width, int height)
 {
 	glViewport(0, 0, width, height);
 }
-GLuint keys = 0;
+static GLuint keys = 0;
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
 	switch (key) {
@@ -70,7 +71,7 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 	
 	
 }
-
+GLuint getKeys() { return keys; }
 void inputInit(GLFWwindow* window) {
 	glfwSetWindowSizeCallback(window, window_size_callback);
 	glfwSetKeyCallback(window, key_callback);

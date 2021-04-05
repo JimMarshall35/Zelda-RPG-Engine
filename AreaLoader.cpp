@@ -1,6 +1,6 @@
 
 #include "AreaLoader.h"
-
+#define PLAYER_TILESET_NAME "24by24ModernRPGGuy"
 AreaLoader* AreaLoader::instance;
 #pragma region json file checks
 bool AreaLoader::tilesetFileChecks(const rapidjson::Value& val) {
@@ -30,6 +30,9 @@ bool AreaLoader::layersChecks(const rapidjson::Value& val) {
 		if (!checkJSONValue("data", JSONTYPE::ARRAY, val)) { return false; }
 		if (!checkJSONValue("height", JSONTYPE::NUMBER, val)) { return false; }
 		if (!checkJSONValue("width", JSONTYPE::NUMBER, val)) { return false; }
+	}
+	if (val["type"].GetString() == "objectgroup") {
+		if (!checkJSONValue("objects", JSONTYPE::ARRAY, val)) { return false; }
 	}
 
 	return true;
@@ -61,7 +64,7 @@ bool AreaLoader::loadArea(std::string folder, std::string file, Area & arearef)
 	arearef.background.tileheight = doc["tileheight"].GetInt();
 
 	if (!loadTilesets(doc, arearef, folder)) { return false; }
-	if (!loadTilesetImgData(arearef)) { return false; }
+	//if (!loadTilesetImgData(arearef)) { return false; }
 	if (!loadLayers(doc, arearef)) { return false; }
 
 	unsigned char testdata[16 * 16 * 4];
@@ -102,20 +105,24 @@ bool AreaLoader::loadTilesets(const rapidjson::Document & doc, Area & arearef, s
 		tileset.tilecount = doc["tilecount"].GetInt();
 		tileset.tileheight = doc["tileheight"].GetInt();
 		tileset.tilewidth = doc["tilewidth"].GetInt();
+		if (!loadTilesetImgData(tileset)) { return false; }
+		if (tileset.name == PLAYER_TILESET_NAME) {
+			tileset.genTexture();
+			tileset.genSprites();
+		}
 	}
 	return true;
 }
-bool AreaLoader::loadTilesetImgData(Area& arearef)
+bool AreaLoader::loadTilesetImgData(TileSet& tileset)
 {
-	for (size_t i = 0; i < arearef.numtilesets; i++) {
-		int x, y, n;
-		std::string path = arearef.tilesets[i].imgpath;
-		arearef.tilesets[i].imgdata = stbi_load(path.c_str(), &x, &y, &n, 0);
-		if (arearef.tilesets[i].imgdata == NULL) {
-			std::cerr << "problem loading image at " << path.c_str() << std::endl;
-			return false;
-		}
+
+	int x, y, n;
+	tileset.imgdata = stbi_load(tileset.imgpath.c_str(), &x, &y, &n, 0);
+	if (tileset.imgdata == NULL) {
+		std::cerr << "problem loading image at " << tileset.imgpath.c_str() << std::endl;
+		return false;
 	}
+
 	return true;
 }
 bool AreaLoader::loadLayers(const rapidjson::Document & doc, Area & arearef)
@@ -135,9 +142,10 @@ bool AreaLoader::loadLayers(const rapidjson::Document & doc, Area & arearef)
 	arearef.background.layers = new BG_Layer[arearef.background.numlayers];
 	int ontilelayer = 0;
 
-	for (SizeType i = 0; i < arearef.background.numlayers; i++) {
+	for (SizeType i = 0; i < total_layers; i++) {
 		const Value& val = doc["layers"][i];
 		std::string type = val["type"].GetString();
+		std::string name = val["name"].GetString();
 		if (type == "tilelayer") {
 
 			BG_Layer& layer = arearef.background.layers[ontilelayer];
@@ -151,8 +159,22 @@ bool AreaLoader::loadLayers(const rapidjson::Document & doc, Area & arearef)
 			ontilelayer++;
 		}
 
-		else if (type == "objectgroup" && val["name"].GetString() == "gameobjects") {
-
+		else if (type == "objectgroup" && name == "gameobjects") {
+			for (SizeType i = 0; i < val["objects"].Size(); i++) {
+				const Value& object = val["objects"][i];
+				std::string objname = object["name"].GetString();
+				if (objname == "start_point") {
+					Player* player = new Player();
+					TileSet* player_tileset = arearef.getTilesetByName(PLAYER_TILESET_NAME);
+					player->sprite = player_tileset->getSprite(4);
+					player->scale *= glm::vec2(
+						player_tileset->tilewidth / (arearef.background.tilewidth * 40.0),
+						player_tileset->tileheight/(arearef.background.tileheight * 40.0)
+					);
+					arearef.gameobjects.push_back(player);
+					
+				}
+			}
 		}
 	}
 	return true;

@@ -24,7 +24,7 @@ class Sprite {
 public:
 	Sprite();
 	~Sprite() { }
-	void setup(GLuint tex_id, 
+	void setup_preexisting(GLuint tex_id,
 		unsigned int img_width, unsigned int img_height,
 		unsigned int sheet_x, unsigned int sheet_y, 
 		unsigned int sheet_w, unsigned int sheet_h);              // for use with existing opengl texture
@@ -35,7 +35,7 @@ public:
 		unsigned int sheet_w, unsigned int sheet_h);    // creates new texture from img data as well 
 
 	void freeData();
-	void draw(const glm::vec2 pos, const glm::vec3 scale, Shader& s, const Camera& camera);
+	void draw(const glm::vec2 pos, const glm::vec3 scale, Shader& s, const Camera* camera);
 	
 private:
 	void setup_base(unsigned int img_width, unsigned int img_height, unsigned int sheet_x, unsigned int sheet_y, unsigned int sheet_w, unsigned int sheet_h);

@@ -9,14 +9,13 @@
 #define ZOOM_IN_BIT  4
 #define ZOOM_OUT_BIT 5
 
-#define TEST_SPEED 2.0
+#define TEST_SPEED 1.0
 #define TEST_ZOOM_SPEED 1
 
 #define ORIGINAL_QUAD_WIDTH 2.0
 #define ORIGINAL_QUAD_HEIGHT 2.0
-Camera::~Camera()
-{
-}
+Camera* Camera::instance;
+
 
 void Camera::testUpdate(const GLuint keys, const float delta, glm::vec2 bounds)
 {
@@ -47,16 +46,16 @@ void Camera::testUpdate(const GLuint keys, const float delta, glm::vec2 bounds)
 		newpos += glm::vec2(delta * TEST_SPEED,0);
 		print = true;
 	}
-	setPositionClamped(bounds,newpos);
+	setPositionClamped(newpos);
 	if (print) {
 		
-		std::cout << "camera x = " << position.x << std::endl << "camera y = " << position.y <<" zoom= " << zoom << std::endl << std::endl;
+		//std::cout << "camera x = " << position.x << std::endl << "camera y = " << position.y <<" zoom= " << zoom << std::endl << std::endl;
 
 	}
 
 }
 
-void Camera::setPositionClamped(glm::vec2 bounds, glm::vec2 newposition)
+void Camera::setPositionClamped(glm::vec2 newposition)
 {
 	float ybound = abs(bounds.y - (2/ zoom)/2);
 	float xbound = abs(bounds.x - (2/ zoom)/2);

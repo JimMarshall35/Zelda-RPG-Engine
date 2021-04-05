@@ -32,7 +32,7 @@ void Sprite::setup_base(
 Sprite::Sprite()
 {
 }
-void Sprite::setup(
+void Sprite::setup_preexisting(
 	GLuint tex_id, 
 	unsigned int img_width, unsigned int img_height, 
 	unsigned int sheet_x, unsigned int sheet_y, 
@@ -61,7 +61,7 @@ void Sprite::setup(
 		sheet_w, sheet_h
 	);
 	GPULoadTexture(img_data, img_width, img_height, &TextureID);
-	std::cout << TextureID << std::endl;
+	std::cout << "TEX_ID = " << TextureID << std::endl;
 	genbuffers();
 }
 
@@ -70,7 +70,7 @@ void Sprite::freeData() {
 	glDeleteTextures(1, &TextureID);
 }
 
-void Sprite::draw(const glm::vec2 pos, const glm::vec3 scale, Shader& s, const Camera& camera)
+void Sprite::draw(const glm::vec2 pos, const glm::vec3 scale, Shader& s, const Camera* camera)
 {
 	GLClearErrors();
 
@@ -84,10 +84,10 @@ void Sprite::draw(const glm::vec2 pos, const glm::vec3 scale, Shader& s, const C
 	s.setVec2("position", pos);
 	GLPrintErrors("s.setVec2(\"position\",position);");
 
-	s.setVec2("camera_pos", camera.position);
+	s.setVec2("camera_pos", camera->position);
 	GLPrintErrors("s.setVec2(\"camera_pos\", camera.position);");
 
-	s.setFloat("camera_zoom", camera.zoom);
+	s.setFloat("camera_zoom", camera->zoom);
 	GLPrintErrors("s.setFloat(\"camera_zoom\", camera.zoom);");
 
 	glActiveTexture(GL_TEXTURE0);

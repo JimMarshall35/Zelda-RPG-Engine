@@ -129,6 +129,7 @@
     <ClCompile Include="AreaLoader.cpp" />
     <ClCompile Include="Background.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GLTextureHelper.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="jsonhelper.cpp" />
@@ -146,6 +147,7 @@
     <ClInclude Include="AreaLoader.h" />
     <ClInclude Include="Background.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="GameObject.h" />
     <ClInclude Include="GLTextureHelper.h" />
     <ClInclude Include="gl_error_handling.h" />
     <ClInclude Include="Input.h" />

@@ -31,3 +31,41 @@ void TileSet::tileDirectMemCpy(unsigned int tilenum, TileSet& tileset, unsigned 
 	// will copy tile data direct to a texture being generated - unlike method above which transfers it to a buffer first
 	// was done the way above because i planned to use glTextureSubImage2D to modify the background texture once uploaded to gpu
 }
+
+void TileSet::freeData()
+{
+	stbi_image_free(imgdata);
+	if (texID > 0) {
+		glDeleteTextures(1, &texID);
+		texID = 0;
+	}
+	for (size_t i = 0; i < sprites.size(); i++) {
+		sprites[i].freeData();
+	}
+	sprites.clear();
+	sprites.shrink_to_fit();
+}
+
+void TileSet::genTexture()
+{
+	GPULoadTexture(imgdata, imgwidth, imgheight, &texID);
+}
+
+void TileSet::genSprites()
+{
+	for (size_t i = 0; i < tilecount; i++) {
+		int x_coord = i % columns;
+		int y_coord = i / columns;
+		int x = x_coord * tilewidth;
+		int y = y_coord * tileheight;
+		Sprite sprite;
+		sprite.setup_preexisting(
+			texID,
+			imgwidth, imgheight,
+			x,y,
+			tilewidth, tileheight
+		);
+		sprites.push_back(sprite);
+
+	}
+}

@@ -5,11 +5,10 @@
 #include <iostream>
 #include <chrono>
 #include <glm/glm.hpp>
-
-#include "Shader.h"
 #include "Input.h"
+#include "Shader.h"
 #include "AreaLoader.h"
-
+#include "Camera.h"
 GLFWwindow* window;
 using namespace glm;
 int GLFWInit();
@@ -22,32 +21,36 @@ int main(void)
 	}
 	inputInit(window);
 	Shader shader("shaders/background_vert.glsl", "shaders/background_frag.glsl");
-	Camera camera;
-	Area b;
+	Camera* camera = Camera::Instance();
+	Area a;
 	std::chrono::high_resolution_clock::time_point t0 = std::chrono::high_resolution_clock::now();
-	if (!AreaLoader::Instance()->loadArea("json","lvl1_test.json", b)) {
+	if (!AreaLoader::Instance()->loadArea("json","lvl1_test.json", a)) {
 		std::cout << "failed to load level" << std::endl;
 	}
 	std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
 	std::chrono::duration<double> time_span = std::chrono::duration_cast<std::chrono::duration<double>>(t1 - t0);
 	std::cout << "background loading done in " << time_span.count() * 1000 << " ms" << std::endl;
 	//b.debugPrint();
+
+	//int testtile = a.getBackGround()->getTileAtPosition(glm::vec2(0, 0), "structure");
+
 	glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
 	double delta;
 	double last = glfwGetTime();
 	do {
 		if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS) {
-			AreaLoader::Instance()->loadArea("json", "lvl1_test2.json", b);
+			AreaLoader::Instance()->loadArea("json", "lvl1_test2.json", a);
 		}
 		//delta time
 		double now = glfwGetTime();
 		delta = now - last;
 		last = now;
 		//update
-		camera.testUpdate(keys, delta, b.getBackGround()->get_base_scale());
+		Camera::Instance()->testUpdate(keys, delta, a.getBackGround()->get_base_scale());
+		//a.update(delta, keys);
 		//render
 		glClear(GL_COLOR_BUFFER_BIT);
-		b.draw(shader,camera);
+		a.draw(shader,camera);
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 
