@@ -1,6 +1,5 @@
 #pragma once
 #include "Background.h"
-#include "Player.h"
 class Area
 {
 public:
@@ -14,6 +13,5 @@ private:
 	unsigned int       numtilesets;
 	Background         background;
 	void               freeData();
-	Player             player;
 };
 

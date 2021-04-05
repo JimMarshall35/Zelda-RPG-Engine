@@ -6,41 +6,20 @@
 #include "Shader.h"
 #include "gl_error_handling.h"
 #include "Camera.h"
+#include "Rendering.h"
 
+#define NUM_CHANNELS 4
 #define VERTICES_SIZE 20
 #define FLOATS_PER_VERTEX 5
 
-static float vertices[] = {
-	// position            tex coordinates
-	1.0f,  1.0f, 0.0f,      1.0f, 0.0f,   // top right
-	1.0f, -1.0f, 0.0f,      1.0f, 1.0f,   // bottom right
-	-1.0f, -1.0f, 0.0f,     0.0f, 1.0f,   // bottom left
-	-1.0f,  1.0f, 0.0f,     0.0f, 0.0f    // top left 
-};
-static const unsigned int indices[] = {  // note that we start from 0!
-	0, 1, 3,   // first triangle
-	1, 2, 3    // second triangle
-};
-struct TileSet {
-	std::string     imgpath;
-	std::string     name;
-	unsigned int    columns;
-	unsigned int    imgwidth;
-	unsigned int    imgheight;
-	unsigned int    margin;
-	unsigned int    spacing;
-	unsigned int    tilewidth;
-	unsigned int    tileheight;
-	unsigned int    tilecount;
-	unsigned char*  imgdata;
-};
+#include "TileSet.h"
 
 struct BG_Layer {
 	std::string          name;
 	unsigned int*        tiles;
 	unsigned int         width;
 	unsigned int         height;
-	GLuint               textureID;         
+	Sprite               sprite;
 };
 class Background
 {
@@ -54,11 +33,8 @@ public:
 	void           freeData();
 private:
 	BG_Layer*      layers;
-	void           getTileBytes(unsigned int tilenum, TileSet& tileset, unsigned char* output);
 	void           tileDirectMemCpy(unsigned int tilenum, TileSet& tileset, unsigned char* output);
 	void           genLayersTextures(TileSet& tileset);
-	void           genBuffers();
-	GLuint         VAO;
 	unsigned int   numlayers;
 	unsigned int   numtilesets;
 	unsigned int   width;

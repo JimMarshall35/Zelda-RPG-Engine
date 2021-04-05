@@ -136,9 +136,10 @@
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\GL\glm;C:\GL\glew\include;C:\GL\glfw\include</AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\GL\glm;C:\GL\glew\include;C:\GL\glfw\include</AdditionalIncludeDirectories>
     </ClCompile>
-    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Rendering.cpp" />
     <ClCompile Include="stb_image.cpp" />
     <ClCompile Include="stb_image_write.cpp" />
+    <ClCompile Include="TileSet.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Area.h" />
@@ -149,10 +150,11 @@
     <ClInclude Include="gl_error_handling.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="jsonhelper.h" />
-    <ClInclude Include="Player.h" />
+    <ClInclude Include="Rendering.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="stb_image_write.h" />
+    <ClInclude Include="TileSet.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

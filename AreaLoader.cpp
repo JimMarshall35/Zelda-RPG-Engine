@@ -68,7 +68,7 @@ bool AreaLoader::loadArea(std::string folder, std::string file, Area & arearef)
 	TileSet t = arearef.tilesets[0];
 	arearef.background.genLayersTextures(t);
 	arearef.background.setInitialScale();
-	arearef.background.genBuffers();
+	//arearef.background.genBuffers();
 	return true;
 }
 
