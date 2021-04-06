@@ -167,6 +167,8 @@ bool AreaLoader::loadLayers(const rapidjson::Document & doc, Area & arearef)
 				const Value& object = val["objects"][i];
 				std::string objname = object["name"].GetString();
 				if (objname == "start_point") {
+					// just quick code to test 
+					// will proably write PlayerLoader class or similar
 					Player* player = new Player();
 					TileSet* player_tileset = arearef.getTilesetByName(PLAYER_TILESET_NAME);
 					player->sprite = player_tileset->getSprite(4);
