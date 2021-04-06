@@ -48,6 +48,9 @@ void Player::update(float delta, GLuint keys)
 	}
 	else if (keys & (1 << ZOOM_OUT_BIT)) {
 		Camera::Instance()->zoom += -(TEST_ZOOM_SPEED * delta);
+		if (Camera::Instance()->zoom < 1.0) {
+			Camera::Instance()->zoom = 1.0;
+		}
 		Camera::Instance()->setPositionClamped(glm::vec2(position.x + velocity.x, position.y + velocity.y));
 	}
 	else {

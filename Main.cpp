@@ -36,15 +36,7 @@ int main(void)
 	double delta;
 	double last = glfwGetTime();
 	do {
-		if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS) {
-			AreaLoader::Instance()->loadArea("json", "lvl1_test.json", a);
-		}
-		if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS) {
-			AreaLoader::Instance()->loadArea("json", "lvl1_test2.json", a);
-		}
-		if (glfwGetKey(window, GLFW_KEY_3) == GLFW_PRESS) {
-			AreaLoader::Instance()->loadArea("json", "lvl1_test3.json", a);
-		}
+		
 		//delta time
 		double now = glfwGetTime();
 		delta = now - last;
@@ -57,6 +49,16 @@ int main(void)
 		a.draw(shader,camera);
 		glfwSwapBuffers(window);
 		glfwPollEvents();
+
+		if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS) {
+			AreaLoader::Instance()->loadArea("json", "lvl1_test.json", a);
+		}
+		if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS) {
+			AreaLoader::Instance()->loadArea("json", "lvl1_test2.json", a);
+		}
+		if (glfwGetKey(window, GLFW_KEY_3) == GLFW_PRESS) {
+			AreaLoader::Instance()->loadArea("json", "lvl1_test3.json", a);
+		}
 
 	} // Check if the ESC key was pressed or the window was closed
 	while (glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS &&
