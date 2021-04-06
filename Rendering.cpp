@@ -61,7 +61,7 @@ void Sprite::setup(
 		sheet_w, sheet_h
 	);
 	GPULoadTexture(img_data, img_width, img_height, &TextureID);
-	std::cout << "TEX_ID = " << TextureID << std::endl;
+	//std::cout << "TEX_ID = " << TextureID << std::endl;
 	genbuffers();
 }
 
@@ -73,7 +73,7 @@ void Sprite::freeData() {
 void Sprite::draw(const glm::vec2 pos, const glm::vec3 scale, Shader& s, const Camera* camera)
 {
 	GLClearErrors();
-
+	
 	s.use();
 	s.setInt("Texture", 0);
 	GLPrintErrors("s.setInt(\"Texture\", 0);");
@@ -142,5 +142,5 @@ void Sprite::genbuffers()
 	GLPrintErrors("glBindBuffer(GL_ARRAY_BUFFER, 0);");
 	glBindVertexArray(0); // Unbind VAO (it's always a good thing to unbind any buffer/array to prevent strange bugs)
 	GLPrintErrors("glBindVertexArray(0);");
-	std::cout << "VAO = " << VAO << std::endl;
+	//std::cout << "VAO = " << VAO << std::endl;
 }

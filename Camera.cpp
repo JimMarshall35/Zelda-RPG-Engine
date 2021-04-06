@@ -57,8 +57,18 @@ void Camera::testUpdate(const GLuint keys, const float delta, glm::vec2 bounds)
 
 void Camera::setPositionClamped(glm::vec2 newposition)
 {
-	float ybound = abs(bounds.y - (2/ zoom)/2);
-	float xbound = abs(bounds.x - (2/ zoom)/2);
+	newposition *= zoom;
+	float bgwidth = zoom * bounds.y; // wrong order?! can't figure out why
+	float bgheight = zoom * bounds.x;
+
+	float view_width = 2;
+	float view_height = 2;
+	
+
+	float xbound = (bgheight - (view_height / 2));
+	float ybound = (bgwidth - (view_width / 2));
+
+
 
 	if (newposition.x > xbound) {
 		position.x = xbound;

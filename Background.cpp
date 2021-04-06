@@ -22,7 +22,8 @@ void Background::freeData()
 
 unsigned int Background::getTileAtPosition(glm::vec2 pos, std::string layername)
 {
-	/*
+	//std::cout <<"x: " << pos.x << " y: "<< pos.y << std::endl;
+	//return 0;
 	const BG_Layer* layer = nullptr;
 	for (size_t i = 0; i < numlayers; i++) {
 		if (layers[i].name == layername) {
@@ -50,8 +51,8 @@ unsigned int Background::getTileAtPosition(glm::vec2 pos, std::string layername)
 	else {
 		return -1;
 	}
-	*/
-	return 0;
+	
+	
 }
 
 void Background::debugPrint()
@@ -126,5 +127,5 @@ void Background::setInitialScale() {
 		static_cast<float>(height) / 40.0f,
 		1.0f
 	);
-	Camera::Instance()->setBounds(base_scale);
+	Camera::Instance()->setBounds(glm::vec2(base_scale.x,base_scale.y));
 }

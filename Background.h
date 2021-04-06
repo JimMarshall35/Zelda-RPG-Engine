@@ -34,7 +34,6 @@ public:
 	unsigned int   getTileAtPosition(glm::vec2 pos, std::string layername);
 private:
 	BG_Layer*      layers;
-	void           tileDirectMemCpy(unsigned int tilenum, TileSet& tileset, unsigned char* output);
 	void           genLayersTextures(TileSet& tileset);
 	unsigned int   numlayers;
 	unsigned int   numtilesets;

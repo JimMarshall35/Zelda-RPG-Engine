@@ -10,13 +10,11 @@ void main()
 {
 	vec2 transformed  = vec2(aPos.x, aPos.y);
 
-	transformed += position;
-
 	transformed *= vec2(base_scale.x,base_scale.y);
-
-	transformed += -camera_pos;
+	transformed += position;
 	
 	transformed *= camera_zoom;
+	transformed += -camera_pos;
 	
     gl_Position = vec4(transformed,aPos.z,1.0);
     

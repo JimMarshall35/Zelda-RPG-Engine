@@ -49,6 +49,8 @@ bool AreaLoader::tilesetChecks(const rapidjson::Value& val) {
 bool AreaLoader::loadArea(std::string folder, std::string file, Area & arearef)
 {
 	using namespace rapidjson;
+	std::cout << "loading file " << folder << "/" << file << std::endl;
+	std::chrono::high_resolution_clock::time_point t0 = std::chrono::high_resolution_clock::now();
 	arearef.freeData();
 	Document doc;
 	if (!loadJSONFile(doc, (folder + "/" + file).c_str())) {
@@ -64,14 +66,15 @@ bool AreaLoader::loadArea(std::string folder, std::string file, Area & arearef)
 	arearef.background.tileheight = doc["tileheight"].GetInt();
 
 	if (!loadTilesets(doc, arearef, folder)) { return false; }
-	//if (!loadTilesetImgData(arearef)) { return false; }
 	if (!loadLayers(doc, arearef)) { return false; }
 
-	unsigned char testdata[16 * 16 * 4];
 	TileSet t = arearef.tilesets[0];
 	arearef.background.genLayersTextures(t);
 	arearef.background.setInitialScale();
-	//arearef.background.genBuffers();
+	std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
+	std::chrono::duration<double> time_span = std::chrono::duration_cast<std::chrono::duration<double>>(t1 - t0);
+	std::cout << "background loading done in " << time_span.count() * 1000 << " ms" << std::endl;
+	std::cout << std::endl << std::endl;
 	return true;
 }
 

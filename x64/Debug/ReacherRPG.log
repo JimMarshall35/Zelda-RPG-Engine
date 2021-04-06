@@ -1,4 +1,5 @@
-﻿  Main.cpp
+﻿  AreaLoader.cpp
 c:\users\user1\source\repos\reacherrpg\reacherrpg\shader.h(58): warning C4101: 'e': unreferenced local variable
-c:\users\user1\source\repos\reacherrpg\reacherrpg\main.cpp(49): warning C4244: 'argument': conversion from 'double' to 'const float', possible loss of data
+c:\users\user1\source\repos\reacherrpg\reacherrpg\arealoader.cpp(137): warning C4018: '<': signed/unsigned mismatch
+c:\users\user1\source\repos\reacherrpg\reacherrpg\arealoader.cpp(148): warning C4018: '<': signed/unsigned mismatch
   ReacherRPG.vcxproj -> C:\Users\User1\source\repos\ReacherRPG\x64\Debug\ReacherRPG.exe
