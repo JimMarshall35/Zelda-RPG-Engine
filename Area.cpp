@@ -45,6 +45,7 @@ void Area::freeData()
 		tilesets[i].freeData();
 	}
 	for (size_t i = 0; i < gameobjects.size(); i++) {
+		gameobjects[i]->freeData();
 		delete gameobjects[i];
 	}
 	gameobjects.clear();

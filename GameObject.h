@@ -1,6 +1,7 @@
 #pragma once
 #include "glm/glm.hpp"
 #include "Rendering.h"
+#include "Animator.h"
 
 enum class GO_TYPE {
 	PLAYER,
@@ -18,11 +19,12 @@ public:
 	GO_TYPE type = GO_TYPE::NONE;
 	bool isdrawable = false;
 	bool issolidvsbackground = false;
-	Sprite* sprite = nullptr;
+	
 
 	virtual void onInteract(GameObject* other) = 0;
 	virtual void update(float delta, GLuint keys) = 0;
 	virtual void draw(Shader& s, const Camera* camera) {};
+	virtual void freeData() {};
 
 };
 
@@ -33,6 +35,8 @@ public:
 	virtual void onInteract(GameObject* other);
 	virtual void update(float delta, GLuint keys);
 	virtual void draw(Shader& s, const Camera* camera);
+	virtual void freeData() { animator.freeData(); }
+	Animator animator;
 private:
 	GLuint lastkeys = 0;
 	

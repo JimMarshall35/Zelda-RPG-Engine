@@ -171,7 +171,38 @@ bool AreaLoader::loadLayers(const rapidjson::Document & doc, Area & arearef)
 					// will proably write PlayerLoader class or similar
 					Player* player = new Player();
 					TileSet* player_tileset = arearef.getTilesetByName(PLAYER_TILESET_NAME);
-					player->sprite = player_tileset->getSprite(4);
+					///////////////////////////////////////////////////////////////////////// HARD CODED SECTION - to be read from file
+					Sprite** upFrames = new Sprite*[4]{
+						player_tileset->getSprite(0),
+						player_tileset->getSprite(1),
+						player_tileset->getSprite(2),
+						player_tileset->getSprite(3)
+					};
+					Sprite** downFrames = new Sprite*[4]{
+						player_tileset->getSprite(4),
+						player_tileset->getSprite(5),
+						player_tileset->getSprite(6),
+						player_tileset->getSprite(7)
+					};
+					Sprite** rightFrames = new Sprite*[4]{
+						player_tileset->getSprite(8),
+						player_tileset->getSprite(9),
+						player_tileset->getSprite(10),
+						player_tileset->getSprite(11)
+					};
+					Sprite** leftFrames = new Sprite*[4]{
+						player_tileset->getSprite(12),
+						player_tileset->getSprite(13),
+						player_tileset->getSprite(14),
+						player_tileset->getSprite(15)
+					};
+
+					player->animator.push_animation("walk_up", upFrames, 4, 10, true);
+					player->animator.push_animation("walk_down", downFrames, 4, 10, true);
+					player->animator.push_animation("walk_left", leftFrames, 4, 10, true);
+					player->animator.push_animation("walk_right", rightFrames, 4, 10, true);
+					player->animator.set_anim("walk_down");
+					/////////////////////////////////////////////////////////////////////////////////////////////////
 					player->scale *= glm::vec2(
 						player_tileset->tilewidth / (arearef.background.tilewidth * 40.0),
 						player_tileset->tileheight/(arearef.background.tileheight * 40.0)

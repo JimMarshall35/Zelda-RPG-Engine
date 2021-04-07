@@ -1,6 +1,6 @@
 #include "GameObject.h"
 
-#define TEST_SPEED      1.0
+#define TEST_SPEED      0.5
 #define TEST_ZOOM_SPEED 1
 #define UP_BIT       0
 #define DOWN_BIT     1
@@ -25,20 +25,30 @@ void Player::onInteract(GameObject * other)
 
 void Player::update(float delta, GLuint keys)
 {
+	animator.update(delta);
 	glm::vec2 vel = glm::vec2(0.0);
 	if (keys & (1 << UP_BIT)) {
+		animator.set_anim("walk_up");
+		animator.start_anim();
 		vel += glm::vec2(0, delta*TEST_SPEED);
 	}
 	if (keys & (1 << DOWN_BIT)) {
+		animator.set_anim("walk_down");
+		animator.start_anim();
 		vel += glm::vec2(0, -delta * TEST_SPEED);
 	}
 	if (keys & (1 << LEFT_BIT)) {
+		animator.set_anim("walk_left");
+		animator.start_anim();
 		vel += glm::vec2(-delta * TEST_SPEED, 0);
 	}
 	if (keys & (1 << RIGHT_BIT)) {
+		animator.set_anim("walk_right");
+		animator.start_anim();
 		vel += glm::vec2(delta * TEST_SPEED, 0);
 	}
 	if(keys == 0) {
+		animator.stop_anim();
 		vel += glm::vec2(0.0);
 	}
 	velocity = vel;
@@ -61,5 +71,5 @@ void Player::update(float delta, GLuint keys)
 
 void Player::draw(Shader & s, const Camera * camera)
 {
-	sprite->draw(position, glm::vec3(scale, 1.0), s, camera);
+	animator.draw(position, scale, s, camera);
 }
