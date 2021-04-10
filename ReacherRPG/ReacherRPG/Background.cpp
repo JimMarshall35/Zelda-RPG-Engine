@@ -43,9 +43,9 @@ unsigned int Background::getTileAtPosition(glm::vec2 pos, std::string layername)
 
 	int index = tilex + tiley * width;
 	if (layer != nullptr) {
-		if (layer->tiles[index] > 0) {
-			std::cout << "tilex = " << tilex << " tiley = " << tiley << std::endl;
-		}
+//		if (layer->tiles[index] > 0) {
+//			std::cout << "tilex = " << tilex << " tiley = " << tiley << std::endl;
+//		}
 		return layer->tiles[index];
 	}
 	else {
