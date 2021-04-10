@@ -168,8 +168,7 @@ bool AreaLoader::loadLayers(const rapidjson::Document & doc, Area & arearef)
 				std::string objname = object["name"].GetString();
 				if (objname == "start_point") {
 					/////////////////////////////// BAD HARD CODED CODE STARTS
-					// just quick code to test 
-					// will proably write PlayerLoader class or similar
+
 					Player* player = new Player();
 					TileSet* player_tileset = arearef.getTilesetByName(PLAYER_TILESET_NAME);
 					Sprite** upFrames = new Sprite*[4]{
@@ -206,11 +205,11 @@ bool AreaLoader::loadLayers(const rapidjson::Document & doc, Area & arearef)
 						player_tileset->tilewidth / (arearef.background.tilewidth * 40.0),
 						player_tileset->tileheight/(arearef.background.tileheight * 40.0)
 					);
-#define RESOLUTION 16
-#define LOFFSET 5.0
-#define ROFFSET 6.0
-#define TOFFSET 12.0
-#define BOFFSET 1.0
+#define RESOLUTION 16.0f
+#define LOFFSET 7.0f
+#define ROFFSET 8.0f
+#define TOFFSET 18.0f
+#define BOFFSET 1.0f
 					player->collider.left_offset = LOFFSET;
 					player->collider.right_offset = ROFFSET;
 					player->collider.top_offset = TOFFSET;

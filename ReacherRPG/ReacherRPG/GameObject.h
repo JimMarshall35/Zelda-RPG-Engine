@@ -20,13 +20,14 @@ struct TilemapCollider {
 class GameObject
 {
 public:
-	glm::vec2 position = glm::vec2(0, 0);
-	glm::vec2 velocity = glm::vec2(0,0);
-	glm::vec2 scale = glm::vec2(1.0,1.0);
-	GO_TYPE type = GO_TYPE::NONE;
-	bool isdrawable = false;
-	bool issolidvsbackground = false;
+	glm::vec2       position = glm::vec2(0, 0);
+	glm::vec2       velocity = glm::vec2(0,0);
+	glm::vec2       scale = glm::vec2(1.0,1.0);
+	GO_TYPE         type = GO_TYPE::NONE;
+	bool            isdrawable = false;
+	bool            issolidvsbackground = false;
 	TilemapCollider collider;
+	unsigned int    renderlayer;
 
 	virtual void onInteract(GameObject* other) = 0;
 	virtual void update(float delta, GLuint keys) = 0;

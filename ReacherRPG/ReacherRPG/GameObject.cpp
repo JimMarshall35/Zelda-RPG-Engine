@@ -47,15 +47,18 @@ void Player::update(float delta, GLuint keys)
 		animator.start_anim();
 		vel += glm::vec2(1, 0);
 	}
-	if(keys == 0) {
+	if(!(keys & (1<<UP_BIT)) &&
+	   !(keys & (1 << DOWN_BIT)) &&
+	   !(keys & (1 << LEFT_BIT)) &&
+	   !(keys & (1 << RIGHT_BIT))) {
 		animator.stop_anim();
-		vel += glm::vec2(0.0);
+		vel = glm::vec2(0.0);
 	}
 	if (glm::length(vel) > 0) {
 		vel = glm::normalize(vel) * delta * (float)TEST_SPEED;
-		velocity = vel;
+		
 	}
-	
+	velocity = vel;
 	if (keys & (1 << ZOOM_IN_BIT)) {
 		Camera::Instance()->zoom += (TEST_ZOOM_SPEED * delta);
 		Camera::Instance()->setPositionClamped(glm::vec2(position.x + velocity.x, position.y + velocity.y));
