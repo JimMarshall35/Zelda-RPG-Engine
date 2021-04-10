@@ -10,7 +10,7 @@ enum class GO_TYPE {
 	ENEMY,
 	NONE
 };
-struct Collider {
+struct TilemapCollider {
 	float resolution;
 	float top_offset;       // number of pixels ignored from the top down of the sprite
 	float bottom_offset;    // number of pixels ignored from the bottom up of the sprite
@@ -26,7 +26,7 @@ public:
 	GO_TYPE type = GO_TYPE::NONE;
 	bool isdrawable = false;
 	bool issolidvsbackground = false;
-	Collider collider;
+	TilemapCollider collider;
 
 	virtual void onInteract(GameObject* other) = 0;
 	virtual void update(float delta, GLuint keys) = 0;
