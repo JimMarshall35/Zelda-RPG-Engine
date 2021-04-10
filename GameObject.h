@@ -10,6 +10,13 @@ enum class GO_TYPE {
 	ENEMY,
 	NONE
 };
+struct Collider {
+	float resolution;
+	float top_offset;       // number of pixels ignored from the top down of the sprite
+	float bottom_offset;    // number of pixels ignored from the bottom up of the sprite
+	float left_offset;      // number of pixels ignored from the left towards the right of the sprite
+	float right_offset;     // number of pixels ignored from the right to the left of the sprite
+};
 class GameObject
 {
 public:
@@ -19,7 +26,7 @@ public:
 	GO_TYPE type = GO_TYPE::NONE;
 	bool isdrawable = false;
 	bool issolidvsbackground = false;
-	
+	Collider collider;
 
 	virtual void onInteract(GameObject* other) = 0;
 	virtual void update(float delta, GLuint keys) = 0;
@@ -32,7 +39,7 @@ class Player : public GameObject {
 public:
 	Player();
 	~Player();
-	virtual void onInteract(GameObject* other);
+	virtual void onInteract(GameObject* other);          // when another game object collides with it
 	virtual void update(float delta, GLuint keys);
 	virtual void draw(Shader& s, const Camera* camera);
 	virtual void freeData() { animator.freeData(); }

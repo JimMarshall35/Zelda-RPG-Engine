@@ -31,15 +31,18 @@ void Animator::draw(const glm::vec2 pos, const glm::vec2 scale, Shader & s, cons
 
 void Animator::update(float delta)
 {
-	static int onframe = 0;
+	static int onframe = 0; 
 	if (isanimating) {
 		
 		timer += delta;
 		if (timer > 1 / current_animation->fps) {
 			timer = 0;
 			onframe++;
-			if (onframe >= current_animation->numframes) {
+			if (onframe >= current_animation->numframes && current_animation->shouldloop) {
 				onframe = 0;
+			}
+			else if (onframe >= current_animation->numframes && !current_animation->shouldloop) {
+				onframe = current_animation->numframes - 1;
 			}
 		}
 		current_frame = current_animation->frames[onframe];

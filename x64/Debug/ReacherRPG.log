@@ -1,10 +1,8 @@
-﻿  AreaLoader.cpp
+﻿  Area.cpp
+c:\users\user1\source\repos\reacherrpg\reacherrpg\shader.h(58): warning C4101: 'e': unreferenced local variable
+  AreaLoader.cpp
 c:\users\user1\source\repos\reacherrpg\reacherrpg\shader.h(58): warning C4101: 'e': unreferenced local variable
 c:\users\user1\source\repos\reacherrpg\reacherrpg\arealoader.cpp(137): warning C4018: '<': signed/unsigned mismatch
 c:\users\user1\source\repos\reacherrpg\reacherrpg\arealoader.cpp(148): warning C4018: '<': signed/unsigned mismatch
-  GameObject.cpp
-c:\users\user1\source\repos\reacherrpg\reacherrpg\shader.h(58): warning C4101: 'e': unreferenced local variable
   Generating Code...
-  LINK : C:\Users\User1\source\repos\ReacherRPG\x64\Debug\ReacherRPG.exe not found or not built by the last incremental link; performing full link
-LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
   ReacherRPG.vcxproj -> C:\Users\User1\source\repos\ReacherRPG\x64\Debug\ReacherRPG.exe
