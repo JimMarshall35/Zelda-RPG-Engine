@@ -114,7 +114,7 @@ void Background::genLayersTextures(TileSet& tileset)
 			layer.width*tileset.tilewidth, layer.height*tileset.tileheight
 		);
 		// for debugging
-		//stbi_write_png((layer.name+".png").c_str(), tileset.tilewidth*layer.width, tileset.tileheight*layer.height, NUM_CHANNELS, tex_data, tileset.tilewidth*layer.width * NUM_CHANNELS);
+		//stbi_write_png(("debug_img/"+layer.name+".png").c_str(), tileset.tilewidth*layer.width, tileset.tileheight*layer.height, NUM_CHANNELS, tex_data, tileset.tilewidth*layer.width * NUM_CHANNELS);
 
 		delete[] tex_data;
 	}

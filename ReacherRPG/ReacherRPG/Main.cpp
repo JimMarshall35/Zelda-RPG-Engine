@@ -24,7 +24,7 @@ int main(void)
 	Camera* camera = Camera::Instance();
 	Area a;
 	
-	if (!AreaLoader::Instance()->loadArea("json","lvl1_test.json", a)) {
+	if (!AreaLoader::Instance()->loadArea("json","lvl1_test4.json", a)) {
 		std::cout << "failed to load level" << std::endl;
 	}
 	

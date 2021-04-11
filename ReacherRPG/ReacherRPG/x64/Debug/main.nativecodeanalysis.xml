@@ -2,7 +2,7 @@
 <DEFECTS>
   <DEFECT>
     <SFA>
-      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
       <FILENAME>shader.h</FILENAME>
       <LINE>26</LINE>
       <COLUMN>1</COLUMN>
@@ -16,7 +16,7 @@
   </DEFECT>
   <DEFECT>
     <SFA>
-      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
       <FILENAME>shader.h</FILENAME>
       <LINE>29</LINE>
       <COLUMN>1</COLUMN>
@@ -30,7 +30,7 @@
   </DEFECT>
   <DEFECT>
     <SFA>
-      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\rapidjson\internal</FILEPATH>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\rapidjson\internal</FILEPATH>
       <FILENAME>ieee754.h</FILENAME>
       <LINE>25</LINE>
       <COLUMN>4</COLUMN>
@@ -44,7 +44,7 @@
   </DEFECT>
   <DEFECT>
     <SFA>
-      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\rapidjson\internal</FILEPATH>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\rapidjson\internal</FILEPATH>
       <FILENAME>ieee754.h</FILENAME>
       <LINE>25</LINE>
       <COLUMN>4</COLUMN>
@@ -58,7 +58,7 @@
   </DEFECT>
   <DEFECT>
     <SFA>
-      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\rapidjson\internal</FILEPATH>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\rapidjson\internal</FILEPATH>
       <FILENAME>biginteger.h</FILENAME>
       <LINE>243</LINE>
       <COLUMN>51</COLUMN>
@@ -72,7 +72,7 @@
   </DEFECT>
   <DEFECT>
     <SFA>
-      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\rapidjson\internal</FILEPATH>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\rapidjson\internal</FILEPATH>
       <FILENAME>diyfp.h</FILENAME>
       <LINE>121</LINE>
       <COLUMN>22</COLUMN>
@@ -86,7 +86,7 @@
   </DEFECT>
   <DEFECT>
     <SFA>
-      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\rapidjson\internal</FILEPATH>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\rapidjson\internal</FILEPATH>
       <FILENAME>diyfp.h</FILENAME>
       <LINE>142</LINE>
       <COLUMN>36</COLUMN>
@@ -100,7 +100,7 @@
   </DEFECT>
   <DEFECT>
     <SFA>
-      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\rapidjson\internal</FILEPATH>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\rapidjson\internal</FILEPATH>
       <FILENAME>diyfp.h</FILENAME>
       <LINE>227</LINE>
       <COLUMN>21</COLUMN>
@@ -114,7 +114,7 @@
   </DEFECT>
   <DEFECT>
     <SFA>
-      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\rapidjson\internal</FILEPATH>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\rapidjson\internal</FILEPATH>
       <FILENAME>strtod.h</FILENAME>
       <LINE>138</LINE>
       <COLUMN>76</COLUMN>
@@ -128,7 +128,7 @@
   </DEFECT>
   <DEFECT>
     <SFA>
-      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\rapidjson\internal</FILEPATH>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\rapidjson\internal</FILEPATH>
       <FILENAME>strtod.h</FILENAME>
       <LINE>176</LINE>
       <COLUMN>18</COLUMN>
@@ -142,7 +142,7 @@
   </DEFECT>
   <DEFECT>
     <SFA>
-      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\rapidjson\internal</FILEPATH>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\rapidjson\internal</FILEPATH>
       <FILENAME>strtod.h</FILENAME>
       <LINE>180</LINE>
       <COLUMN>21</COLUMN>
@@ -156,7 +156,7 @@
   </DEFECT>
   <DEFECT>
     <SFA>
-      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
       <FILENAME>camera.h</FILENAME>
       <LINE>22</LINE>
       <COLUMN>1</COLUMN>
@@ -170,7 +170,49 @@
   </DEFECT>
   <DEFECT>
     <SFA>
-      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
+      <FILENAME>gameobject.h</FILENAME>
+      <LINE>56</LINE>
+      <COLUMN>1</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'StaticSprite::sprite' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>StaticSprite::{ctor}</FUNCTION>
+    <DECORATED>??0StaticSprite@@QEAA@XZ</DECORATED>
+    <FUNCLINE>56</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
+      <FILENAME>gameobject.h</FILENAME>
+      <LINE>38</LINE>
+      <COLUMN>0</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'GameObject::collider' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>GameObject::{ctor}</FUNCTION>
+    <DECORATED>??0GameObject@@QEAA@XZ</DECORATED>
+    <FUNCLINE>38</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
+      <FILENAME>gameobject.h</FILENAME>
+      <LINE>38</LINE>
+      <COLUMN>0</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'GameObject::renderlayer' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>GameObject::{ctor}</FUNCTION>
+    <DECORATED>??0GameObject@@QEAA@XZ</DECORATED>
+    <FUNCLINE>38</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
       <FILENAME>main.cpp</FILENAME>
       <LINE>78</LINE>
       <COLUMN>9</COLUMN>
@@ -184,7 +226,7 @@
   </DEFECT>
   <DEFECT>
     <SFA>
-      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
       <FILENAME>main.cpp</FILENAME>
       <LINE>92</LINE>
       <COLUMN>9</COLUMN>
@@ -198,7 +240,7 @@
   </DEFECT>
   <DEFECT>
     <SFA>
-      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
       <FILENAME>main.cpp</FILENAME>
       <LINE>101</LINE>
       <COLUMN>9</COLUMN>

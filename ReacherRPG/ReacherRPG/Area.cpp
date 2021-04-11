@@ -1,6 +1,7 @@
 #include "Area.h"
 
-
+#include <algorithm>
+#include <execution>
 
 Area::Area()
 {
@@ -8,23 +9,30 @@ Area::Area()
 }
 
 
-
+bool compareGO(GameObject* go1, GameObject* go2) {
+	return (go1->position.y - go1->scale.y > go2->position.y - go2->scale.y);
+}
 
 void Area::draw(Shader & s, const Camera * camera)
 {
 	background.draw(s, camera);
+	// want to sort by y value in descending order - draw from top of window down
+	std::sort(gameobjects.begin(), gameobjects.end(), compareGO);
+
 	for (size_t i = 0; i < gameobjects.size(); i++)
 	{
+		//std::cout << gameobjects[i]->position.y << std::endl;
 		if (gameobjects[i]->isdrawable) {
 			gameobjects[i]->draw(s, camera);
 		}
 	}
+	//std::cout << std::endl << std::endl;
 }
 
 void Area::update(float delta, GLuint keys)
 {
 	for (size_t i = 0; i < gameobjects.size(); i++) {
-		gameobjects[0]->update(delta, keys);
+		gameobjects[i]->update(delta, keys);
 	}
 	updatePhysics();
 }

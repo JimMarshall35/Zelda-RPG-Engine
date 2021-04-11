@@ -2,7 +2,7 @@
 <DEFECTS>
   <DEFECT>
     <SFA>
-      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
       <FILENAME>shader.h</FILENAME>
       <LINE>26</LINE>
       <COLUMN>1</COLUMN>
@@ -16,7 +16,7 @@
   </DEFECT>
   <DEFECT>
     <SFA>
-      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
       <FILENAME>shader.h</FILENAME>
       <LINE>29</LINE>
       <COLUMN>1</COLUMN>
@@ -30,7 +30,7 @@
   </DEFECT>
   <DEFECT>
     <SFA>
-      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
       <FILENAME>camera.h</FILENAME>
       <LINE>22</LINE>
       <COLUMN>1</COLUMN>
@@ -44,21 +44,7 @@
   </DEFECT>
   <DEFECT>
     <SFA>
-      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
-      <FILENAME>background.cpp</FILENAME>
-      <LINE>6</LINE>
-      <COLUMN>12</COLUMN>
-    </SFA>
-    <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'Background::base_scale' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
-    <FUNCTION>Background::{ctor}</FUNCTION>
-    <DECORATED>??0Background@@QEAA@XZ</DECORATED>
-    <FUNCLINE>6</FUNCLINE>
-    <PATH></PATH>
-  </DEFECT>
-  <DEFECT>
-    <SFA>
-      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
       <FILENAME>background.cpp</FILENAME>
       <LINE>6</LINE>
       <COLUMN>12</COLUMN>
@@ -72,7 +58,7 @@
   </DEFECT>
   <DEFECT>
     <SFA>
-      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
       <FILENAME>background.cpp</FILENAME>
       <LINE>6</LINE>
       <COLUMN>12</COLUMN>
@@ -86,7 +72,21 @@
   </DEFECT>
   <DEFECT>
     <SFA>
-      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
+      <FILENAME>background.cpp</FILENAME>
+      <LINE>6</LINE>
+      <COLUMN>12</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'Background::base_scale' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>Background::{ctor}</FUNCTION>
+    <DECORATED>??0Background@@QEAA@XZ</DECORATED>
+    <FUNCLINE>6</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
       <FILENAME>background.cpp</FILENAME>
       <LINE>6</LINE>
       <COLUMN>12</COLUMN>
@@ -100,7 +100,7 @@
   </DEFECT>
   <DEFECT>
     <SFA>
-      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
       <FILENAME>background.cpp</FILENAME>
       <LINE>6</LINE>
       <COLUMN>12</COLUMN>
@@ -114,7 +114,7 @@
   </DEFECT>
   <DEFECT>
     <SFA>
-      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
       <FILENAME>background.cpp</FILENAME>
       <LINE>6</LINE>
       <COLUMN>12</COLUMN>
@@ -128,7 +128,7 @@
   </DEFECT>
   <DEFECT>
     <SFA>
-      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
       <FILENAME>background.cpp</FILENAME>
       <LINE>6</LINE>
       <COLUMN>12</COLUMN>
@@ -142,7 +142,7 @@
   </DEFECT>
   <DEFECT>
     <SFA>
-      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
       <FILENAME>background.cpp</FILENAME>
       <LINE>6</LINE>
       <COLUMN>12</COLUMN>
@@ -156,7 +156,7 @@
   </DEFECT>
   <DEFECT>
     <SFA>
-      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
       <FILENAME>background.cpp</FILENAME>
       <LINE>80</LINE>
       <COLUMN>92</COLUMN>
@@ -170,7 +170,7 @@
   </DEFECT>
   <DEFECT>
     <SFA>
-      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
       <FILENAME>background.cpp</FILENAME>
       <LINE>80</LINE>
       <COLUMN>73</COLUMN>
@@ -184,7 +184,7 @@
   </DEFECT>
   <DEFECT>
     <SFA>
-      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
       <FILENAME>background.cpp</FILENAME>
       <LINE>103</LINE>
       <COLUMN>40</COLUMN>
@@ -198,7 +198,7 @@
   </DEFECT>
   <DEFECT>
     <SFA>
-      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
       <FILENAME>background.cpp</FILENAME>
       <LINE>107</LINE>
       <COLUMN>52</COLUMN>
@@ -212,7 +212,7 @@
   </DEFECT>
   <DEFECT>
     <SFA>
-      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
       <FILENAME>background.cpp</FILENAME>
       <LINE>107</LINE>
       <COLUMN>34</COLUMN>
@@ -226,7 +226,7 @@
   </DEFECT>
   <DEFECT>
     <SFA>
-      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
       <FILENAME>background.cpp</FILENAME>
       <LINE>107</LINE>
       <COLUMN>122</COLUMN>
@@ -240,7 +240,7 @@
   </DEFECT>
   <DEFECT>
     <SFA>
-      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
       <FILENAME>background.cpp</FILENAME>
       <LINE>107</LINE>
       <COLUMN>108</COLUMN>
@@ -254,7 +254,7 @@
   </DEFECT>
   <DEFECT>
     <SFA>
-      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
       <FILENAME>background.cpp</FILENAME>
       <LINE>107</LINE>
       <COLUMN>90</COLUMN>
@@ -268,7 +268,7 @@
   </DEFECT>
   <DEFECT>
     <SFA>
-      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
       <FILENAME>background.cpp</FILENAME>
       <LINE>107</LINE>
       <COLUMN>71</COLUMN>

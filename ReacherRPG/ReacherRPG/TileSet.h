@@ -6,6 +6,7 @@
 #include "GLTextureHelper.h"
 #include <vector>
 #include "Rendering.h"
+#include <map>
 class TileSet
 {
 public:
@@ -29,7 +30,10 @@ public:
 	void                genTexture();
 	void                genSprites();
 	Sprite*             getSprite(int i) { return &sprites[i]; }
+	void                genMetaSprite(const unsigned int* tiles, const unsigned int width, const unsigned int numtiles, const std::string name);
+	Sprite*             getNamedSprite(std::string name) { return &sprites[namedSpriteMap[name]]; }
 private:
-	std::vector<Sprite> sprites;
+	std::vector<Sprite>            sprites;
+	std::map<std::string, int> namedSpriteMap;
 };
 

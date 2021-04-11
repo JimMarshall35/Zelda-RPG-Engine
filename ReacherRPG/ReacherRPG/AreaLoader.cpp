@@ -113,6 +113,32 @@ bool AreaLoader::loadTilesets(const rapidjson::Document & doc, Area & arearef, s
 			tileset.genTexture();
 			tileset.genSprites();
 		}
+		if (checkJSONValue("metasprites", JSONTYPE::ARRAY, doc)) {
+			for (SizeType j = 0; j < doc["metasprites"].Size(); j++) {
+				const Value& metasprite = doc["metasprites"][j];
+				if (!checkJSONValue("name", JSONTYPE::STRING, metasprite)) {
+					std::cerr << "object "<< j << " in metasprites of tileset "<< path  << std::endl;
+					break;
+				}
+				if (!checkJSONValue("tiles", JSONTYPE::ARRAY, metasprite)) {
+					std::cerr << "object " << j << " in metasprites of tileset " << path << std::endl;
+					break;
+				}
+				if (!checkJSONValue("width", JSONTYPE::INT, metasprite)) {
+					std::cerr << "object " << j << " in metasprites of tileset " << path << std::endl;
+					break;
+				}
+				unsigned int width = metasprite["width"].GetInt();
+				std::string name = metasprite["name"].GetString();
+				unsigned int numtiles = metasprite["tiles"].Size();
+				unsigned int* tiles = new unsigned int [numtiles];
+				for (SizeType k = 0; k < numtiles; k++) {
+					tiles[k] = metasprite["tiles"][k].GetInt();
+				}
+				tileset.genMetaSprite(tiles, width, numtiles, name);
+				delete[] tiles;
+			}
+		}
 	}
 	return true;
 }
@@ -166,7 +192,15 @@ bool AreaLoader::loadLayers(const rapidjson::Document & doc, Area & arearef)
 			for (SizeType i = 0; i < val["objects"].Size(); i++) {
 				const Value& object = val["objects"][i];
 				std::string objname = object["name"].GetString();
+				std::string objtype = object["type"].GetString();
 				if (objname == "start_point") {
+					
+					if (!checkJSONValue("x", JSONTYPE::NUMBER, object)) { continue; }
+					if (!checkJSONValue("y", JSONTYPE::NUMBER, object)) { continue; }
+					float json_x = object["x"].GetFloat();
+					float json_y = object["y"].GetFloat();
+					
+					glm::vec2 player_start_pos = tiledPosToGameEnginePos(glm::vec2(json_x,json_y),arearef);
 					/////////////////////////////// BAD HARD CODED CODE STARTS
 
 					Player* player = new Player();
@@ -205,6 +239,7 @@ bool AreaLoader::loadLayers(const rapidjson::Document & doc, Area & arearef)
 						player_tileset->tilewidth / (arearef.background.tilewidth * 40.0),
 						player_tileset->tileheight/(arearef.background.tileheight * 40.0)
 					);
+					player->position = player_start_pos;
 #define RESOLUTION 16.0f
 #define LOFFSET 7.0f
 #define ROFFSET 8.0f
@@ -218,10 +253,65 @@ bool AreaLoader::loadLayers(const rapidjson::Document & doc, Area & arearef)
 					arearef.gameobjects.push_back(player);
 					////////////////// BAD CODE ENDS! /////////////////////////////////////
 				}
+				else if (objtype == "static_metasprite_object") {
+
+					TiledProperty tileset_name_value, metasprite_name_value;
+					StaticSprite* s_sprite = new StaticSprite();
+					if (!getTiledObjectProperty(object["properties"], "tileset_name", tileset_name_value)) {}//continue; }
+					if (!getTiledObjectProperty(object["properties"], "metasprite_name", metasprite_name_value)) {}//continue; }
+					s_sprite->sprite = arearef.getTilesetByName(tileset_name_value.s)->getNamedSprite(metasprite_name_value.s);
+					glm::vec2 json_pos(object["x"].GetFloat(), object["y"].GetFloat());
+					s_sprite->position = tiledPosToGameEnginePos(json_pos, arearef);
+					s_sprite->scale *= glm::vec2(
+						object["width"].GetFloat() / (arearef.background.tilewidth * 40.0),
+						object["height"].GetFloat() / (arearef.background.tileheight * 40.0)
+					);
+
+					s_sprite->position += glm::vec2(
+						(s_sprite->scale.x * 2.0f) / 2.0f,
+						(s_sprite->scale.y * 2.0f) / 2.0f
+					);
+					arearef.gameobjects.push_back(s_sprite);
+				}
 			}
 		}
 	}
 	return true;
+}
+bool AreaLoader::getTiledObjectProperty(const rapidjson::Value & props_array, std::string name, TiledProperty & output)
+{
+	using namespace rapidjson;
+	if(!props_array.IsArray()){ 
+		std::cout << "getTiledObjectProperty has been passed a rapidjson value that is not an array" << std::endl;
+		return false;
+	}
+	for (SizeType i = 0; i < props_array.Size(); i++) {
+		const Value& val = props_array[i];
+		if (!checkJSONValue("name", JSONTYPE::STRING, val)) { return false; }
+		if (!checkJSONValue("type", JSONTYPE::STRING, val)) { return false; }
+		if (!checkJSONValue("value", JSONTYPE::ANY, val)) { return false; }
+		if (val["name"].GetString() == name) {
+			std::string type = val["type"].GetString();
+			if (type == "string") {
+				output.s = val["value"].GetString();
+				return true;
+			}
+		}
+	}
+	std::cout << "no property '" << name << "'" << std::endl;
+	return false;
+}
+glm::vec2 AreaLoader::tiledPosToGameEnginePos(glm::vec2 tiledpos, const Area & arearef)
+{
+	float json_x = tiledpos.x;
+	float json_y = tiledpos.y;
+	float tl_x = ((arearef.background.width / 40) * -2.0f) / 2;
+	float tl_y = ((arearef.background.height / 40) * 2.0f) / 2;
+
+	glm::vec2 map_tl(tl_x, tl_y);
+	float worldx = map_tl.x + (json_x / (arearef.background.tilewidth*arearef.background.width))*2.0f;
+	float worldy = map_tl.y - (json_y / (arearef.background.tileheight*arearef.background.height))*2.0f;
+	return glm::vec2(worldx, worldy);
 }
 AreaLoader::AreaLoader()
 {

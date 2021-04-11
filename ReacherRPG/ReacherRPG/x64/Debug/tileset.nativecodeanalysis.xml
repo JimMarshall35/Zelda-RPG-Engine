@@ -2,7 +2,7 @@
 <DEFECTS>
   <DEFECT>
     <SFA>
-      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
       <FILENAME>shader.h</FILENAME>
       <LINE>26</LINE>
       <COLUMN>1</COLUMN>
@@ -16,7 +16,7 @@
   </DEFECT>
   <DEFECT>
     <SFA>
-      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
       <FILENAME>shader.h</FILENAME>
       <LINE>29</LINE>
       <COLUMN>1</COLUMN>
@@ -30,7 +30,7 @@
   </DEFECT>
   <DEFECT>
     <SFA>
-      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
       <FILENAME>camera.h</FILENAME>
       <LINE>22</LINE>
       <COLUMN>1</COLUMN>
@@ -44,63 +44,7 @@
   </DEFECT>
   <DEFECT>
     <SFA>
-      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
-      <FILENAME>tileset.cpp</FILENAME>
-      <LINE>5</LINE>
-      <COLUMN>9</COLUMN>
-    </SFA>
-    <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'TileSet::tilecount' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
-    <FUNCTION>TileSet::{ctor}</FUNCTION>
-    <DECORATED>??0TileSet@@QEAA@XZ</DECORATED>
-    <FUNCLINE>5</FUNCLINE>
-    <PATH></PATH>
-  </DEFECT>
-  <DEFECT>
-    <SFA>
-      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
-      <FILENAME>tileset.cpp</FILENAME>
-      <LINE>5</LINE>
-      <COLUMN>9</COLUMN>
-    </SFA>
-    <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'TileSet::imgdata' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
-    <FUNCTION>TileSet::{ctor}</FUNCTION>
-    <DECORATED>??0TileSet@@QEAA@XZ</DECORATED>
-    <FUNCLINE>5</FUNCLINE>
-    <PATH></PATH>
-  </DEFECT>
-  <DEFECT>
-    <SFA>
-      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
-      <FILENAME>tileset.cpp</FILENAME>
-      <LINE>5</LINE>
-      <COLUMN>9</COLUMN>
-    </SFA>
-    <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'TileSet::tileheight' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
-    <FUNCTION>TileSet::{ctor}</FUNCTION>
-    <DECORATED>??0TileSet@@QEAA@XZ</DECORATED>
-    <FUNCLINE>5</FUNCLINE>
-    <PATH></PATH>
-  </DEFECT>
-  <DEFECT>
-    <SFA>
-      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
-      <FILENAME>tileset.cpp</FILENAME>
-      <LINE>5</LINE>
-      <COLUMN>9</COLUMN>
-    </SFA>
-    <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'TileSet::columns' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
-    <FUNCTION>TileSet::{ctor}</FUNCTION>
-    <DECORATED>??0TileSet@@QEAA@XZ</DECORATED>
-    <FUNCLINE>5</FUNCLINE>
-    <PATH></PATH>
-  </DEFECT>
-  <DEFECT>
-    <SFA>
-      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
       <FILENAME>tileset.cpp</FILENAME>
       <LINE>5</LINE>
       <COLUMN>9</COLUMN>
@@ -114,21 +58,7 @@
   </DEFECT>
   <DEFECT>
     <SFA>
-      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
-      <FILENAME>tileset.cpp</FILENAME>
-      <LINE>5</LINE>
-      <COLUMN>9</COLUMN>
-    </SFA>
-    <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'TileSet::imgwidth' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
-    <FUNCTION>TileSet::{ctor}</FUNCTION>
-    <DECORATED>??0TileSet@@QEAA@XZ</DECORATED>
-    <FUNCLINE>5</FUNCLINE>
-    <PATH></PATH>
-  </DEFECT>
-  <DEFECT>
-    <SFA>
-      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
       <FILENAME>tileset.cpp</FILENAME>
       <LINE>5</LINE>
       <COLUMN>9</COLUMN>
@@ -142,21 +72,7 @@
   </DEFECT>
   <DEFECT>
     <SFA>
-      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
-      <FILENAME>tileset.cpp</FILENAME>
-      <LINE>5</LINE>
-      <COLUMN>9</COLUMN>
-    </SFA>
-    <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'TileSet::margin' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
-    <FUNCTION>TileSet::{ctor}</FUNCTION>
-    <DECORATED>??0TileSet@@QEAA@XZ</DECORATED>
-    <FUNCLINE>5</FUNCLINE>
-    <PATH></PATH>
-  </DEFECT>
-  <DEFECT>
-    <SFA>
-      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
       <FILENAME>tileset.cpp</FILENAME>
       <LINE>5</LINE>
       <COLUMN>9</COLUMN>
@@ -170,7 +86,91 @@
   </DEFECT>
   <DEFECT>
     <SFA>
-      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
+      <FILENAME>tileset.cpp</FILENAME>
+      <LINE>5</LINE>
+      <COLUMN>9</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'TileSet::margin' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>TileSet::{ctor}</FUNCTION>
+    <DECORATED>??0TileSet@@QEAA@XZ</DECORATED>
+    <FUNCLINE>5</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
+      <FILENAME>tileset.cpp</FILENAME>
+      <LINE>5</LINE>
+      <COLUMN>9</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'TileSet::imgdata' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>TileSet::{ctor}</FUNCTION>
+    <DECORATED>??0TileSet@@QEAA@XZ</DECORATED>
+    <FUNCLINE>5</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
+      <FILENAME>tileset.cpp</FILENAME>
+      <LINE>5</LINE>
+      <COLUMN>9</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'TileSet::tilecount' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>TileSet::{ctor}</FUNCTION>
+    <DECORATED>??0TileSet@@QEAA@XZ</DECORATED>
+    <FUNCLINE>5</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
+      <FILENAME>tileset.cpp</FILENAME>
+      <LINE>5</LINE>
+      <COLUMN>9</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'TileSet::imgwidth' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>TileSet::{ctor}</FUNCTION>
+    <DECORATED>??0TileSet@@QEAA@XZ</DECORATED>
+    <FUNCLINE>5</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
+      <FILENAME>tileset.cpp</FILENAME>
+      <LINE>5</LINE>
+      <COLUMN>9</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'TileSet::tileheight' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>TileSet::{ctor}</FUNCTION>
+    <DECORATED>??0TileSet@@QEAA@XZ</DECORATED>
+    <FUNCLINE>5</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
+      <FILENAME>tileset.cpp</FILENAME>
+      <LINE>5</LINE>
+      <COLUMN>9</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'TileSet::columns' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>TileSet::{ctor}</FUNCTION>
+    <DECORATED>??0TileSet@@QEAA@XZ</DECORATED>
+    <FUNCLINE>5</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
       <FILENAME>tileset.cpp</FILENAME>
       <LINE>21</LINE>
       <COLUMN>49</COLUMN>
@@ -184,7 +184,7 @@
   </DEFECT>
   <DEFECT>
     <SFA>
-      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
       <FILENAME>tileset.cpp</FILENAME>
       <LINE>24</LINE>
       <COLUMN>41</COLUMN>
@@ -198,7 +198,7 @@
   </DEFECT>
   <DEFECT>
     <SFA>
-      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
       <FILENAME>tileset.cpp</FILENAME>
       <LINE>25</LINE>
       <COLUMN>27</COLUMN>
@@ -212,7 +212,7 @@
   </DEFECT>
   <DEFECT>
     <SFA>
-      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
       <FILENAME>tileset.cpp</FILENAME>
       <LINE>26</LINE>
       <COLUMN>21</COLUMN>
@@ -222,6 +222,244 @@
     <FUNCTION>TileSet::getTileBytes</FUNCTION>
     <DECORATED>?getTileBytes@TileSet@@QEAAXIPEAE@Z</DECORATED>
     <FUNCLINE>14</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
+      <FILENAME>tileset.cpp</FILENAME>
+      <LINE>79</LINE>
+      <COLUMN>69</COLUMN>
+    </SFA>
+    <DEFECTCODE>26451</DEFECTCODE>
+    <DESCRIPTION>Arithmetic overflow: Using operator '*' on a 4 byte value and then casting the result to a 8 byte value. Cast the value to the wider type before calling operator '*' to avoid overflow (io.2).</DESCRIPTION>
+    <FUNCTION>TileSet::genMetaSprite</FUNCTION>
+    <DECORATED>?genMetaSprite@TileSet@@QEAAXPEBIIIV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z</DECORATED>
+    <FUNCLINE>74</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
+      <FILENAME>tileset.cpp</FILENAME>
+      <LINE>79</LINE>
+      <COLUMN>57</COLUMN>
+    </SFA>
+    <DEFECTCODE>26451</DEFECTCODE>
+    <DESCRIPTION>Arithmetic overflow: Using operator '*' on a 4 byte value and then casting the result to a 8 byte value. Cast the value to the wider type before calling operator '*' to avoid overflow (io.2).</DESCRIPTION>
+    <FUNCTION>TileSet::genMetaSprite</FUNCTION>
+    <DECORATED>?genMetaSprite@TileSet@@QEAAXPEBIIIV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z</DECORATED>
+    <FUNCLINE>74</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
+      <FILENAME>tileset.cpp</FILENAME>
+      <LINE>80</LINE>
+      <COLUMN>75</COLUMN>
+    </SFA>
+    <DEFECTCODE>26451</DEFECTCODE>
+    <DESCRIPTION>Arithmetic overflow: Using operator '*' on a 4 byte value and then casting the result to a 8 byte value. Cast the value to the wider type before calling operator '*' to avoid overflow (io.2).</DESCRIPTION>
+    <FUNCTION>TileSet::genMetaSprite</FUNCTION>
+    <DECORATED>?genMetaSprite@TileSet@@QEAAXPEBIIIV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z</DECORATED>
+    <FUNCLINE>74</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
+      <FILENAME>tileset.cpp</FILENAME>
+      <LINE>80</LINE>
+      <COLUMN>65</COLUMN>
+    </SFA>
+    <DEFECTCODE>26451</DEFECTCODE>
+    <DESCRIPTION>Arithmetic overflow: Using operator '*' on a 4 byte value and then casting the result to a 8 byte value. Cast the value to the wider type before calling operator '*' to avoid overflow (io.2).</DESCRIPTION>
+    <FUNCTION>TileSet::genMetaSprite</FUNCTION>
+    <DECORATED>?genMetaSprite@TileSet@@QEAAXPEBIIIV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z</DECORATED>
+    <FUNCLINE>74</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
+      <FILENAME>tileset.cpp</FILENAME>
+      <LINE>81</LINE>
+      <COLUMN>45</COLUMN>
+    </SFA>
+    <DEFECTCODE>26451</DEFECTCODE>
+    <DESCRIPTION>Arithmetic overflow: Using operator '*' on a 4 byte value and then casting the result to a 8 byte value. Cast the value to the wider type before calling operator '*' to avoid overflow (io.2).</DESCRIPTION>
+    <FUNCTION>TileSet::genMetaSprite</FUNCTION>
+    <DECORATED>?genMetaSprite@TileSet@@QEAAXPEBIIIV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z</DECORATED>
+    <FUNCLINE>74</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
+      <FILENAME>tileset.cpp</FILENAME>
+      <LINE>81</LINE>
+      <COLUMN>33</COLUMN>
+    </SFA>
+    <DEFECTCODE>26451</DEFECTCODE>
+    <DESCRIPTION>Arithmetic overflow: Using operator '*' on a 4 byte value and then casting the result to a 8 byte value. Cast the value to the wider type before calling operator '*' to avoid overflow (io.2).</DESCRIPTION>
+    <FUNCTION>TileSet::genMetaSprite</FUNCTION>
+    <DECORATED>?genMetaSprite@TileSet@@QEAAXPEBIIIV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z</DECORATED>
+    <FUNCLINE>74</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
+      <FILENAME>tileset.cpp</FILENAME>
+      <LINE>87</LINE>
+      <COLUMN>54</COLUMN>
+    </SFA>
+    <DEFECTCODE>26451</DEFECTCODE>
+    <DESCRIPTION>Arithmetic overflow: Using operator '*' on a 4 byte value and then casting the result to a 8 byte value. Cast the value to the wider type before calling operator '*' to avoid overflow (io.2).</DESCRIPTION>
+    <FUNCTION>TileSet::genMetaSprite</FUNCTION>
+    <DECORATED>?genMetaSprite@TileSet@@QEAAXPEBIIIV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z</DECORATED>
+    <FUNCLINE>74</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
+      <FILENAME>tileset.cpp</FILENAME>
+      <LINE>87</LINE>
+      <COLUMN>43</COLUMN>
+    </SFA>
+    <DEFECTCODE>26451</DEFECTCODE>
+    <DESCRIPTION>Arithmetic overflow: Using operator '*' on a 4 byte value and then casting the result to a 8 byte value. Cast the value to the wider type before calling operator '*' to avoid overflow (io.2).</DESCRIPTION>
+    <FUNCTION>TileSet::genMetaSprite</FUNCTION>
+    <DECORATED>?genMetaSprite@TileSet@@QEAAXPEBIIIV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z</DECORATED>
+    <FUNCLINE>74</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
+      <FILENAME>tileset.cpp</FILENAME>
+      <LINE>87</LINE>
+      <COLUMN>33</COLUMN>
+    </SFA>
+    <DEFECTCODE>26451</DEFECTCODE>
+    <DESCRIPTION>Arithmetic overflow: Using operator '*' on a 4 byte value and then casting the result to a 8 byte value. Cast the value to the wider type before calling operator '*' to avoid overflow (io.2).</DESCRIPTION>
+    <FUNCTION>TileSet::genMetaSprite</FUNCTION>
+    <DECORATED>?genMetaSprite@TileSet@@QEAAXPEBIIIV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z</DECORATED>
+    <FUNCLINE>74</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
+      <FILENAME>tileset.cpp</FILENAME>
+      <LINE>87</LINE>
+      <COLUMN>27</COLUMN>
+    </SFA>
+    <DEFECTCODE>26451</DEFECTCODE>
+    <DESCRIPTION>Arithmetic overflow: Using operator '*' on a 4 byte value and then casting the result to a 8 byte value. Cast the value to the wider type before calling operator '*' to avoid overflow (io.2).</DESCRIPTION>
+    <FUNCTION>TileSet::genMetaSprite</FUNCTION>
+    <DECORATED>?genMetaSprite@TileSet@@QEAAXPEBIIIV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z</DECORATED>
+    <FUNCLINE>74</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
+      <FILENAME>tileset.cpp</FILENAME>
+      <LINE>87</LINE>
+      <COLUMN>83</COLUMN>
+    </SFA>
+    <DEFECTCODE>26451</DEFECTCODE>
+    <DESCRIPTION>Arithmetic overflow: Using operator '*' on a 4 byte value and then casting the result to a 8 byte value. Cast the value to the wider type before calling operator '*' to avoid overflow (io.2).</DESCRIPTION>
+    <FUNCTION>TileSet::genMetaSprite</FUNCTION>
+    <DECORATED>?genMetaSprite@TileSet@@QEAAXPEBIIIV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z</DECORATED>
+    <FUNCLINE>74</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
+      <FILENAME>tileset.cpp</FILENAME>
+      <LINE>87</LINE>
+      <COLUMN>73</COLUMN>
+    </SFA>
+    <DEFECTCODE>26451</DEFECTCODE>
+    <DESCRIPTION>Arithmetic overflow: Using operator '*' on a 4 byte value and then casting the result to a 8 byte value. Cast the value to the wider type before calling operator '*' to avoid overflow (io.2).</DESCRIPTION>
+    <FUNCTION>TileSet::genMetaSprite</FUNCTION>
+    <DECORATED>?genMetaSprite@TileSet@@QEAAXPEBIIIV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z</DECORATED>
+    <FUNCLINE>74</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
+      <FILENAME>tileset.cpp</FILENAME>
+      <LINE>95</LINE>
+      <COLUMN>43</COLUMN>
+    </SFA>
+    <DEFECTCODE>26451</DEFECTCODE>
+    <DESCRIPTION>Arithmetic overflow: Using operator '*' on a 4 byte value and then casting the result to a 8 byte value. Cast the value to the wider type before calling operator '*' to avoid overflow (io.2).</DESCRIPTION>
+    <FUNCTION>TileSet::genMetaSprite</FUNCTION>
+    <DECORATED>?genMetaSprite@TileSet@@QEAAXPEBIIIV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z</DECORATED>
+    <FUNCLINE>74</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
+      <FILENAME>tileset.cpp</FILENAME>
+      <LINE>95</LINE>
+      <COLUMN>33</COLUMN>
+    </SFA>
+    <DEFECTCODE>26451</DEFECTCODE>
+    <DESCRIPTION>Arithmetic overflow: Using operator '*' on a 4 byte value and then casting the result to a 8 byte value. Cast the value to the wider type before calling operator '*' to avoid overflow (io.2).</DESCRIPTION>
+    <FUNCTION>TileSet::genMetaSprite</FUNCTION>
+    <DECORATED>?genMetaSprite@TileSet@@QEAAXPEBIIIV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z</DECORATED>
+    <FUNCLINE>74</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
+      <FILENAME>tileset.cpp</FILENAME>
+      <LINE>96</LINE>
+      <COLUMN>37</COLUMN>
+    </SFA>
+    <DEFECTCODE>26451</DEFECTCODE>
+    <DESCRIPTION>Arithmetic overflow: Using operator '*' on a 4 byte value and then casting the result to a 8 byte value. Cast the value to the wider type before calling operator '*' to avoid overflow (io.2).</DESCRIPTION>
+    <FUNCTION>TileSet::genMetaSprite</FUNCTION>
+    <DECORATED>?genMetaSprite@TileSet@@QEAAXPEBIIIV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z</DECORATED>
+    <FUNCLINE>74</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
+      <FILENAME>tileset.cpp</FILENAME>
+      <LINE>96</LINE>
+      <COLUMN>25</COLUMN>
+    </SFA>
+    <DEFECTCODE>26451</DEFECTCODE>
+    <DESCRIPTION>Arithmetic overflow: Using operator '*' on a 4 byte value and then casting the result to a 8 byte value. Cast the value to the wider type before calling operator '*' to avoid overflow (io.2).</DESCRIPTION>
+    <FUNCTION>TileSet::genMetaSprite</FUNCTION>
+    <DECORATED>?genMetaSprite@TileSet@@QEAAXPEBIIIV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z</DECORATED>
+    <FUNCLINE>74</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
+      <FILENAME>tileset.cpp</FILENAME>
+      <LINE>97</LINE>
+      <COLUMN>31</COLUMN>
+    </SFA>
+    <DEFECTCODE>26451</DEFECTCODE>
+    <DESCRIPTION>Arithmetic overflow: Using operator '*' on a 4 byte value and then casting the result to a 8 byte value. Cast the value to the wider type before calling operator '*' to avoid overflow (io.2).</DESCRIPTION>
+    <FUNCTION>TileSet::genMetaSprite</FUNCTION>
+    <DECORATED>?genMetaSprite@TileSet@@QEAAXPEBIIIV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z</DECORATED>
+    <FUNCLINE>74</FUNCLINE>
     <PATH></PATH>
   </DEFECT>
 </DEFECTS>

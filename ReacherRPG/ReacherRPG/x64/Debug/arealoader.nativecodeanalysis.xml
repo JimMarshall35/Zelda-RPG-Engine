@@ -2,7 +2,7 @@
 <DEFECTS>
   <DEFECT>
     <SFA>
-      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\rapidjson\internal</FILEPATH>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\rapidjson\internal</FILEPATH>
       <FILENAME>ieee754.h</FILENAME>
       <LINE>25</LINE>
       <COLUMN>4</COLUMN>
@@ -16,7 +16,7 @@
   </DEFECT>
   <DEFECT>
     <SFA>
-      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\rapidjson\internal</FILEPATH>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\rapidjson\internal</FILEPATH>
       <FILENAME>ieee754.h</FILENAME>
       <LINE>25</LINE>
       <COLUMN>4</COLUMN>
@@ -30,7 +30,7 @@
   </DEFECT>
   <DEFECT>
     <SFA>
-      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\rapidjson\internal</FILEPATH>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\rapidjson\internal</FILEPATH>
       <FILENAME>biginteger.h</FILENAME>
       <LINE>243</LINE>
       <COLUMN>51</COLUMN>
@@ -44,7 +44,7 @@
   </DEFECT>
   <DEFECT>
     <SFA>
-      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\rapidjson\internal</FILEPATH>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\rapidjson\internal</FILEPATH>
       <FILENAME>diyfp.h</FILENAME>
       <LINE>121</LINE>
       <COLUMN>22</COLUMN>
@@ -58,7 +58,7 @@
   </DEFECT>
   <DEFECT>
     <SFA>
-      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\rapidjson\internal</FILEPATH>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\rapidjson\internal</FILEPATH>
       <FILENAME>diyfp.h</FILENAME>
       <LINE>142</LINE>
       <COLUMN>36</COLUMN>
@@ -72,7 +72,7 @@
   </DEFECT>
   <DEFECT>
     <SFA>
-      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\rapidjson\internal</FILEPATH>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\rapidjson\internal</FILEPATH>
       <FILENAME>diyfp.h</FILENAME>
       <LINE>227</LINE>
       <COLUMN>21</COLUMN>
@@ -86,7 +86,7 @@
   </DEFECT>
   <DEFECT>
     <SFA>
-      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\rapidjson\internal</FILEPATH>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\rapidjson\internal</FILEPATH>
       <FILENAME>strtod.h</FILENAME>
       <LINE>138</LINE>
       <COLUMN>76</COLUMN>
@@ -100,7 +100,7 @@
   </DEFECT>
   <DEFECT>
     <SFA>
-      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\rapidjson\internal</FILEPATH>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\rapidjson\internal</FILEPATH>
       <FILENAME>strtod.h</FILENAME>
       <LINE>176</LINE>
       <COLUMN>18</COLUMN>
@@ -114,7 +114,7 @@
   </DEFECT>
   <DEFECT>
     <SFA>
-      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\rapidjson\internal</FILEPATH>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\rapidjson\internal</FILEPATH>
       <FILENAME>strtod.h</FILENAME>
       <LINE>180</LINE>
       <COLUMN>21</COLUMN>
@@ -128,7 +128,7 @@
   </DEFECT>
   <DEFECT>
     <SFA>
-      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
       <FILENAME>shader.h</FILENAME>
       <LINE>26</LINE>
       <COLUMN>1</COLUMN>
@@ -142,7 +142,7 @@
   </DEFECT>
   <DEFECT>
     <SFA>
-      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
       <FILENAME>shader.h</FILENAME>
       <LINE>29</LINE>
       <COLUMN>1</COLUMN>
@@ -156,7 +156,7 @@
   </DEFECT>
   <DEFECT>
     <SFA>
-      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
       <FILENAME>camera.h</FILENAME>
       <LINE>22</LINE>
       <COLUMN>1</COLUMN>
@@ -170,16 +170,58 @@
   </DEFECT>
   <DEFECT>
     <SFA>
-      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
+      <FILENAME>gameobject.h</FILENAME>
+      <LINE>56</LINE>
+      <COLUMN>1</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'StaticSprite::sprite' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>StaticSprite::{ctor}</FUNCTION>
+    <DECORATED>??0StaticSprite@@QEAA@XZ</DECORATED>
+    <FUNCLINE>56</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
+      <FILENAME>gameobject.h</FILENAME>
+      <LINE>38</LINE>
+      <COLUMN>0</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'GameObject::collider' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>GameObject::{ctor}</FUNCTION>
+    <DECORATED>??0GameObject@@QEAA@XZ</DECORATED>
+    <FUNCLINE>38</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
+      <FILENAME>gameobject.h</FILENAME>
+      <LINE>38</LINE>
+      <COLUMN>0</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'GameObject::renderlayer' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>GameObject::{ctor}</FUNCTION>
+    <DECORATED>??0GameObject@@QEAA@XZ</DECORATED>
+    <FUNCLINE>38</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
       <FILENAME>arealoader.cpp</FILENAME>
-      <LINE>160</LINE>
+      <LINE>186</LINE>
       <COLUMN>19</COLUMN>
     </SFA>
     <DEFECTCODE>6386</DEFECTCODE>
     <DESCRIPTION>Buffer overrun while writing to 'layer.tiles':  the writable size is 'layer.width*layer.height*4' bytes, but '8' bytes might be written.</DESCRIPTION>
     <FUNCTION>AreaLoader::loadLayers</FUNCTION>
     <DECORATED>?loadLayers@AreaLoader@@AEAA_NAEBV?$GenericDocument@U?$UTF8@D@rapidjson@@V?$MemoryPoolAllocator@VCrtAllocator@rapidjson@@@2@VCrtAllocator@2@@rapidjson@@AEAVArea@@@Z</DECORATED>
-    <FUNCLINE>131</FUNCLINE>
+    <FUNCLINE>157</FUNCLINE>
     <PROBABILITY>1</PROBABILITY>
     <RANK>4</RANK>
     <CATEGORY>
@@ -187,9 +229,9 @@
     </CATEGORY>
     <PATH>
       <SFA>
-        <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+        <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
         <FILENAME>arealoader.cpp</FILENAME>
-        <LINE>134</LINE>
+        <LINE>160</LINE>
         <COLUMN>5</COLUMN>
         <KEYEVENT>
           <ID>1</ID>
@@ -199,27 +241,27 @@
         </KEYEVENT>
       </SFA>
       <SFA>
-        <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+        <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
         <FILENAME>arealoader.cpp</FILENAME>
-        <LINE>135</LINE>
+        <LINE>161</LINE>
         <COLUMN>5</COLUMN>
       </SFA>
       <SFA>
-        <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+        <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
         <FILENAME>arealoader.cpp</FILENAME>
-        <LINE>136</LINE>
+        <LINE>162</LINE>
         <COLUMN>30</COLUMN>
       </SFA>
       <SFA>
-        <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+        <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
         <FILENAME>arealoader.cpp</FILENAME>
-        <LINE>137</LINE>
+        <LINE>163</LINE>
         <COLUMN>15</COLUMN>
       </SFA>
       <SFA>
-        <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+        <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
         <FILENAME>arealoader.cpp</FILENAME>
-        <LINE>137</LINE>
+        <LINE>163</LINE>
         <COLUMN>24</COLUMN>
         <KEYEVENT>
           <ID>2</ID>
@@ -229,15 +271,15 @@
         </KEYEVENT>
       </SFA>
       <SFA>
-        <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+        <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
         <FILENAME>arealoader.cpp</FILENAME>
-        <LINE>138</LINE>
+        <LINE>164</LINE>
         <COLUMN>13</COLUMN>
       </SFA>
       <SFA>
-        <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+        <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
         <FILENAME>arealoader.cpp</FILENAME>
-        <LINE>139</LINE>
+        <LINE>165</LINE>
         <COLUMN>6</COLUMN>
         <KEYEVENT>
           <ID>3</ID>
@@ -247,15 +289,15 @@
         </KEYEVENT>
       </SFA>
       <SFA>
-        <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+        <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
         <FILENAME>arealoader.cpp</FILENAME>
-        <LINE>140</LINE>
+        <LINE>166</LINE>
         <COLUMN>14</COLUMN>
       </SFA>
       <SFA>
-        <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+        <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
         <FILENAME>arealoader.cpp</FILENAME>
-        <LINE>141</LINE>
+        <LINE>167</LINE>
         <COLUMN>11</COLUMN>
         <KEYEVENT>
           <ID>4</ID>
@@ -265,27 +307,27 @@
         </KEYEVENT>
       </SFA>
       <SFA>
-        <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+        <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
         <FILENAME>arealoader.cpp</FILENAME>
-        <LINE>140</LINE>
+        <LINE>166</LINE>
         <COLUMN>42</COLUMN>
       </SFA>
       <SFA>
-        <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+        <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
         <FILENAME>arealoader.cpp</FILENAME>
-        <LINE>144</LINE>
+        <LINE>170</LINE>
         <COLUMN>1</COLUMN>
       </SFA>
       <SFA>
-        <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+        <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
         <FILENAME>arealoader.cpp</FILENAME>
-        <LINE>137</LINE>
+        <LINE>163</LINE>
         <COLUMN>41</COLUMN>
       </SFA>
       <SFA>
-        <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+        <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
         <FILENAME>arealoader.cpp</FILENAME>
-        <LINE>137</LINE>
+        <LINE>163</LINE>
         <COLUMN>24</COLUMN>
         <KEYEVENT>
           <ID>5</ID>
@@ -295,27 +337,27 @@
         </KEYEVENT>
       </SFA>
       <SFA>
-        <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+        <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
         <FILENAME>arealoader.cpp</FILENAME>
-        <LINE>145</LINE>
+        <LINE>171</LINE>
         <COLUMN>27</COLUMN>
       </SFA>
       <SFA>
-        <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+        <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
         <FILENAME>arealoader.cpp</FILENAME>
-        <LINE>146</LINE>
+        <LINE>172</LINE>
         <COLUMN>5</COLUMN>
       </SFA>
       <SFA>
-        <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+        <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
         <FILENAME>arealoader.cpp</FILENAME>
-        <LINE>148</LINE>
+        <LINE>174</LINE>
         <COLUMN>15</COLUMN>
       </SFA>
       <SFA>
-        <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+        <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
         <FILENAME>arealoader.cpp</FILENAME>
-        <LINE>148</LINE>
+        <LINE>174</LINE>
         <COLUMN>24</COLUMN>
         <KEYEVENT>
           <ID>6</ID>
@@ -325,27 +367,27 @@
         </KEYEVENT>
       </SFA>
       <SFA>
-        <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+        <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
         <FILENAME>arealoader.cpp</FILENAME>
-        <LINE>149</LINE>
+        <LINE>175</LINE>
         <COLUMN>13</COLUMN>
       </SFA>
       <SFA>
-        <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+        <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
         <FILENAME>arealoader.cpp</FILENAME>
-        <LINE>150</LINE>
+        <LINE>176</LINE>
         <COLUMN>14</COLUMN>
       </SFA>
       <SFA>
-        <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+        <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
         <FILENAME>arealoader.cpp</FILENAME>
-        <LINE>151</LINE>
+        <LINE>177</LINE>
         <COLUMN>14</COLUMN>
       </SFA>
       <SFA>
-        <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+        <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
         <FILENAME>arealoader.cpp</FILENAME>
-        <LINE>152</LINE>
+        <LINE>178</LINE>
         <COLUMN>11</COLUMN>
         <KEYEVENT>
           <ID>7</ID>
@@ -355,45 +397,45 @@
         </KEYEVENT>
       </SFA>
       <SFA>
-        <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+        <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
         <FILENAME>arealoader.cpp</FILENAME>
-        <LINE>154</LINE>
+        <LINE>180</LINE>
         <COLUMN>11</COLUMN>
       </SFA>
       <SFA>
-        <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+        <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
         <FILENAME>arealoader.cpp</FILENAME>
-        <LINE>155</LINE>
+        <LINE>181</LINE>
         <COLUMN>15</COLUMN>
       </SFA>
       <SFA>
-        <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+        <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
         <FILENAME>arealoader.cpp</FILENAME>
-        <LINE>156</LINE>
+        <LINE>182</LINE>
         <COLUMN>16</COLUMN>
       </SFA>
       <SFA>
-        <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+        <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
         <FILENAME>arealoader.cpp</FILENAME>
-        <LINE>157</LINE>
+        <LINE>183</LINE>
         <COLUMN>15</COLUMN>
       </SFA>
       <SFA>
-        <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+        <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
         <FILENAME>arealoader.cpp</FILENAME>
-        <LINE>158</LINE>
+        <LINE>184</LINE>
         <COLUMN>14</COLUMN>
       </SFA>
       <SFA>
-        <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+        <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
         <FILENAME>arealoader.cpp</FILENAME>
-        <LINE>159</LINE>
+        <LINE>185</LINE>
         <COLUMN>17</COLUMN>
       </SFA>
       <SFA>
-        <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+        <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
         <FILENAME>arealoader.cpp</FILENAME>
-        <LINE>159</LINE>
+        <LINE>185</LINE>
         <COLUMN>26</COLUMN>
         <KEYEVENT>
           <ID>8</ID>
@@ -403,15 +445,15 @@
         </KEYEVENT>
       </SFA>
       <SFA>
-        <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+        <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
         <FILENAME>arealoader.cpp</FILENAME>
-        <LINE>160</LINE>
+        <LINE>186</LINE>
         <COLUMN>19</COLUMN>
       </SFA>
       <SFA>
-        <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+        <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
         <FILENAME>arealoader.cpp</FILENAME>
-        <LINE>159</LINE>
+        <LINE>185</LINE>
         <COLUMN>49</COLUMN>
         <KEYEVENT>
           <ID>9</ID>
@@ -421,9 +463,9 @@
         </KEYEVENT>
       </SFA>
       <SFA>
-        <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+        <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
         <FILENAME>arealoader.cpp</FILENAME>
-        <LINE>159</LINE>
+        <LINE>185</LINE>
         <COLUMN>26</COLUMN>
         <KEYEVENT>
           <ID>10</ID>
@@ -433,9 +475,9 @@
         </KEYEVENT>
       </SFA>
       <SFA>
-        <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+        <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
         <FILENAME>arealoader.cpp</FILENAME>
-        <LINE>160</LINE>
+        <LINE>186</LINE>
         <COLUMN>19</COLUMN>
         <KEYEVENT>
           <ID>11</ID>
@@ -448,21 +490,21 @@
   </DEFECT>
   <DEFECT>
     <SFA>
-      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
       <FILENAME>arealoader.cpp</FILENAME>
-      <LINE>157</LINE>
+      <LINE>183</LINE>
       <COLUMN>46</COLUMN>
     </SFA>
     <DEFECTCODE>26451</DEFECTCODE>
     <DESCRIPTION>Arithmetic overflow: Using operator '*' on a 4 byte value and then casting the result to a 8 byte value. Cast the value to the wider type before calling operator '*' to avoid overflow (io.2).</DESCRIPTION>
     <FUNCTION>AreaLoader::loadLayers</FUNCTION>
     <DECORATED>?loadLayers@AreaLoader@@AEAA_NAEBV?$GenericDocument@U?$UTF8@D@rapidjson@@V?$MemoryPoolAllocator@VCrtAllocator@rapidjson@@@2@VCrtAllocator@2@@rapidjson@@AEAVArea@@@Z</DECORATED>
-    <FUNCLINE>131</FUNCLINE>
+    <FUNCLINE>157</FUNCLINE>
     <PATH></PATH>
   </DEFECT>
   <DEFECT>
     <SFA>
-      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
       <FILENAME>background.h</FILENAME>
       <LINE>23</LINE>
       <COLUMN>0</COLUMN>
@@ -476,7 +518,7 @@
   </DEFECT>
   <DEFECT>
     <SFA>
-      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
       <FILENAME>background.h</FILENAME>
       <LINE>23</LINE>
       <COLUMN>0</COLUMN>
@@ -490,7 +532,7 @@
   </DEFECT>
   <DEFECT>
     <SFA>
-      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
       <FILENAME>background.h</FILENAME>
       <LINE>23</LINE>
       <COLUMN>0</COLUMN>
@@ -500,6 +542,48 @@
     <FUNCTION>BG_Layer::{ctor}</FUNCTION>
     <DECORATED>??0BG_Layer@@QEAA@XZ</DECORATED>
     <FUNCLINE>23</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
+      <FILENAME>arealoader.h</FILENAME>
+      <LINE>12</LINE>
+      <COLUMN>0</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'TiledProperty::i' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>TiledProperty::{ctor}</FUNCTION>
+    <DECORATED>??0TiledProperty@@QEAA@XZ</DECORATED>
+    <FUNCLINE>12</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
+      <FILENAME>arealoader.h</FILENAME>
+      <LINE>12</LINE>
+      <COLUMN>0</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'TiledProperty::f' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>TiledProperty::{ctor}</FUNCTION>
+    <DECORATED>??0TiledProperty@@QEAA@XZ</DECORATED>
+    <FUNCLINE>12</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
+      <FILENAME>arealoader.h</FILENAME>
+      <LINE>12</LINE>
+      <COLUMN>0</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'TiledProperty::ui' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>TiledProperty::{ctor}</FUNCTION>
+    <DECORATED>??0TiledProperty@@QEAA@XZ</DECORATED>
+    <FUNCLINE>12</FUNCLINE>
     <PATH></PATH>
   </DEFECT>
 </DEFECTS>

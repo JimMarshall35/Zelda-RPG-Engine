@@ -1,6 +1,6 @@
 #include "GameObject.h"
 
-#define TEST_SPEED      0.5
+#define TEST_SPEED      0.3
 #define TEST_ZOOM_SPEED 1
 #define UP_BIT       0
 #define DOWN_BIT     1
@@ -80,3 +80,4 @@ void Player::draw(Shader & s, const Camera * camera)
 {
 	animator.draw(position, scale, s, camera);
 }
+

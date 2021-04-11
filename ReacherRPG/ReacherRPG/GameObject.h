@@ -8,6 +8,7 @@ enum class GO_TYPE {
 	DOOR,
 	PICKUP,
 	ENEMY,
+	SCENERY,
 	NONE
 };
 struct TilemapCollider {
@@ -33,7 +34,6 @@ public:
 	virtual void update(float delta, GLuint keys) = 0;
 	virtual void draw(Shader& s, const Camera* camera) {};
 	virtual void freeData() {};
-
 };
 
 class Player : public GameObject {
@@ -50,3 +50,16 @@ private:
 	
 };
 
+class StaticSprite : public GameObject{
+public:
+	StaticSprite() {
+		type = GO_TYPE::SCENERY;
+		isdrawable = true;
+	}
+	virtual void onInteract(GameObject* other) {};
+	virtual void update(float delta, GLuint keys) {};
+	virtual void draw(Shader& s, const Camera* camera) { 
+		sprite->draw(position, glm::vec3(scale,1.0f), s, camera);  
+	}
+	Sprite* sprite;
+};

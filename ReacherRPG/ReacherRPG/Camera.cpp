@@ -49,7 +49,7 @@ void Camera::testUpdate(const GLuint keys, const float delta, glm::vec2 bounds)
 	setPositionClamped(newpos);
 	if (print) {
 		
-		//std::cout << "camera x = " << position.x << std::endl << "camera y = " << position.y <<" zoom= " << zoom << std::endl << std::endl;
+		std::cout << "camera x = " << position.x << std::endl << "camera y = " << position.y <<" zoom= " << zoom << std::endl << std::endl;
 
 	}
 

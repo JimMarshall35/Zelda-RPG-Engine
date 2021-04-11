@@ -2,7 +2,7 @@
 <DEFECTS>
   <DEFECT>
     <SFA>
-      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
       <FILENAME>shader.h</FILENAME>
       <LINE>26</LINE>
       <COLUMN>1</COLUMN>
@@ -16,7 +16,7 @@
   </DEFECT>
   <DEFECT>
     <SFA>
-      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
       <FILENAME>shader.h</FILENAME>
       <LINE>29</LINE>
       <COLUMN>1</COLUMN>
@@ -30,7 +30,7 @@
   </DEFECT>
   <DEFECT>
     <SFA>
-      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
       <FILENAME>camera.h</FILENAME>
       <LINE>22</LINE>
       <COLUMN>1</COLUMN>
@@ -44,7 +44,7 @@
   </DEFECT>
   <DEFECT>
     <SFA>
-      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
       <FILENAME>rendering.cpp</FILENAME>
       <LINE>32</LINE>
       <COLUMN>8</COLUMN>
@@ -58,7 +58,7 @@
   </DEFECT>
   <DEFECT>
     <SFA>
-      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
       <FILENAME>rendering.cpp</FILENAME>
       <LINE>32</LINE>
       <COLUMN>8</COLUMN>

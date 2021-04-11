@@ -278,5 +278,52 @@
                  "tileid":1018,
                  "wangid":[1, 1, 1, 1, 1, 1, 1, 1]
                 }]
-        }]
+        }],
+	"metasprites" : [
+		{
+			"name" : "lamp_right_modern",
+			"width" : 1,
+			"tiles":[
+				594,
+				631,
+				668
+			]
+		},
+		{
+			"name" : "lamp_left_modern",
+			"width" : 1,
+			"tiles" :[
+				593,
+				630,
+				667
+			]
+		},
+		{
+			"name" : "lamp_right_wood",
+			"width" : 1,
+			"tiles": [
+				600,
+				637,
+				674
+			]
+		},
+		{
+			"name" : "lamp_left_wood",
+			"width" : 1,
+			"tiles":[
+				599,
+				636,
+				673
+			]
+		},
+		{
+			"name" : "car_left_green",
+			"width" : 3,
+			"tiles":[
+				623,624,625,
+				660,661,662
+			]
+
+		}
+	]
 }

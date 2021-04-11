@@ -2,7 +2,7 @@
 <DEFECTS>
   <DEFECT>
     <SFA>
-      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
       <FILENAME>shader.h</FILENAME>
       <LINE>26</LINE>
       <COLUMN>1</COLUMN>
@@ -16,7 +16,7 @@
   </DEFECT>
   <DEFECT>
     <SFA>
-      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
       <FILENAME>shader.h</FILENAME>
       <LINE>29</LINE>
       <COLUMN>1</COLUMN>
@@ -30,7 +30,7 @@
   </DEFECT>
   <DEFECT>
     <SFA>
-      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg</FILEPATH>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
       <FILENAME>camera.h</FILENAME>
       <LINE>22</LINE>
       <COLUMN>1</COLUMN>
@@ -40,6 +40,48 @@
     <FUNCTION>Camera::{ctor}</FUNCTION>
     <DECORATED>??0Camera@@AEAA@XZ</DECORATED>
     <FUNCLINE>22</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
+      <FILENAME>gameobject.h</FILENAME>
+      <LINE>56</LINE>
+      <COLUMN>1</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'StaticSprite::sprite' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>StaticSprite::{ctor}</FUNCTION>
+    <DECORATED>??0StaticSprite@@QEAA@XZ</DECORATED>
+    <FUNCLINE>56</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
+      <FILENAME>gameobject.h</FILENAME>
+      <LINE>38</LINE>
+      <COLUMN>0</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'GameObject::renderlayer' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>GameObject::{ctor}</FUNCTION>
+    <DECORATED>??0GameObject@@QEAA@XZ</DECORATED>
+    <FUNCLINE>38</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg</FILEPATH>
+      <FILENAME>gameobject.h</FILENAME>
+      <LINE>38</LINE>
+      <COLUMN>0</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'GameObject::collider' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>GameObject::{ctor}</FUNCTION>
+    <DECORATED>??0GameObject@@QEAA@XZ</DECORATED>
+    <FUNCLINE>38</FUNCLINE>
     <PATH></PATH>
   </DEFECT>
 </DEFECTS>

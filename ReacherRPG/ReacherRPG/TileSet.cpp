@@ -1,6 +1,6 @@
 #include "TileSet.h"
 #define NUM_CHANNELS 4
-
+#include "stb_image_write.h"
 
 TileSet::TileSet()
 {
@@ -35,6 +35,7 @@ void TileSet::tileDirectMemCpy(unsigned int tilenum, TileSet& tileset, unsigned 
 void TileSet::freeData()
 {
 	stbi_image_free(imgdata);
+	namedSpriteMap.clear();
 	if (texID > 0) {
 		glDeleteTextures(1, &texID);
 		texID = 0;
@@ -68,4 +69,43 @@ void TileSet::genSprites()
 		sprites.push_back(sprite);
 
 	}
+}
+
+void TileSet::genMetaSprite(const unsigned int * tiles, const unsigned int width, const unsigned int numtiles, const std::string name)
+{
+	unsigned int pixelsheight = (numtiles / width) * tileheight;
+	unsigned int pixelswidth = width * tilewidth;
+	std::cout << name << std::endl;
+	unsigned char* tex_data = new unsigned char[pixelsheight*pixelswidth*NUM_CHANNELS];
+	unsigned char* single_tile_buffer = new unsigned char[tileheight*tilewidth*NUM_CHANNELS];
+	memset(tex_data, 0, pixelsheight*pixelswidth*NUM_CHANNELS);
+	unsigned char* write_ptr = tex_data;
+	for (int i = 0; i < numtiles; i++) {
+		int x = (i % width);
+		const int y = (i / width);
+		const int tile = tiles[i];
+		write_ptr = tex_data + (y*width*tilewidth*tileheight*NUM_CHANNELS) + (x*tilewidth*NUM_CHANNELS);
+		//std::cout << "x: " << x << " y: " << y << std::endl;
+		getTileBytes(tile + 1, single_tile_buffer);
+		stbi_write_png(("debug_img/" + std::to_string(tile) + ".png").c_str(), tilewidth, tileheight, NUM_CHANNELS, single_tile_buffer, tilewidth * NUM_CHANNELS);
+		if (tile > 0) {
+			for (int j = 0; j < tileheight; j++) {
+				unsigned char* src;
+				unsigned char* dest;
+				src = single_tile_buffer + (j*tilewidth*NUM_CHANNELS);
+				dest = write_ptr + (j*pixelswidth*NUM_CHANNELS);
+				memcpy(dest, src, tilewidth*NUM_CHANNELS);
+			}
+		}
+		
+		
+	}
+	stbi_write_png(("debug_img/"+name+".png").c_str(), pixelswidth, pixelsheight, NUM_CHANNELS, tex_data, pixelswidth * NUM_CHANNELS);
+	Sprite sprite;
+	sprite.setup(tex_data, pixelswidth, pixelsheight, 0, 0, pixelswidth, pixelsheight);
+	sprites.push_back(sprite);
+	int index = sprites.size() - 1;
+	namedSpriteMap.insert(std::pair<std::string, int>(name, index));
+	delete[] tex_data;
+	delete[] single_tile_buffer;
 }
