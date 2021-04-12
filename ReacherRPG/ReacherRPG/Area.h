@@ -19,5 +19,7 @@ private:
 	void                     freeData();
 	std::vector<GameObject*> gameobjects;
 	void                     updatePhysics();
+	bool                     AABBCollision(GameObject* go1, GameObject* go2);
+	bool                     AABBCollision(GameObject * go1, GameObject * go2, glm::vec2 go1_vel, glm::vec2 go2_vel);
 };
 

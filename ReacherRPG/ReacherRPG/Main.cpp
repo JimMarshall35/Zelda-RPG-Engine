@@ -51,10 +51,10 @@ int main(void)
 		glfwPollEvents();
 
 		if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS) {
-			AreaLoader::Instance()->loadArea("json", "lvl1_test.json", a);
+			AreaLoader::Instance()->loadArea("json", "lvl1_test4.json", a);
 		}
 		if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS) {
-			AreaLoader::Instance()->loadArea("json", "lvl1_test2.json", a);
+			//AreaLoader::Instance()->loadArea("json", "lvl1_test2.json", a);
 		}
 		if (glfwGetKey(window, GLFW_KEY_3) == GLFW_PRESS) {
 			AreaLoader::Instance()->loadArea("json", "lvl1_test3.json", a);

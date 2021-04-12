@@ -36,11 +36,14 @@ public:
 
 	void freeData();
 	void draw(const glm::vec2 pos, const glm::vec3 scale, Shader& s, const Camera* camera);
-	
+	GLuint getPixelsHeight() { return height_pixels; }
+	GLuint getPixelsWidth() { return width_pixels; }
 private:
 	void setup_base(unsigned int img_width, unsigned int img_height, unsigned int sheet_x, unsigned int sheet_y, unsigned int sheet_w, unsigned int sheet_h);
 	GLuint VAO;
 	GLuint TextureID;
+	GLuint width_pixels;
+	GLuint height_pixels;
 	void genbuffers();
 	
 };

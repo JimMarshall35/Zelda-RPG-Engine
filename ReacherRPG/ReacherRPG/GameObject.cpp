@@ -12,6 +12,7 @@ Player::Player()
 {
 	isdrawable = true;
 	issolidvsbackground = true;
+	issolidvsgameobjects = true;
 	type = GO_TYPE::PLAYER;
 }
 
@@ -21,6 +22,7 @@ Player::~Player()
 
 void Player::onInteract(GameObject * other)
 {
+	std::cout << "COLLISION!" << std::endl;
 }
 
 void Player::update(float delta, GLuint keys)

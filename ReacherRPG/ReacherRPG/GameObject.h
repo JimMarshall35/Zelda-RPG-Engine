@@ -11,12 +11,20 @@ enum class GO_TYPE {
 	SCENERY,
 	NONE
 };
-struct TilemapCollider {
+struct Rect {
+	float x;
+	float y;
+	float w;
+	float h;
+};
+struct FloorCollider {
 	float resolution;
 	float top_offset;       // number of pixels ignored from the top down of the sprite
 	float bottom_offset;    // number of pixels ignored from the bottom up of the sprite
 	float left_offset;      // number of pixels ignored from the left towards the right of the sprite
 	float right_offset;     // number of pixels ignored from the right to the left of the sprite
+	float pixelswidth;
+	float pixelsheight;
 };
 class GameObject
 {
@@ -27,7 +35,8 @@ public:
 	GO_TYPE         type = GO_TYPE::NONE;
 	bool            isdrawable = false;
 	bool            issolidvsbackground = false;
-	TilemapCollider collider;
+	bool			issolidvsgameobjects = false;
+	FloorCollider   collider;
 	unsigned int    renderlayer;
 
 	virtual void onInteract(GameObject* other) = 0;
@@ -55,6 +64,7 @@ public:
 	StaticSprite() {
 		type = GO_TYPE::SCENERY;
 		isdrawable = true;
+		issolidvsgameobjects = true;
 	}
 	virtual void onInteract(GameObject* other) {};
 	virtual void update(float delta, GLuint keys) {};

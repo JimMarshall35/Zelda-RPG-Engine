@@ -250,6 +250,8 @@ bool AreaLoader::loadLayers(const rapidjson::Document & doc, Area & arearef)
 					player->collider.top_offset = TOFFSET;
 					player->collider.bottom_offset = BOFFSET;
 					player->collider.resolution = RESOLUTION;
+					player->collider.pixelswidth = 24;//object["width"].GetFloat();
+					player->collider.pixelsheight = 24; object["height"].GetFloat();
 					arearef.gameobjects.push_back(player);
 					////////////////// BAD CODE ENDS! /////////////////////////////////////
 				}
@@ -271,6 +273,17 @@ bool AreaLoader::loadLayers(const rapidjson::Document & doc, Area & arearef)
 						(s_sprite->scale.x * 2.0f) / 2.0f,
 						(s_sprite->scale.y * 2.0f) / 2.0f
 					);
+					TiledProperty t_offset, b_offset, l_offset, r_offset;
+					if(!getTiledObjectProperty(object["properties"], "collider_b_offset", b_offset)){}
+					if (!getTiledObjectProperty(object["properties"], "collider_t_offset", t_offset)) {}
+					if (!getTiledObjectProperty(object["properties"], "collider_l_offset", l_offset)) {}
+					if (!getTiledObjectProperty(object["properties"], "collider_r_offset", r_offset)) {}
+					s_sprite->collider.top_offset = t_offset.f;
+					s_sprite->collider.bottom_offset = b_offset.f;
+					s_sprite->collider.left_offset = l_offset.f;
+					s_sprite->collider.right_offset = r_offset.f;
+					s_sprite->collider.pixelswidth = object["width"].GetFloat();
+					s_sprite->collider.pixelsheight = object["height"].GetFloat();
 					arearef.gameobjects.push_back(s_sprite);
 				}
 			}
@@ -294,6 +307,10 @@ bool AreaLoader::getTiledObjectProperty(const rapidjson::Value & props_array, st
 			std::string type = val["type"].GetString();
 			if (type == "string") {
 				output.s = val["value"].GetString();
+				return true;
+			}
+			else if (type == "float") {
+				output.f = val["value"].GetFloat();
 				return true;
 			}
 		}

@@ -27,7 +27,8 @@ void Sprite::setup_base(
 		vertices[i + 1] = uvs[onuv].y;
 		onuv++;
 	}
-
+	width_pixels = sheet_w;
+	height_pixels = sheet_h;
 }
 Sprite::Sprite()
 {
