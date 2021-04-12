@@ -84,9 +84,10 @@ void Area::updatePhysics()
 		if (go->issolidvsgameobjects) {
 			for (size_t j = 0; j < gameobjects.size(); j++) {
 				GameObject* go2 = gameobjects[j];
-				if (go != go2) {
+				if (go != go2 && go2->issolidvsgameobjects) {
 					if (AABBCollision(go, go2)) {
-						go->position -= go->velocity;
+						go->position += -go->velocity;
+						break;
 					}
 				}
 

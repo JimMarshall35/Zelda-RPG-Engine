@@ -243,8 +243,8 @@ bool AreaLoader::loadLayers(const rapidjson::Document & doc, Area & arearef)
 #define RESOLUTION 16.0f
 #define LOFFSET 7.0f
 #define ROFFSET 8.0f
-#define TOFFSET 20.0f
-#define BOFFSET 1.0f
+#define TOFFSET 18.0f
+#define BOFFSET 0.0f
 					player->collider.left_offset = LOFFSET;
 					player->collider.right_offset = ROFFSET;
 					player->collider.top_offset = TOFFSET;

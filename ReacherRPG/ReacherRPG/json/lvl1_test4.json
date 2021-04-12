@@ -492,17 +492,17 @@
                         {
                          "name":"collider_l_offset",
                          "type":"float",
-                         "value":0
+                         "value":5
                         }, 
                         {
                          "name":"collider_r_offset",
                          "type":"float",
-                         "value":0
+                         "value":5
                         }, 
                         {
                          "name":"collider_t_offset",
                          "type":"float",
-                         "value":16
+                         "value":22
                         }, 
                         {
                          "name":"metasprite_name",
@@ -621,17 +621,17 @@
                         {
                          "name":"collider_l_offset",
                          "type":"float",
-                         "value":0
+                         "value":5
                         }, 
                         {
                          "name":"collider_r_offset",
                          "type":"float",
-                         "value":0
+                         "value":5
                         }, 
                         {
                          "name":"collider_t_offset",
                          "type":"float",
-                         "value":16
+                         "value":22
                         }, 
                         {
                          "name":"metasprite_name",
