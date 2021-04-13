@@ -1,33 +1,40 @@
-#include "Background.h"
+#include "TileLayer.h"
 #include <iostream>
 #include "stb_image_write.h"
 #include "GLTextureHelper.h"
 #define NUM_CHANNELS 4
-Background::Background()
+TileLayers::TileLayers()
 {
 }
 
 
-void Background::freeData()
+void TileLayers::freeData()
 {
 	GLClearErrors();
-	for (size_t i = 0; i < numlayers; i++) {
-		TileLayer layer = layers[i];
+	for (size_t i = 0; i < num_fg_layers; i++) {
+		TileLayer layer = fg_layers[i];
 		GLPrintErrors("glDeleteTextures(1, &layer.textureID);");
 		delete[] layer.tiles;
 		layer.sprite.freeData();
 	}
-	delete[] layers;
+	for (size_t i = 0; i < num_bg_layers; i++) {
+		TileLayer layer = bg_layers[i];
+		GLPrintErrors("glDeleteTextures(1, &layer.textureID);");
+		delete[] layer.tiles;
+		layer.sprite.freeData();
+	}
+	delete[] bg_layers;
+	delete[] fg_layers;
 }
 
-unsigned int Background::getTileAtPosition(glm::vec2 pos, std::string layername)
+unsigned int TileLayers::getTileAtPosition(glm::vec2 pos, std::string layername)
 {
 	//std::cout <<"x: " << pos.x << " y: "<< pos.y << std::endl;
 	//return 0;
 	const TileLayer* layer = nullptr;
-	for (size_t i = 0; i < numlayers; i++) {
-		if (layers[i].name == layername) {
-			layer = &layers[i];
+	for (size_t i = 0; i < num_bg_layers; i++) {
+		if (bg_layers[i].name == layername) {
+			layer = &bg_layers[i];
 		}
 	}
 	float bg_width = 2 * base_scale.x;
@@ -55,23 +62,33 @@ unsigned int Background::getTileAtPosition(glm::vec2 pos, std::string layername)
 	
 }
 
-void Background::debugPrint()
+void TileLayers::debugPrint()
 {
 
 }
 
-void Background::draw(Shader& s, const Camera* camera)
+void TileLayers::draw_fg(Shader& s, const Camera* camera)
 {
 
 
-	for (size_t i = 0; i < numlayers; i++) {
+	for (size_t i = 0; i < num_fg_layers; i++) {
 
-		TileLayer layer = layers[i];
+		TileLayer layer = fg_layers[i];
+		layer.sprite.draw(position, base_scale, s, camera);
+	}
+}
+void TileLayers::draw_bg(Shader& s, const Camera* camera)
+{
+
+
+	for (size_t i = 0; i < num_bg_layers; i++) {
+
+		TileLayer layer = bg_layers[i];
 		layer.sprite.draw(position, base_scale, s, camera);
 	}
 }
 
-void Background::genLayersTextures(TileSet& tileset)
+void TileLayers::genLayersTextures(TileSet& tileset, TileLayer* layers, size_t numlayers)
 {
 
 	// alocate a single tiles worth of pixel bytes to be used to copy from spritesheet to our generated texture
@@ -119,7 +136,7 @@ void Background::genLayersTextures(TileSet& tileset)
 	delete[] single_tile_buffer;
 }
 
-void Background::setInitialScale() {
+void TileLayers::setInitialScale() {
 	base_scale = glm::vec3(
 		static_cast<float>(width) / 40.0f,
 		static_cast<float>(height) / 40.0f,

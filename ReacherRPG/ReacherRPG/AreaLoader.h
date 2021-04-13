@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 #include "jsonhelper.h"
-#include "Background.h"
+#include "TileLayer.h"
 #include "Area.h"
 #include <chrono>
 struct TiledProperty {

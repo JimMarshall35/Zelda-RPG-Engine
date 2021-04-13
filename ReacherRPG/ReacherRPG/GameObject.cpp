@@ -83,3 +83,21 @@ void Player::draw(Shader & s, const Camera * camera)
 	animator.draw(position, scale, s, camera);
 }
 
+void FloorCollider::init(GameObject* parent)
+{
+	/*
+	top1 = go1->position.y + go1->scale.y - (go1->collider.top_offset / go1->collider.pixelsheight) * 2.0f * go1->scale.y;
+	bottom1 = go1->position.y - go1->scale.y + (go1->collider.bottom_offset / go1->collider.pixelsheight) * 2.0f * go1->scale.y;
+	left1 = go1->position.x - go1->scale.x + (go1->collider.left_offset / go1->collider.pixelswidth) * 2.0f * go1->scale.x;
+	right1 = go1->position.x + go1->scale.x - (go1->collider.right_offset / go1->collider.pixelswidth) * 2.0f * go1->scale.x;
+	*/
+	top = parent->scale.y - (top_offset / pixelsheight) * 2.0f * parent->scale.y;
+	bottom = -parent->scale.y + (bottom_offset / pixelsheight) * 2.0f * parent->scale.y;
+	left = -parent->scale.x + (left_offset / pixelswidth) * 2.0f * parent->scale.x;
+	right = parent->scale.x - (right_offset / pixelswidth) * 2.0f * parent->scale.x;
+
+	width = right - left;
+	height = top - bottom;
+	resolutionx = parent->scale.x / pixelswidth;
+	resolutiony = parent->scale.y / pixelsheight;
+}

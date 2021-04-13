@@ -17,14 +17,28 @@ struct Rect {
 	float w;
 	float h;
 };
-struct FloorCollider {
-	float resolution;
+class GameObject;
+class FloorCollider {
+public:
 	float top_offset;       // number of pixels ignored from the top down of the sprite
 	float bottom_offset;    // number of pixels ignored from the bottom up of the sprite
 	float left_offset;      // number of pixels ignored from the left towards the right of the sprite
 	float right_offset;     // number of pixels ignored from the right to the left of the sprite
 	float pixelswidth;
 	float pixelsheight;
+
+	float top;
+	float bottom;
+	float left;
+	float right;
+
+	float width;
+	float height;
+
+	float resolutionx;
+	float resolutiony;
+
+	void init(GameObject* parent);
 };
 class GameObject
 {
@@ -36,13 +50,14 @@ public:
 	bool            isdrawable = false;
 	bool            issolidvsbackground = false;
 	bool			issolidvsgameobjects = false;
+	bool            isstatic = false;
 	FloorCollider   collider;
 	unsigned int    renderlayer;
 
-	virtual void onInteract(GameObject* other) = 0;
-	virtual void update(float delta, GLuint keys) = 0;
-	virtual void draw(Shader& s, const Camera* camera) {};
-	virtual void freeData() {};
+	virtual void    onInteract(GameObject* other) = 0;
+	virtual void    update(float delta, GLuint keys) = 0;
+	virtual void    draw(Shader& s, const Camera* camera) {};
+	virtual void    freeData() {};
 };
 
 class Player : public GameObject {
@@ -65,6 +80,7 @@ public:
 		type = GO_TYPE::SCENERY;
 		isdrawable = true;
 		issolidvsgameobjects = true;
+		isstatic = true;
 	}
 	virtual void onInteract(GameObject* other) {};
 	virtual void update(float delta, GLuint keys) {};

@@ -1,4 +1,4 @@
-#include <stdio.h>
+﻿#include <stdio.h>
 #include <stdlib.h>
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
@@ -24,7 +24,7 @@ int main(void)
 	Camera* camera = Camera::Instance();
 	Area a;
 	
-	if (!AreaLoader::Instance()->loadArea("json","lvl1_test4.json", a)) {
+	if (!AreaLoader::Instance()->loadArea("json","lvl1_test5.json", a)) {
 		std::cout << "failed to load level" << std::endl;
 	}
 	

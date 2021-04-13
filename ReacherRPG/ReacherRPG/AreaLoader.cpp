@@ -58,22 +58,23 @@ bool AreaLoader::loadArea(std::string folder, std::string file, Area & arearef)
 		return false;
 	}
 	if (!checkJSONValue("width", JSONTYPE::INT, doc) || !checkJSONValue("height", JSONTYPE::INT, doc)) { return false; }
-	arearef.background.width = doc["width"].GetInt();
-	arearef.background.height = doc["height"].GetInt();
+	arearef.tilelayers.width = doc["width"].GetInt();
+	arearef.tilelayers.height = doc["height"].GetInt();
 
 	if (!checkJSONValue("tilewidth", JSONTYPE::INT, doc) || !checkJSONValue("tileheight", JSONTYPE::INT, doc)) { return false; }
-	arearef.background.tilewidth = doc["tilewidth"].GetInt();
-	arearef.background.tileheight = doc["tileheight"].GetInt();
+	arearef.tilelayers.tilewidth = doc["tilewidth"].GetInt();
+	arearef.tilelayers.tileheight = doc["tileheight"].GetInt();
 
 	if (!loadTilesets(doc, arearef, folder)) { return false; }
 	if (!loadLayers(doc, arearef)) { return false; }
 
 	TileSet t = arearef.tilesets[0];
-	arearef.background.genLayersTextures(t);
-	arearef.background.setInitialScale();
+	arearef.tilelayers.genLayersTextures(t,arearef.tilelayers.bg_layers,arearef.tilelayers.num_bg_layers);
+	arearef.tilelayers.genLayersTextures(t, arearef.tilelayers.fg_layers, arearef.tilelayers.num_fg_layers);
+	arearef.tilelayers.setInitialScale();
 	std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
 	std::chrono::duration<double> time_span = std::chrono::duration_cast<std::chrono::duration<double>>(t1 - t0);
-	std::cout << "background loading done in " << time_span.count() * 1000 << " ms" << std::endl;
+	std::cout << "area loading done in " << time_span.count() * 1000 << " ms" << std::endl;
 	std::cout << std::endl << std::endl;
 	return true;
 }
@@ -144,7 +145,6 @@ bool AreaLoader::loadTilesets(const rapidjson::Document & doc, Area & arearef, s
 }
 bool AreaLoader::loadTilesetImgData(TileSet& tileset)
 {
-
 	int x, y, n;
 	tileset.imgdata = stbi_load(tileset.imgpath.c_str(), &x, &y, &n, 0);
 	if (tileset.imgdata == NULL) {
@@ -159,25 +159,32 @@ bool AreaLoader::loadLayers(const rapidjson::Document & doc, Area & arearef)
 	using namespace rapidjson;
 	if (!checkJSONValue("layers", JSONTYPE::ARRAY, doc)) { return false; }
 	int total_layers = doc["layers"].Size();
-	arearef.background.numlayers = 0;
+	arearef.tilelayers.num_bg_layers = 0;
+	arearef.tilelayers.num_fg_layers = 0;
 	for (SizeType i = 0; i < total_layers; i++) {
 		const Value& val = doc["layers"][i];
 		if (!layersChecks(val)) { return false; }
 		std::string type = val["type"].GetString();
 		if (type == "tilelayer") {
-			arearef.background.numlayers++;
+			std::string layername = val["name"].GetString();
+			if (layername.substr(0, 3) == "fg_") {
+				arearef.tilelayers.num_fg_layers++;
+			}
+			else {
+				arearef.tilelayers.num_bg_layers++;
+			}
 		}
 	}
-	arearef.background.layers = new TileLayer[arearef.background.numlayers];
-	int ontilelayer = 0;
-
+	arearef.tilelayers.bg_layers = new TileLayer[arearef.tilelayers.num_bg_layers];
+	arearef.tilelayers.fg_layers = new TileLayer[arearef.tilelayers.num_fg_layers];
+	int onbgtilelayer = 0;
+	int onfgtilelayer = 0;
 	for (SizeType i = 0; i < total_layers; i++) {
 		const Value& val = doc["layers"][i];
 		std::string type = val["type"].GetString();
 		std::string name = val["name"].GetString();
-		if (type == "tilelayer") {
-
-			TileLayer& layer = arearef.background.layers[ontilelayer];
+		if (type == "tilelayer" && name.substr(0, 3) == "fg_") {
+			TileLayer& layer = arearef.tilelayers.fg_layers[onfgtilelayer];
 			layer.width = val["width"].GetInt();
 			layer.height = val["height"].GetInt();
 			layer.tiles = new unsigned int[layer.width * layer.height];
@@ -185,9 +192,19 @@ bool AreaLoader::loadLayers(const rapidjson::Document & doc, Area & arearef)
 			for (SizeType j = 0; j < val["data"].Size(); j++) {
 				layer.tiles[j] = val["data"][j].GetInt();
 			}
-			ontilelayer++;
+			onfgtilelayer++;
 		}
-
+		else if (type == "tilelayer") {
+			TileLayer& layer = arearef.tilelayers.bg_layers[onbgtilelayer];
+			layer.width = val["width"].GetInt();
+			layer.height = val["height"].GetInt();
+			layer.tiles = new unsigned int[layer.width * layer.height];
+			layer.name = val["name"].GetString();
+			for (SizeType j = 0; j < val["data"].Size(); j++) {
+				layer.tiles[j] = val["data"][j].GetInt();
+			}
+			onbgtilelayer++;
+		}
 		else if (type == "objectgroup" && name == "gameobjects") {
 			for (SizeType i = 0; i < val["objects"].Size(); i++) {
 				const Value& object = val["objects"][i];
@@ -236,8 +253,8 @@ bool AreaLoader::loadLayers(const rapidjson::Document & doc, Area & arearef)
 					player->animator.push_animation("walk_right", rightFrames, 4, 10, true);
 					player->animator.set_anim("walk_down");
 					player->scale *= glm::vec2(
-						player_tileset->tilewidth / (arearef.background.tilewidth * 40.0),
-						player_tileset->tileheight/(arearef.background.tileheight * 40.0)
+						player_tileset->tilewidth / (arearef.tilelayers.tilewidth * 40.0),
+						player_tileset->tileheight/(arearef.tilelayers.tileheight * 40.0)
 					);
 					player->position = player_start_pos;
 #define RESOLUTION 16.0f
@@ -249,9 +266,9 @@ bool AreaLoader::loadLayers(const rapidjson::Document & doc, Area & arearef)
 					player->collider.right_offset = ROFFSET;
 					player->collider.top_offset = TOFFSET;
 					player->collider.bottom_offset = BOFFSET;
-					player->collider.resolution = RESOLUTION;
 					player->collider.pixelswidth = 24;//object["width"].GetFloat();
 					player->collider.pixelsheight = 24; object["height"].GetFloat();
+					player->collider.init(player);
 					arearef.gameobjects.push_back(player);
 					////////////////// BAD CODE ENDS! /////////////////////////////////////
 				}
@@ -265,8 +282,8 @@ bool AreaLoader::loadLayers(const rapidjson::Document & doc, Area & arearef)
 					glm::vec2 json_pos(object["x"].GetFloat(), object["y"].GetFloat());
 					s_sprite->position = tiledPosToGameEnginePos(json_pos, arearef);
 					s_sprite->scale *= glm::vec2(
-						object["width"].GetFloat() / (arearef.background.tilewidth * 40.0),
-						object["height"].GetFloat() / (arearef.background.tileheight * 40.0)
+						object["width"].GetFloat() / (arearef.tilelayers.tilewidth * 40.0),
+						object["height"].GetFloat() / (arearef.tilelayers.tileheight * 40.0)
 					);
 
 					s_sprite->position += glm::vec2(
@@ -284,6 +301,7 @@ bool AreaLoader::loadLayers(const rapidjson::Document & doc, Area & arearef)
 					s_sprite->collider.right_offset = r_offset.f;
 					s_sprite->collider.pixelswidth = object["width"].GetFloat();
 					s_sprite->collider.pixelsheight = object["height"].GetFloat();
+					s_sprite->collider.init(s_sprite);
 					arearef.gameobjects.push_back(s_sprite);
 				}
 			}
@@ -322,12 +340,12 @@ glm::vec2 AreaLoader::tiledPosToGameEnginePos(glm::vec2 tiledpos, const Area & a
 {
 	float json_x = tiledpos.x;
 	float json_y = tiledpos.y;
-	float tl_x = ((arearef.background.width / 40) * -2.0f) / 2;
-	float tl_y = ((arearef.background.height / 40) * 2.0f) / 2;
+	float tl_x = ((arearef.tilelayers.width / 40) * -2.0f) / 2;
+	float tl_y = ((arearef.tilelayers.height / 40) * 2.0f) / 2;
 
 	glm::vec2 map_tl(tl_x, tl_y);
-	float worldx = map_tl.x + (json_x / (arearef.background.tilewidth*arearef.background.width))*2.0f;
-	float worldy = map_tl.y - (json_y / (arearef.background.tileheight*arearef.background.height))*2.0f;
+	float worldx = map_tl.x + (json_x / (arearef.tilelayers.tilewidth*arearef.tilelayers.width))*2.0f;
+	float worldy = map_tl.y - (json_y / (arearef.tilelayers.tileheight*arearef.tilelayers.height))*2.0f;
 	return glm::vec2(worldx, worldy);
 }
 AreaLoader::AreaLoader()
