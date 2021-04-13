@@ -12,7 +12,7 @@ void Background::freeData()
 {
 	GLClearErrors();
 	for (size_t i = 0; i < numlayers; i++) {
-		BG_Layer layer = layers[i];
+		TileLayer layer = layers[i];
 		GLPrintErrors("glDeleteTextures(1, &layer.textureID);");
 		delete[] layer.tiles;
 		layer.sprite.freeData();
@@ -24,7 +24,7 @@ unsigned int Background::getTileAtPosition(glm::vec2 pos, std::string layername)
 {
 	//std::cout <<"x: " << pos.x << " y: "<< pos.y << std::endl;
 	//return 0;
-	const BG_Layer* layer = nullptr;
+	const TileLayer* layer = nullptr;
 	for (size_t i = 0; i < numlayers; i++) {
 		if (layers[i].name == layername) {
 			layer = &layers[i];
@@ -62,13 +62,11 @@ void Background::debugPrint()
 
 void Background::draw(Shader& s, const Camera* camera)
 {
-	GLClearErrors();
-	s.use();
-	GLPrintErrors("s.use();");
+
 
 	for (size_t i = 0; i < numlayers; i++) {
 
-		BG_Layer layer = layers[i];
+		TileLayer layer = layers[i];
 		layer.sprite.draw(position, base_scale, s, camera);
 	}
 }
@@ -79,7 +77,7 @@ void Background::genLayersTextures(TileSet& tileset)
 	// alocate a single tiles worth of pixel bytes to be used to copy from spritesheet to our generated texture
 	unsigned char* single_tile_buffer = new unsigned char[tileset.tileheight*tileset.tilewidth * NUM_CHANNELS];
 	for (size_t i = 0; i < numlayers; i++) {
-		BG_Layer& layer = layers[i];
+		TileLayer& layer = layers[i];
 		const unsigned int numtiles = layer.width*layer.height;
 		// allocate pixel data for the texture we're generating from the tilemap
 		const int buffer_size = numtiles * tileset.tilewidth*tileset.tileheight * NUM_CHANNELS;

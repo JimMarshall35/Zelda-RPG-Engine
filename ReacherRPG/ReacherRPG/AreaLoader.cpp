@@ -168,7 +168,7 @@ bool AreaLoader::loadLayers(const rapidjson::Document & doc, Area & arearef)
 			arearef.background.numlayers++;
 		}
 	}
-	arearef.background.layers = new BG_Layer[arearef.background.numlayers];
+	arearef.background.layers = new TileLayer[arearef.background.numlayers];
 	int ontilelayer = 0;
 
 	for (SizeType i = 0; i < total_layers; i++) {
@@ -177,7 +177,7 @@ bool AreaLoader::loadLayers(const rapidjson::Document & doc, Area & arearef)
 		std::string name = val["name"].GetString();
 		if (type == "tilelayer") {
 
-			BG_Layer& layer = arearef.background.layers[ontilelayer];
+			TileLayer& layer = arearef.background.layers[ontilelayer];
 			layer.width = val["width"].GetInt();
 			layer.height = val["height"].GetInt();
 			layer.tiles = new unsigned int[layer.width * layer.height];

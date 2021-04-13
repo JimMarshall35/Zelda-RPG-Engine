@@ -41,6 +41,7 @@ public:
 private:
 	void setup_base(unsigned int img_width, unsigned int img_height, unsigned int sheet_x, unsigned int sheet_y, unsigned int sheet_w, unsigned int sheet_h);
 	GLuint VAO;
+
 	GLuint TextureID;
 	GLuint width_pixels;
 	GLuint height_pixels;

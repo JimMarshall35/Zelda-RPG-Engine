@@ -14,7 +14,7 @@
 
 #include "TileSet.h"
 
-struct BG_Layer {
+struct TileLayer {
 	std::string          name;
 	unsigned int*        tiles;
 	unsigned int         width;
@@ -25,15 +25,15 @@ class Background
 {
 public:
 	friend class AreaLoader;
-	Background();
-	~Background() { freeData(); }
-	void debugPrint();
-	void draw(Shader& s, const Camera* camera);
+	               Background();
+	               ~Background() { freeData(); }
+	void           debugPrint();
+	void           draw(Shader& s, const Camera* camera);
 	glm::vec2      get_base_scale() { return glm::vec2(base_scale); }
 	void           freeData();
 	unsigned int   getTileAtPosition(glm::vec2 pos, std::string layername);
 private:
-	BG_Layer*      layers;
+	TileLayer*      layers;
 	void           genLayersTextures(TileSet& tileset);
 	unsigned int   numlayers;
 	unsigned int   numtilesets;
