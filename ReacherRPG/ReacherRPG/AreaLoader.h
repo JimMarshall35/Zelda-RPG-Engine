@@ -4,11 +4,12 @@
 #include "TileLayer.h"
 #include "Area.h"
 #include <chrono>
-struct TiledProperty {
+struct TiledProperty { // would use a union but i don't think you can with std::string
 	std::string   s;
 	float         f;
 	int           i;
 	unsigned int  ui;
+	bool          b;
 };
 class AreaLoader
 {

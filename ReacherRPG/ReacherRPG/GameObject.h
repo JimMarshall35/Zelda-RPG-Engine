@@ -52,7 +52,6 @@ public:
 	bool			issolidvsgameobjects = false;
 	bool            isstatic = false;
 	FloorCollider   collider;
-	unsigned int    renderlayer;
 
 	virtual void    onInteract(GameObject* other) = 0;
 	virtual void    update(float delta, GLuint keys) = 0;
@@ -89,3 +88,4 @@ public:
 	}
 	Sprite* sprite;
 };
+

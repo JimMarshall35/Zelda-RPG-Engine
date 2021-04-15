@@ -324,6 +324,95 @@
 				660,661,662
 			]
 
+		},
+		{
+			"name" : "fence_left_section",
+			"width" : 5,
+			"tiles" :[
+				645,645,645,645,645,
+				682,682,682,682,682
+			]
+		},
+		{
+			"name" : "fence_right_section",
+			"width" : 6,
+			"tiles" :[
+				645,645,645,645,645,648,
+				682,682,682,682,682,685
+			]
+		},
+		{
+			"name" : "fence_mid_section",
+			"width" : 2,
+			"tiles" :[
+				720,720,
+				757,757
+			]
+		},
+		{
+			"name" : "tree_light_green",
+			"width" : 1,
+			"tiles" :[
+				401,
+				438
+			]
+		},
+		{
+			"name" : "tree_dark_green",
+			"width" : 1,
+			"tiles" :[
+				403,
+				440
+			]
+		},
+		{
+			"name" : "tree_brown",
+			"width" : 1,
+			"tiles" :[
+				402,
+				439
+			]
+		},
+		{
+			"name" : "food_cart",
+			"width" : 1,
+			"tiles" : [
+				552,
+				589
+			]
+		},
+		{
+			"name" : "fire_hydrant",
+			"width" : 1,
+			"tiles" : [533]
+		},
+		{
+			"name" : "bin",
+			"width" : 1,
+			"tiles" : [496]
+		},
+		{
+			"name" : "boxes",
+			"width" : 1,
+			"tiles" : [642]
+		},
+		{
+			"name" : "motorway_post_l",
+			"width" : 1,
+			"tiles" : [
+				631,
+				631,
+				668
+			]
+		},
+		{
+			"name" : "motorway_post_r",
+			"width" : 1,
+			"tiles" : [
+				630,
+				630,
+				667
+			]
 		}
 	]
 }

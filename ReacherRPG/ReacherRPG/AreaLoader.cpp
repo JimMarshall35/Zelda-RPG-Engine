@@ -274,10 +274,16 @@ bool AreaLoader::loadLayers(const rapidjson::Document & doc, Area & arearef)
 				}
 				else if (objtype == "static_metasprite_object") {
 
-					TiledProperty tileset_name_value, metasprite_name_value;
+					TiledProperty tileset_name_value, metasprite_name_value, t_offset, b_offset, l_offset, r_offset, collidable;
 					StaticSprite* s_sprite = new StaticSprite();
 					if (!getTiledObjectProperty(object["properties"], "tileset_name", tileset_name_value)) {}//continue; }
 					if (!getTiledObjectProperty(object["properties"], "metasprite_name", metasprite_name_value)) {}//continue; }
+					if (!getTiledObjectProperty(object["properties"], "collider_b_offset", b_offset)) {}
+					if (!getTiledObjectProperty(object["properties"], "collider_t_offset", t_offset)) {}
+					if (!getTiledObjectProperty(object["properties"], "collider_l_offset", l_offset)) {}
+					if (!getTiledObjectProperty(object["properties"], "collider_r_offset", r_offset)) {}
+					if (!getTiledObjectProperty(object["properties"], "collidable", collidable)) { std::cout << "error" << std::endl; }
+
 					s_sprite->sprite = arearef.getTilesetByName(tileset_name_value.s)->getNamedSprite(metasprite_name_value.s);
 					glm::vec2 json_pos(object["x"].GetFloat(), object["y"].GetFloat());
 					s_sprite->position = tiledPosToGameEnginePos(json_pos, arearef);
@@ -290,11 +296,7 @@ bool AreaLoader::loadLayers(const rapidjson::Document & doc, Area & arearef)
 						(s_sprite->scale.x * 2.0f) / 2.0f,
 						(s_sprite->scale.y * 2.0f) / 2.0f
 					);
-					TiledProperty t_offset, b_offset, l_offset, r_offset;
-					if(!getTiledObjectProperty(object["properties"], "collider_b_offset", b_offset)){}
-					if (!getTiledObjectProperty(object["properties"], "collider_t_offset", t_offset)) {}
-					if (!getTiledObjectProperty(object["properties"], "collider_l_offset", l_offset)) {}
-					if (!getTiledObjectProperty(object["properties"], "collider_r_offset", r_offset)) {}
+					
 					s_sprite->collider.top_offset = t_offset.f;
 					s_sprite->collider.bottom_offset = b_offset.f;
 					s_sprite->collider.left_offset = l_offset.f;
@@ -302,6 +304,10 @@ bool AreaLoader::loadLayers(const rapidjson::Document & doc, Area & arearef)
 					s_sprite->collider.pixelswidth = object["width"].GetFloat();
 					s_sprite->collider.pixelsheight = object["height"].GetFloat();
 					s_sprite->collider.init(s_sprite);
+					if (!collidable.b) {
+						s_sprite->issolidvsgameobjects = false;
+					}
+
 					arearef.gameobjects.push_back(s_sprite);
 				}
 			}
@@ -321,7 +327,8 @@ bool AreaLoader::getTiledObjectProperty(const rapidjson::Value & props_array, st
 		if (!checkJSONValue("name", JSONTYPE::STRING, val)) { return false; }
 		if (!checkJSONValue("type", JSONTYPE::STRING, val)) { return false; }
 		if (!checkJSONValue("value", JSONTYPE::ANY, val)) { return false; }
-		if (val["name"].GetString() == name) {
+		std::string jsonname = val["name"].GetString();
+		if (jsonname == name) {
 			std::string type = val["type"].GetString();
 			if (type == "string") {
 				output.s = val["value"].GetString();
@@ -329,6 +336,10 @@ bool AreaLoader::getTiledObjectProperty(const rapidjson::Value & props_array, st
 			}
 			else if (type == "float") {
 				output.f = val["value"].GetFloat();
+				return true;
+			}
+			else if (type == "bool") {
+				output.b = val["value"].GetBool();
 				return true;
 			}
 		}
@@ -344,8 +355,8 @@ glm::vec2 AreaLoader::tiledPosToGameEnginePos(glm::vec2 tiledpos, const Area & a
 	float tl_y = ((arearef.tilelayers.height / 40) * 2.0f) / 2;
 
 	glm::vec2 map_tl(tl_x, tl_y);
-	float worldx = map_tl.x + (json_x / (arearef.tilelayers.tilewidth*arearef.tilelayers.width))*2.0f;
-	float worldy = map_tl.y - (json_y / (arearef.tilelayers.tileheight*arearef.tilelayers.height))*2.0f;
+	float worldx = map_tl.x + (json_x / (arearef.tilelayers.tilewidth*arearef.tilelayers.width))*(arearef.tilelayers.width / 40)*2.0f;
+	float worldy = map_tl.y - (json_y / (arearef.tilelayers.tileheight*arearef.tilelayers.height))*(arearef.tilelayers.height / 40)*2.0f;
 	return glm::vec2(worldx, worldy);
 }
 AreaLoader::AreaLoader()

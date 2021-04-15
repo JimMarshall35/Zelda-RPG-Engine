@@ -15,7 +15,11 @@ int GLFWInit();
 
 int main(void)
 {
-	
+	if (__cplusplus == 201703L) std::cout << "C++17\n";
+	else if (__cplusplus == 201402L) std::cout << "C++14\n";
+	else if (__cplusplus == 201103L) std::cout << "C++11\n";
+	else if (__cplusplus == 199711L) std::cout << "C++98\n";
+	else std::cout << "pre-standard C++\n";
 	if (GLFWInit() < 0) {
 		return -1;
 	}
@@ -23,11 +27,11 @@ int main(void)
 	Shader shader("shaders/background_vert.glsl", "shaders/background_frag.glsl");
 	Camera* camera = Camera::Instance();
 	Area a;
-	
-	if (!AreaLoader::Instance()->loadArea("json","lvl1_test5.json", a)) {
+
+	if (!AreaLoader::Instance()->loadArea("json", "lvl1_test5.json", a)) {
 		std::cout << "failed to load level" << std::endl;
 	}
-	
+
 	//b.debugPrint();
 
 	//int testtile = a.getBackGround()->getTileAtPosition(glm::vec2(0, 0), "structure");
@@ -36,7 +40,7 @@ int main(void)
 	double delta;
 	double last = glfwGetTime();
 	do {
-		
+
 		//delta time
 		double now = glfwGetTime();
 		delta = now - last;
@@ -46,18 +50,18 @@ int main(void)
 		a.update(delta, keys);
 		//render
 		glClear(GL_COLOR_BUFFER_BIT);
-		a.draw(shader,camera);
+		a.draw(shader, camera);
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 
 		if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS) {
-			AreaLoader::Instance()->loadArea("json", "lvl1_test4.json", a);
+			AreaLoader::Instance()->loadArea("json", "lvl1_test5.json", a);
 		}
 		if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS) {
-			//AreaLoader::Instance()->loadArea("json", "lvl1_test2.json", a);
+			AreaLoader::Instance()->loadArea("json", "lvl1_test3.json", a);
 		}
 		if (glfwGetKey(window, GLFW_KEY_3) == GLFW_PRESS) {
-			AreaLoader::Instance()->loadArea("json", "lvl1_test3.json", a);
+
 		}
 
 	} // Check if the ESC key was pressed or the window was closed
@@ -111,6 +115,6 @@ int GLFWInit() {
 
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	
+
 	return 0;
 }
