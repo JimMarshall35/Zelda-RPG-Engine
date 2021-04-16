@@ -25,41 +25,58 @@ void Player::onInteract(GameObject * other)
 	std::cout << "COLLISION!" << std::endl;
 }
 
+
+
 void Player::update(float delta, GLuint keys)
 {
 	animator.update(delta);
+	
 	glm::vec2 vel = glm::vec2(0.0);
-	if (keys & (1 << UP_BIT)) {
+	GLuint newkeys = keys & ~(lastkeys);    // any new keys that have been added this frame
+
+	if (newkeys == 0 && keys != lastkeys) { // no new keys have been pressed, but the state is different from the last state
+		newkeys = keys;                     // therefore a key that was held last frame has now been released
+	}
+	if (newkeys != 0) {
+		if (newkeys & (1 << UP_BIT)) { direction = DIRECTION::UP; }
+		else if (newkeys & (1 << DOWN_BIT)) { direction = DIRECTION::DOWN; }
+		else if (newkeys & (1 << LEFT_BIT)) { direction = DIRECTION::LEFT; }
+		else if (newkeys & (1 << RIGHT_BIT)) { direction = DIRECTION::RIGHT; }
+
+	}
+
+	if (!(keys & (1 << UP_BIT)) &&
+		!(keys & (1 << DOWN_BIT)) &&
+		!(keys & (1 << LEFT_BIT)) &&
+		!(keys & (1 << RIGHT_BIT))) { direction = DIRECTION::NONE; }
+
+	switch (direction) {
+	case DIRECTION::NONE:
+		animator.stop_anim();
+		vel = glm::vec2(0.0);
+		break;
+	case DIRECTION::UP:
 		animator.set_anim("walk_up");
 		animator.start_anim();
 		vel += glm::vec2(0, 1);
-	}
-	if (keys & (1 << DOWN_BIT)) {
+		break;
+	case DIRECTION::DOWN:
 		animator.set_anim("walk_down");
 		animator.start_anim();
 		vel += glm::vec2(0, -1);
-	}
-	if (keys & (1 << LEFT_BIT)) {
+		break;
+	case DIRECTION::LEFT:
 		animator.set_anim("walk_left");
 		animator.start_anim();
 		vel += glm::vec2(-1, 0);
-	}
-	if (keys & (1 << RIGHT_BIT)) {
+		break;
+	case DIRECTION::RIGHT:
 		animator.set_anim("walk_right");
 		animator.start_anim();
 		vel += glm::vec2(1, 0);
+		break;
 	}
-	if(!(keys & (1<<UP_BIT)) &&
-	   !(keys & (1 << DOWN_BIT)) &&
-	   !(keys & (1 << LEFT_BIT)) &&
-	   !(keys & (1 << RIGHT_BIT))) {
-		animator.stop_anim();
-		vel = glm::vec2(0.0);
-	}
-	if (glm::length(vel) > 0) {
-		vel = glm::normalize(vel) * delta * (float)TEST_SPEED;
-		
-	}
+	vel = vel * delta * (float)TEST_SPEED;
 	velocity = vel;
 	if (keys & (1 << ZOOM_IN_BIT)) {
 		Camera::Instance()->zoom += (TEST_ZOOM_SPEED * delta);

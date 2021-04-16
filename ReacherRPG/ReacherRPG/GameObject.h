@@ -77,7 +77,17 @@ public:
 	virtual void freeData() { animator.freeData(); }
 	Animator animator;
 private:
-	GLuint lastkeys = 0;
+	enum class DIRECTION {
+		NONE,
+		UP,
+		DOWN,
+		LEFT,
+		RIGHT
+	};
+	GLuint    lastkeys;
+	GLuint    lastnewkeys;
+	DIRECTION direction = DIRECTION::NONE;
+	glm::vec2 lastvelocity = glm::vec2(0,0);
 	
 };
 
