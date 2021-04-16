@@ -101,3 +101,27 @@ void FloorCollider::init(GameObject* parent)
 	resolutionx = parent->scale.x / pixelswidth;
 	resolutiony = parent->scale.y / pixelsheight;
 }
+
+ScriptableGameObject::ScriptableGameObject(std::string script)
+{
+	L = luaL_newstate();
+	luaL_openlibs(L);
+}
+
+void ScriptableGameObject::onInteract(GameObject * other)
+{
+}
+
+void ScriptableGameObject::update(float delta, GLuint keys)
+{
+}
+
+bool checkLua(lua_State * L, int r)
+{
+	if (r != LUA_OK) {
+		std::string error_msg = lua_tostring(L, -1);
+		std::cout << error_msg << std::endl;
+		return false;
+	}
+	return true;
+}

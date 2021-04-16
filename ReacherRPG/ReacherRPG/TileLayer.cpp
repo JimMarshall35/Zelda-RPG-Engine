@@ -124,8 +124,6 @@ void TileLayers::genLayersTextures(TileSet& tileset, TileLayer* layers, size_t n
 
 		layer.sprite.setup(
 			tex_data,
-			layer.width*tileset.tilewidth, layer.height*tileset.tileheight,
-			0, 0,
 			layer.width*tileset.tilewidth, layer.height*tileset.tileheight
 		);
 		// for debugging

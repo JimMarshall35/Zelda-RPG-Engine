@@ -24,6 +24,7 @@ int main(void)
 		return -1;
 	}
 	inputInit(window);
+	initRendering();
 	Shader shader("shaders/background_vert.glsl", "shaders/background_frag.glsl");
 	Camera* camera = Camera::Instance();
 	Area a;
@@ -67,7 +68,7 @@ int main(void)
 	} // Check if the ESC key was pressed or the window was closed
 	while (glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS &&
 		glfwWindowShouldClose(window) == 0);
-
+	cleanupRendering();
 	// Close OpenGL window and terminate GLFW
 	glfwTerminate();
 

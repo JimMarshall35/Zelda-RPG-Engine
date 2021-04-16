@@ -87,7 +87,7 @@ void TileSet::genMetaSprite(const unsigned int * tiles, const unsigned int width
 		write_ptr = tex_data + (y*width*tilewidth*tileheight*NUM_CHANNELS) + (x*tilewidth*NUM_CHANNELS);
 		//std::cout << "x: " << x << " y: " << y << std::endl;
 		getTileBytes(tile + 1, single_tile_buffer);
-		stbi_write_png(("debug_img/" + std::to_string(tile) + ".png").c_str(), tilewidth, tileheight, NUM_CHANNELS, single_tile_buffer, tilewidth * NUM_CHANNELS);
+		//stbi_write_png(("debug_img/" + std::to_string(tile) + ".png").c_str(), tilewidth, tileheight, NUM_CHANNELS, single_tile_buffer, tilewidth * NUM_CHANNELS);
 		if (tile > 0) {
 			for (int j = 0; j < tileheight; j++) {
 				unsigned char* src;
@@ -100,9 +100,9 @@ void TileSet::genMetaSprite(const unsigned int * tiles, const unsigned int width
 		
 		
 	}
-	stbi_write_png(("debug_img/"+name+".png").c_str(), pixelswidth, pixelsheight, NUM_CHANNELS, tex_data, pixelswidth * NUM_CHANNELS);
+	//stbi_write_png(("debug_img/"+name+".png").c_str(), pixelswidth, pixelsheight, NUM_CHANNELS, tex_data, pixelswidth * NUM_CHANNELS);
 	Sprite sprite;
-	sprite.setup(tex_data, pixelswidth, pixelsheight, 0, 0, pixelswidth, pixelsheight);
+	sprite.setup(tex_data, pixelswidth, pixelsheight);//, 0, 0, pixelswidth, pixelsheight);
 	sprites.push_back(sprite);
 	int index = sprites.size() - 1;
 	namedSpriteMap.insert(std::pair<std::string, int>(name, index));

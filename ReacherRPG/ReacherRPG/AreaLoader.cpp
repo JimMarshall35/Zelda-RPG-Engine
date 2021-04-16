@@ -49,6 +49,9 @@ bool AreaLoader::tilesetChecks(const rapidjson::Value& val) {
 bool AreaLoader::loadArea(std::string folder, std::string file, Area & arearef)
 {
 	using namespace rapidjson;
+
+	
+
 	std::cout << "loading file " << folder << "/" << file << std::endl;
 	std::chrono::high_resolution_clock::time_point t0 = std::chrono::high_resolution_clock::now();
 	arearef.freeData();
@@ -69,7 +72,7 @@ bool AreaLoader::loadArea(std::string folder, std::string file, Area & arearef)
 	if (!loadLayers(doc, arearef)) { return false; }
 
 	TileSet t = arearef.tilesets[0];
-	arearef.tilelayers.genLayersTextures(t,arearef.tilelayers.bg_layers,arearef.tilelayers.num_bg_layers);
+	arearef.tilelayers.genLayersTextures(t, arearef.tilelayers.bg_layers, arearef.tilelayers.num_bg_layers);
 	arearef.tilelayers.genLayersTextures(t, arearef.tilelayers.fg_layers, arearef.tilelayers.num_fg_layers);
 	arearef.tilelayers.setInitialScale();
 	std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
@@ -118,7 +121,7 @@ bool AreaLoader::loadTilesets(const rapidjson::Document & doc, Area & arearef, s
 			for (SizeType j = 0; j < doc["metasprites"].Size(); j++) {
 				const Value& metasprite = doc["metasprites"][j];
 				if (!checkJSONValue("name", JSONTYPE::STRING, metasprite)) {
-					std::cerr << "object "<< j << " in metasprites of tileset "<< path  << std::endl;
+					std::cerr << "object " << j << " in metasprites of tileset " << path << std::endl;
 					break;
 				}
 				if (!checkJSONValue("tiles", JSONTYPE::ARRAY, metasprite)) {
@@ -132,7 +135,7 @@ bool AreaLoader::loadTilesets(const rapidjson::Document & doc, Area & arearef, s
 				unsigned int width = metasprite["width"].GetInt();
 				std::string name = metasprite["name"].GetString();
 				unsigned int numtiles = metasprite["tiles"].Size();
-				unsigned int* tiles = new unsigned int [numtiles];
+				unsigned int* tiles = new unsigned int[numtiles];
 				for (SizeType k = 0; k < numtiles; k++) {
 					tiles[k] = metasprite["tiles"][k].GetInt();
 				}
@@ -211,13 +214,13 @@ bool AreaLoader::loadLayers(const rapidjson::Document & doc, Area & arearef)
 				std::string objname = object["name"].GetString();
 				std::string objtype = object["type"].GetString();
 				if (objname == "start_point") {
-					
+
 					if (!checkJSONValue("x", JSONTYPE::NUMBER, object)) { continue; }
 					if (!checkJSONValue("y", JSONTYPE::NUMBER, object)) { continue; }
 					float json_x = object["x"].GetFloat();
 					float json_y = object["y"].GetFloat();
-					
-					glm::vec2 player_start_pos = tiledPosToGameEnginePos(glm::vec2(json_x,json_y),arearef);
+
+					glm::vec2 player_start_pos = tiledPosToGameEnginePos(glm::vec2(json_x, json_y), arearef);
 					/////////////////////////////// BAD HARD CODED CODE STARTS
 
 					Player* player = new Player();
@@ -254,7 +257,7 @@ bool AreaLoader::loadLayers(const rapidjson::Document & doc, Area & arearef)
 					player->animator.set_anim("walk_down");
 					player->scale *= glm::vec2(
 						player_tileset->tilewidth / (arearef.tilelayers.tilewidth * 40.0),
-						player_tileset->tileheight/(arearef.tilelayers.tileheight * 40.0)
+						player_tileset->tileheight / (arearef.tilelayers.tileheight * 40.0)
 					);
 					player->position = player_start_pos;
 #define RESOLUTION 16.0f
@@ -296,7 +299,7 @@ bool AreaLoader::loadLayers(const rapidjson::Document & doc, Area & arearef)
 						(s_sprite->scale.x * 2.0f) / 2.0f,
 						(s_sprite->scale.y * 2.0f) / 2.0f
 					);
-					
+
 					s_sprite->collider.top_offset = t_offset.f;
 					s_sprite->collider.bottom_offset = b_offset.f;
 					s_sprite->collider.left_offset = l_offset.f;
@@ -318,7 +321,7 @@ bool AreaLoader::loadLayers(const rapidjson::Document & doc, Area & arearef)
 bool AreaLoader::getTiledObjectProperty(const rapidjson::Value & props_array, std::string name, TiledProperty & output)
 {
 	using namespace rapidjson;
-	if(!props_array.IsArray()){ 
+	if (!props_array.IsArray()) {
 		std::cout << "getTiledObjectProperty has been passed a rapidjson value that is not an array" << std::endl;
 		return false;
 	}

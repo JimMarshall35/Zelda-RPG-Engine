@@ -3,6 +3,14 @@
 #include "Rendering.h"
 #include "Animator.h"
 
+
+extern "C" {
+#include "lua535/include/lua.h"
+#include "lua535/include/lauxlib.h"
+#include "lua535/include/lualib.h"
+}
+
+
 enum class GO_TYPE {
 	PLAYER,
 	DOOR,
@@ -89,3 +97,14 @@ public:
 	Sprite* sprite;
 };
 
+bool checkLua(lua_State* L, int r);
+class ScriptableGameObject : public GameObject {
+public:
+	ScriptableGameObject(std::string script);
+	virtual void    onInteract(GameObject* other);
+	virtual void    update(float delta, GLuint keys);
+	virtual void    draw(Shader& s, const Camera* camera) {};
+	virtual void    freeData() {};
+private:
+	lua_State*      L;
+};

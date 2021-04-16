@@ -3,6 +3,53 @@
 #define NUM_CHANNELS 4
 #define VERTICES_SIZE 20
 #define FLOATS_PER_VERTEX 5
+
+GLuint Sprite::FullImgVAO;
+
+
+
+void Sprite::generateFullImgVAO() {
+	GLClearErrors();
+	GLuint VBO;
+	GLuint EBO;
+	glGenVertexArrays(1, &FullImgVAO);
+	GLPrintErrors("glGenVertexArrays(1, &VAO);");
+	glGenBuffers(1, &VBO);
+	GLPrintErrors("glGenBuffers(1, &VBO);");
+	glGenBuffers(1, &EBO);
+	GLPrintErrors("glGenBuffers(1, &EBO);");
+	glBindVertexArray(FullImgVAO);
+	GLPrintErrors("glBindVertexArray(VAO);");
+
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	GLPrintErrors("glBindBuffer(GL_ARRAY_BUFFER, VBO);");
+	glBufferData(GL_ARRAY_BUFFER, sizeof(Full_img_vertices), Full_img_vertices, GL_STATIC_DRAW);
+	GLPrintErrors("glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);");
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+	GLPrintErrors("glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);");
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(full_img_indices), full_img_indices, GL_STATIC_DRAW);
+	GLPrintErrors("glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);");
+	// position attribute
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, FLOATS_PER_VERTEX * sizeof(float), (void*)0);
+	GLPrintErrors("glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);");
+	glEnableVertexAttribArray(0);
+	GLPrintErrors("glEnableVertexAttribArray(0);");
+	// texcoords attribute
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, FLOATS_PER_VERTEX * sizeof(float), (void*)(3 * sizeof(float)));
+	GLPrintErrors("glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));");
+	glEnableVertexAttribArray(1);
+	GLPrintErrors("glEnableVertexAttribArray(1);");
+	glBindBuffer(GL_ARRAY_BUFFER, 0); // Note that this is allowed, the call to glVertexAttribPointer registered VBO as the currently bound vertex buffer object so afterwards we can safely unbind
+	GLPrintErrors("glBindBuffer(GL_ARRAY_BUFFER, 0);");
+	glBindVertexArray(0); // Unbind VAO (it's always a good thing to unbind any buffer/array to prevent strange bugs)
+	GLPrintErrors("glBindVertexArray(0);");
+	std::cout << "Static full img VAO = " << FullImgVAO << std::endl;
+}
+
+
+
+
 void Sprite::setup_base(
 	unsigned int img_width, unsigned int img_height,
 	unsigned int sheet_x, unsigned int sheet_y,
@@ -34,9 +81,9 @@ Sprite::Sprite()
 {
 }
 void Sprite::setup_preexisting(
-	GLuint tex_id, 
-	unsigned int img_width, unsigned int img_height, 
-	unsigned int sheet_x, unsigned int sheet_y, 
+	GLuint tex_id,
+	unsigned int img_width, unsigned int img_height,
+	unsigned int sheet_x, unsigned int sheet_y,
 	unsigned int sheet_w, unsigned int sheet_h)
 {
 
@@ -50,12 +97,12 @@ void Sprite::setup_preexisting(
 }
 
 void Sprite::setup(
-	unsigned char * img_data, 
-	unsigned int img_width, unsigned int img_height, 
-	unsigned int sheet_x, unsigned int sheet_y, 
+	unsigned char * img_data,
+	unsigned int img_width, unsigned int img_height,
+	unsigned int sheet_x, unsigned int sheet_y,
 	unsigned int sheet_w, unsigned int sheet_h)
 {
-	
+
 	setup_base(
 		img_width, img_height,
 		sheet_x, sheet_y,
@@ -67,14 +114,17 @@ void Sprite::setup(
 }
 
 void Sprite::freeData() {
-	glDeleteVertexArrays(1, &VAO);
+	if (VAO != FullImgVAO) {
+		glDeleteVertexArrays(1, &VAO);
+	}
+	
 	glDeleteTextures(1, &TextureID);
 }
 
 void Sprite::draw(const glm::vec2 pos, const glm::vec3 scale, Shader& s, const Camera* camera)
 {
 	GLClearErrors();
-	
+
 	s.use();
 	s.setInt("Texture", 0);
 	GLPrintErrors("s.setInt(\"Texture\", 0);");
@@ -97,7 +147,7 @@ void Sprite::draw(const glm::vec2 pos, const glm::vec3 scale, Shader& s, const C
 	GLPrintErrors((std::string("glBindTexture(GL_TEXTURE_2D, TextureID); ID= ") + std::to_string(TextureID)).c_str());
 
 	glBindVertexArray(VAO);
-	GLPrintErrors((std::string("glBindVertexArray(VAO); VAO =  ")+std::to_string(VAO)).c_str());
+	GLPrintErrors((std::string("glBindVertexArray(VAO); VAO =  ") + std::to_string(VAO)).c_str());
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 	GLPrintErrors("glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);");
 
@@ -144,4 +194,28 @@ void Sprite::genbuffers()
 	glBindVertexArray(0); // Unbind VAO (it's always a good thing to unbind any buffer/array to prevent strange bugs)
 	GLPrintErrors("glBindVertexArray(0);");
 	std::cout << "VAO = " << VAO << std::endl;
+}
+void Sprite::setup(unsigned char* img_data, unsigned int img_width, unsigned int img_height) {
+	GPULoadTexture(img_data, img_width, img_height, &TextureID);
+	VAO = FullImgVAO;
+}
+
+
+
+void Sprite::setup_preexisting(GLuint tex_id, unsigned int img_width, unsigned int img_height) {
+	TextureID = tex_id;
+	VAO = FullImgVAO;
+}
+void Sprite::freeFullImgVAO() {
+	glDeleteVertexArrays(1, &FullImgVAO);
+}
+
+void initRendering()
+{
+	Sprite::generateFullImgVAO();
+}
+
+void cleanupRendering()
+{
+	Sprite::freeFullImgVAO();
 }
