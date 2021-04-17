@@ -1,7 +1,7 @@
 #include "GameObject.h"
 
 #define TEST_SPEED      0.3
-#define TEST_ZOOM_SPEED 1
+#define TEST_ZOOM_SPEED 2
 #define UP_BIT       0
 #define DOWN_BIT     1
 #define LEFT_BIT     2
@@ -37,13 +37,11 @@ void Player::update(float delta, GLuint keys)
 	if (newkeys == 0 && keys != lastkeys) { // no new keys have been pressed, but the state is different from the last state
 		newkeys = keys;                     // therefore a key that was held last frame has now been released
 	}
-	if (newkeys != 0) {
-		if (newkeys & (1 << UP_BIT)) { direction = DIRECTION::UP; }
-		else if (newkeys & (1 << DOWN_BIT)) { direction = DIRECTION::DOWN; }
-		else if (newkeys & (1 << LEFT_BIT)) { direction = DIRECTION::LEFT; }
-		else if (newkeys & (1 << RIGHT_BIT)) { direction = DIRECTION::RIGHT; }
 
-	}
+	if      (newkeys & (1 << UP_BIT))    { direction = DIRECTION::UP; }
+	else if (newkeys & (1 << DOWN_BIT))  { direction = DIRECTION::DOWN; }
+	else if (newkeys & (1 << LEFT_BIT))  { direction = DIRECTION::LEFT; }
+	else if (newkeys & (1 << RIGHT_BIT)) { direction = DIRECTION::RIGHT; }
 
 	if (!(keys & (1 << UP_BIT)) &&
 		!(keys & (1 << DOWN_BIT)) &&
@@ -76,22 +74,21 @@ void Player::update(float delta, GLuint keys)
 		vel += glm::vec2(1, 0);
 		break;
 	}
-	vel = vel * delta * (float)TEST_SPEED;
-	velocity = vel;
+
+	velocity = vel * delta * (float)TEST_SPEED;
+
 	if (keys & (1 << ZOOM_IN_BIT)) {
 		Camera::Instance()->zoom += (TEST_ZOOM_SPEED * delta);
-		Camera::Instance()->setPositionClamped(glm::vec2(position.x + velocity.x, position.y + velocity.y));
 	}
 	else if (keys & (1 << ZOOM_OUT_BIT)) {
 		Camera::Instance()->zoom += -(TEST_ZOOM_SPEED * delta);
 		if (Camera::Instance()->zoom < 1.0) {
 			Camera::Instance()->zoom = 1.0;
 		}
-		Camera::Instance()->setPositionClamped(glm::vec2(position.x + velocity.x, position.y + velocity.y));
 	}
-	else {
-		Camera::Instance()->setPositionClamped(glm::vec2(position.x + velocity.x, position.y + velocity.y));
-	}
+
+	Camera::Instance()->setPositionClamped(glm::vec2(position.x, position.y));
+
 	lastkeys = keys;
 }
 

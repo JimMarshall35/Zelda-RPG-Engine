@@ -9,6 +9,7 @@
 #include "Shader.h"
 #include "AreaLoader.h"
 #include "Camera.h"
+#include "UI.h"
 GLFWwindow* window;
 using namespace glm;
 int GLFWInit();
@@ -25,17 +26,18 @@ int main(void)
 	}
 	inputInit(window);
 	initRendering();
-	Shader shader("shaders/background_vert.glsl", "shaders/background_frag.glsl");
+	Shader shader("shaders/sprite_vert.glsl", "shaders/sprite_frag.glsl");
 	Camera* camera = Camera::Instance();
 	Area a;
 
 	if (!AreaLoader::Instance()->loadArea("json", "lvl1_test5.json", a)) {
 		std::cout << "failed to load level" << std::endl;
 	}
+	
 
-	//b.debugPrint();
+	UI ui = UI("fonts/NineteenEightySeven-MzMJ.ttf");
 
-	//int testtile = a.getBackGround()->getTileAtPosition(glm::vec2(0, 0), "structure");
+	
 
 	glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
 	double delta;
@@ -48,10 +50,13 @@ int main(void)
 		last = now;
 		//update
 		//Camera::Instance()->testUpdate(keys, delta, a.getBackGround()->get_base_scale());
-		a.update(delta, keys);
+		a.update(delta, keys); 
 		//render
 		glClear(GL_COLOR_BUFFER_BIT);
 		a.draw(shader, camera);
+
+		
+		ui.drawFPS(delta);
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 
@@ -68,6 +73,7 @@ int main(void)
 	} // Check if the ESC key was pressed or the window was closed
 	while (glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS &&
 		glfwWindowShouldClose(window) == 0);
+	ui.freeData();
 	cleanupRendering();
 	// Close OpenGL window and terminate GLFW
 	glfwTerminate();
@@ -93,7 +99,7 @@ int GLFWInit() {
 	// Open a window and create its OpenGL context
 	window = glfwCreateWindow(1024, 1024, "RPG", NULL, NULL);
 	if (window == NULL) {
-		fprintf(stderr, "Failed to open GLFW window. If you have an Intel GPU, they are not 3.3 compatible. Try the 2.1 version of the tutorials.\n");
+		fprintf(stderr, "Failed to open GLFW window. If you have an Intel GPU, they are not 3.3 compatible.\n");
 		getchar();
 		glfwTerminate();
 		return -1;
@@ -108,14 +114,13 @@ int GLFWInit() {
 		return -1;
 	}
 
+	GLClearErrors();
 	// Ensure we can capture the escape key being pressed below
 	glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
-
+	GLPrintErrors("glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);");
 	glEnable(GL_BLEND);
-
-
+	GLPrintErrors("glEnable(GL_BLEND);");
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-
+	GLPrintErrors("glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);");
 	return 0;
 }

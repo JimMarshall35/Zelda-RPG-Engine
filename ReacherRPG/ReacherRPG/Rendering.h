@@ -7,6 +7,11 @@
 #include "Camera.h"
 #include "gl_error_handling.h"
 #include "GLTextureHelper.h"
+#include <map>
+
+#include <ft2build.h>
+#include FT_FREETYPE_H  
+
 
 static float vertices[20] = {
 	// position            tex coordinates
@@ -72,6 +77,47 @@ private:
 
 };
 
-void initRendering();
+class TextRenderer {
+	// code mostly copy and pasted from learnopengl.com section on text rendering and made into this class 
+public:
+	TextRenderer();
+	void RenderText(std::string text, float x, float y, float scale, glm::vec3 color);
+	void init(std::string font);
+	GLuint getVAO() { return VAO; }
+	GLuint getVBO() { return VBO; }
+	void freeData();
+private:
+	void genBuffers();
+	struct Character {
+		unsigned int TextureID;  // ID handle of the glyph texture
+		glm::ivec2   Size;       // Size of glyph
+		glm::ivec2   Bearing;    // Offset from baseline to left/top of glyph
+		unsigned int Advance;    // Offset to advance to next glyph - (in 1/64th pixels)
+	};
+	std::map<char, Character> Characters;
+	
+	GLuint VAO, VBO;
+	Shader shader;
+};
 
+class UISpriteRenderer {
+public:
+	void RenderSprite(std::string name, float x, float y, float scale);
+	void SetVAOandVBO(GLuint pVAO, GLuint pVBO) { VAO = pVAO; VBO = pVBO; }
+	bool loadUISprite(std::string img_path, std::string name);
+	void init();
+	void freeData();
+private:
+	struct UISprite {
+		unsigned int TextureID;  // ID handle of the glyph texture
+		glm::ivec2   Size;       // Size of glyph
+		glm::ivec2   Bearing;    // Offset from baseline to left/top of glyph
+	};
+	std::map<std::string, UISprite> sprites;
+	GLuint VAO, VBO;
+	Shader shader;
+};
+
+
+void initRendering();
 void cleanupRendering();
