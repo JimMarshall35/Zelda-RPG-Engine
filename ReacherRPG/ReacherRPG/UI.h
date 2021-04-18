@@ -9,7 +9,8 @@ public:
 	void drawFPS(float delta);
 	void freeData();
 private:
-	TextRenderer text_renderer;
+	TextRenderer     text_renderer;
 	UISpriteRenderer sprite_renderer;
+	void             renderMsgBox(std::string Contents);
 };
 

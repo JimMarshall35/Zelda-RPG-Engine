@@ -1,5 +1,5 @@
 #include "UI.h"
-
+#include <vector>
 
 
 UI::UI()
@@ -14,7 +14,8 @@ UI::UI(std::string font)
 	                                                                              // contains the vao and vbo's used for ui rendering
 	                                                                              // to prevent this weird  bit
 	sprite_renderer.init();
-	sprite_renderer.loadUISprite("Spritesheet/rune_tome.png", "rune_tome");
+	sprite_renderer.loadUISprite("Spritesheet/heart pixel art 32x32.png", "heart");
+	sprite_renderer.loadUISprite("Spritesheet/msg_box_3.png", "msgbox");
 }
 UI::~UI()
 {
@@ -35,11 +36,60 @@ void UI::drawFPS(float delta)
 	}
 	std::string fps_str = std::to_string(fps).substr(0,6) + " fps";
 	text_renderer.RenderText(fps_str, 25.0f, 970, 0.5f, glm::vec3(0.5, 0.8f, 0.2f));
-	sprite_renderer.RenderSprite("rune_tome", 150, 150, 2);
+	sprite_renderer.RenderSprite("heart", 25.0, 960, 1);
+	sprite_renderer.RenderSprite("heart", 57, 960, 1);
+	sprite_renderer.RenderSprite("heart", 89, 960, 1);
+	renderMsgBox("hello world! The quick brown fox jumped over the lazy dog. GOod game mate");
 }
 
 void UI::freeData()
 {
 	text_renderer.freeData();
 	sprite_renderer.freeData();
+}
+#define ASCII_SPACE  0x20
+void UI::renderMsgBox(std::string Contents)
+{
+	const float text_x_offset = 20;
+	const float text_y_offset = -50;
+	const float msgbox_scale = 2.5;
+	const float msgbox_bottom_offset = 50;
+	const float text_scale = 0.5f;
+	glm::ivec2 msgbox_size = sprite_renderer.getSpriteSize("msgbox");
+	std::vector<std::string> lines;
+	unsigned int string_length = text_renderer.geTextWidth(Contents) *0.5;
+
+	float accumulated_length = 0;
+	std::string::const_iterator c;
+	c = Contents.begin();
+	std::string string_being_built;
+	while (c != Contents.end())
+	{
+		string_being_built += *c;
+		float width = text_renderer.geTextWidth(string_being_built) * text_scale;
+		if (width >= (msgbox_size.x*msgbox_scale) - 2*text_x_offset) {
+			lines.push_back(string_being_built);
+			char next = ASCII_SPACE;
+			if (c + 1 != Contents.end()) {
+				next = *(c + 1);
+			}
+			if (*c != ASCII_SPACE && (next != ASCII_SPACE)) {
+				string_being_built = "...";
+			}
+			else {
+				string_being_built = "";
+			}
+		}
+		c++;
+	}
+	lines.push_back(string_being_built);
+	float xpos = 512 - (msgbox_scale * (msgbox_size.x / 2));
+	float ypos = msgbox_size.y * msgbox_scale + msgbox_bottom_offset;
+	sprite_renderer.RenderSprite("msgbox", xpos, ypos, msgbox_scale);
+	for (size_t i = 0; i < lines.size(); i++) {
+		std::string line = lines[i];
+		text_renderer.RenderText(line, xpos + text_x_offset, ypos + text_y_offset - (i*48), 0.5, glm::vec3(1.0, 1.0, 1.0));
+	}
+	
+	
 }

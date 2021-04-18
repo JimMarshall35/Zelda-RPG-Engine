@@ -1,7 +1,7 @@
 #include "Rendering.h"
 #include "stb_image.h"
 #include <iterator>
-
+#include <vector>
 #define NUM_CHANNELS 4
 #define VERTICES_SIZE 20
 #define FLOATS_PER_VERTEX 5
@@ -290,7 +290,6 @@ void TextRenderer::RenderText(std::string text, float x, float y, float scale, g
 	//glUniform3f(glGetUniformLocation(s.Program, "textColor"), color.x, color.y, color.z);
 
 	
-	GLPrintErrors("shader.setMat4(\"projection\", projection);");
 	shader.setVec3("textColour",colour);
 	GLPrintErrors("s.setVec3(\"textColour\",colour);");
 	glActiveTexture(GL_TEXTURE0);
@@ -347,6 +346,19 @@ void TextRenderer::freeData()
 	}
 
 	Characters.clear();
+}
+unsigned int TextRenderer::geTextWidth(std::string text)
+{
+	unsigned int accumulated_width = 0;
+
+	std::string::const_iterator c;
+	
+	
+	for (c = text.begin(); c != text.end(); c++) {
+		Character ch = Characters[*c];
+		accumulated_width += ch.Advance;
+	}
+	return accumulated_width >> 6;
 }
 void TextRenderer::genBuffers() {
 	GLClearErrors();

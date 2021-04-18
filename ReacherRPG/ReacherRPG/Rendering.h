@@ -86,6 +86,7 @@ public:
 	GLuint getVAO() { return VAO; }
 	GLuint getVBO() { return VBO; }
 	void freeData();
+	unsigned int geTextWidth(std::string text);
 private:
 	void genBuffers();
 	struct Character {
@@ -107,6 +108,7 @@ public:
 	bool loadUISprite(std::string img_path, std::string name);
 	void init();
 	void freeData();
+	glm::ivec2 getSpriteSize(std::string name) { return sprites[name].Size; }
 private:
 	struct UISprite {
 		unsigned int TextureID;  // ID handle of the glyph texture
