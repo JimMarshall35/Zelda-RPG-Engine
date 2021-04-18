@@ -5,9 +5,9 @@
 struct MessageBox {                           // not used yet
 	std::vector<std::string> lines;
 	//std::string lines[20];
-	float text_x_offset = 25;
-	float text_y_offset = -50;
-	float msgbox_scale = 2.5;
+	float text_x_offset = 35;
+	float text_y_offset = 50;
+	float msgbox_scale = 3;
 	float msgbox_bottom_offset = 50;
 	float text_scale = 0.5f;
 	float xpos;

@@ -70,7 +70,7 @@ void UI::renderMsgBox()
 	sprite_renderer.RenderSprite("msgbox", xpos, ypos, m.msgbox_scale);
 	for (size_t i = 0; i < m.lines.size(); i++) {
 		std::string line = m.lines[i];
-		text_renderer.RenderText(line, xpos + m.text_x_offset, ypos + m.text_y_offset - (i*base_text_height*m.text_scale), 0.5, glm::vec3(1.0, 1.0, 1.0));
+		text_renderer.RenderText(line, xpos + m.text_x_offset, ypos - m.text_y_offset - (i*base_text_height*m.text_scale), 0.5, glm::vec3(1.0, 1.0, 1.0));
 	}
 	
 	
@@ -78,8 +78,7 @@ void UI::renderMsgBox()
 
 void UI::enqueMsgBoxes(std::string text, std::queue<MessageBox>& queue)
 {
-	std::vector<MessageBox> boxes;
-	boxes.push_back(MessageBox());
+
 	MessageBox m;
 	glm::ivec2 msgbox_size = sprite_renderer.getSpriteSize("msgbox");
 	unsigned int string_length = text_renderer.geTextWidth(text) * m.text_scale;
@@ -94,10 +93,9 @@ void UI::enqueMsgBoxes(std::string text, std::queue<MessageBox>& queue)
 	{
 		string_being_built += *c;
 		float width = text_renderer.geTextWidth(string_being_built) * m.text_scale;
-		if(height >= (msgbox_size.y*m.msgbox_scale) + 2 * m.text_y_offset){
-			m.lines.push_back(string_being_built);
+		if(height >= (msgbox_size.y*m.msgbox_scale) - 2 * m.text_y_offset + text_renderer.getBaseTextHeight() * m.text_scale){
+			//m.lines.push_back(string_being_built);
 			queue.push(m);
-			boxes.push_back(m);
 			m.lines.clear();
 			height = 0;
 		}
@@ -118,7 +116,8 @@ void UI::enqueMsgBoxes(std::string text, std::queue<MessageBox>& queue)
 		}
 		c++;
 	}
-	
+	m.lines.push_back(string_being_built);
+	queue.push(m);
 }
 
 void UI::updateFPS(float delta)
