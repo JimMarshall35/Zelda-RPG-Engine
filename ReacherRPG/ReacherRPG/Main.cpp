@@ -28,15 +28,7 @@ int main(void)
 	initRendering();
 	Shader shader("shaders/sprite_vert.glsl", "shaders/sprite_frag.glsl");
 	Camera* camera = Camera::Instance();
-	//Area a;
 
-	//if (!AreaLoader::Instance()->loadArea("json", "lvl1_test5.json", a)) {
-	//	std::cout << "failed to load level" << std::endl;
-	//}
-	
-
-	//UI ui = UI("fonts/NineteenEightySeven-MzMJ.ttf");
-	//std::queue<MessageBox> queue;
 	Game g;
 	g.loadArea("json", "lvl1_test5.json");
 	g.enqueueMsgBoxes("Kick it! You wake up late for school, man you don't want to go. You ask your mom, please? but she still says, no. You missed two classes, and no homework. But your teacher preaches class like you're some kind of jerk. You gotta fight for your right to party.Your pops caught you smoking, and he says, \"No way!\" That hypocrite smokes two packs a day. Man, living at home is such a drag.Now your mom threw away your best porno mag (bust it!). You gotta fight for your right to party. You gotta fight. Don't step out of this house if that's the clothes you're gonna wear. I'll kick you out of my home if you don't cut that hair. Your mom busted in and said, what's that noise?Aw, mom you're just jealous it's the Beastie Boys. You gotta fight for your right to party. You gotta fight for your right to party. Party. Party.");

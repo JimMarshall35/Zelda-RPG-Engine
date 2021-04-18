@@ -3,13 +3,12 @@
 #include "Rendering.h"
 #include "Animator.h"
 
-
 extern "C" {
 #include "lua535/include/lua.h"
 #include "lua535/include/lauxlib.h"
 #include "lua535/include/lualib.h"
 }
-
+class Game;
 
 enum class GO_TYPE {
 	PLAYER,
@@ -17,6 +16,7 @@ enum class GO_TYPE {
 	PICKUP,
 	ENEMY,
 	SCENERY,
+	ZONE,
 	NONE
 };
 struct Rect {
@@ -105,6 +105,32 @@ public:
 		sprite->draw(position, glm::vec3(scale,1.0f), s, camera);  
 	}
 	Sprite* sprite;
+};
+class DialogueTrigger : public GameObject {
+public:
+	DialogueTrigger() {
+		type = GO_TYPE::ZONE;
+		isdrawable = false;
+		issolidvsgameobjects = false;
+		isstatic = true;
+	}
+	DialogueTrigger(Game* pgame, std::string ptext) {
+		game = pgame;
+		text = ptext;
+		type = GO_TYPE::ZONE;
+		isdrawable = false;
+		issolidvsgameobjects = false;
+		isstatic = true;
+	}
+	virtual void onInteract(GameObject* other);
+	virtual void update(float delta, GLuint keys){}
+	void         setGamePtr(Game* pui) { game = pui; }
+	void         setString(std::string ptext) { text = ptext; }
+private:
+	std::string text;
+	bool        spent = false;
+	Game*       game = nullptr;
+
 };
 
 bool checkLua(lua_State* L, int r);

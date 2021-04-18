@@ -1310,6 +1310,23 @@
                  "width":16,
                  "x":368,
                  "y":800
+                }, 
+                {
+                 "height":64,
+                 "id":54,
+                 "name":"car_dialogue",
+                 "properties":[
+                        {
+                         "name":"text",
+                         "type":"string",
+                         "value":"Here is a car - it looks as though its broken down but the owner is nowhere to be seen. Perhaps they've gone to get help."
+                        }],
+                 "rotation":0,
+                 "type":"dialogue_trigger",
+                 "visible":true,
+                 "width":64,
+                 "x":544,
+                 "y":528
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -1318,7 +1335,7 @@
          "y":0
         }],
  "nextlayerid":96,
- "nextobjectid":54,
+ "nextobjectid":55,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.5.0",

@@ -161,6 +161,7 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GLTextureHelper.h" />
     <ClInclude Include="gl_error_handling.h" />
+    <ClInclude Include="Engine.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="jsonhelper.h" />
     <ClInclude Include="Rendering.h" />

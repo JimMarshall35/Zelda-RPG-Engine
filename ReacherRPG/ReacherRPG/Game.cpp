@@ -13,6 +13,7 @@ Game::~Game()
 
 void Game::loadArea(std::string folder, std::string file)
 {
+	area.game = this;
 	if (!AreaLoader::Instance()->loadArea(folder, file, area)) {
 		std::cout << "failed to load level" << std::endl;
 	}

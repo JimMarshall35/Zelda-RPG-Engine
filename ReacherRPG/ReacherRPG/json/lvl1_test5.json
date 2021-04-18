@@ -2199,16 +2199,22 @@
                  "y":192
                 }, 
                 {
-                 "gid":643,
-                 "height":16,
-                 "id":78,
-                 "name":"",
+                 "gid":1035,
+                 "height":32,
+                 "id":80,
+                 "name":"fence_dialogue",
+                 "properties":[
+                        {
+                         "name":"text",
+                         "type":"string",
+                         "value":"A hole in the fence - i might be able to get through it"
+                        }],
                  "rotation":0,
-                 "type":"",
+                 "type":"dialogue_trigger",
                  "visible":true,
-                 "width":16,
-                 "x":32,
-                 "y":-240
+                 "width":32,
+                 "x":80,
+                 "y":432
                 }],
          "opacity":0.97,
          "type":"objectgroup",
@@ -2217,7 +2223,7 @@
          "y":0
         }],
  "nextlayerid":99,
- "nextobjectid":79,
+ "nextobjectid":81,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.5.0",

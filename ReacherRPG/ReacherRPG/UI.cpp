@@ -10,7 +10,7 @@ UI::UI()
 																				  // to prevent this weird  bit
 	sprite_renderer.init();
 	sprite_renderer.loadUISprite("Spritesheet/heart pixel art 32x32.png", "heart");
-	sprite_renderer.loadUISprite("Spritesheet/msg_box_3.png", "msgbox");
+	sprite_renderer.loadUISprite("Spritesheet/msg_box_2.png", "msgbox");
 }
 
 UI::UI(std::string font)
@@ -76,7 +76,7 @@ void UI::renderMsgBox()
 	
 }
 
-void UI::enqueMsgBoxes(std::string text, std::queue<MessageBox>& queue)
+void UI::emqueueMsgBoxes(std::string text, std::queue<MessageBox>& queue)
 {
 
 	MessageBox m;

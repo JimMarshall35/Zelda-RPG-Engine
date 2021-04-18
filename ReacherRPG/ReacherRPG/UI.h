@@ -24,7 +24,7 @@ public:
 	void             draw();
 	void             drawFPS();
 	void             freeData();
-	void             enqueMsgBoxes(std::string text, std::queue<MessageBox>& queue);
+	void             emqueueMsgBoxes(std::string text, std::queue<MessageBox>& queue);
 	void             setMsgBox(MessageBox* m) { currentMsgBox = m; }
 private:
 	void             updateFPS(float delta);

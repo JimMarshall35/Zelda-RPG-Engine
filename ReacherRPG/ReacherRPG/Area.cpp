@@ -32,24 +32,40 @@ void Area::draw(Shader & s, const Camera * camera)
 
 void Area::update(float delta, GLuint keys)
 {
+	const int sample_size = 50;
+	static int numcounts = 0;
+	static double accumulated_total;
+	std::chrono::high_resolution_clock::time_point t0 = std::chrono::high_resolution_clock::now();
 	for (size_t i = 0; i < gameobjects.size(); i++) {
 		gameobjects[i]->update(delta, keys);
 	}
-	/*
+	//std::vector<GameObject*> go_copy;
+	//go_copy = gameobjects;
+	
 	for (size_t i = 0; i < gameobjects.size(); i++) {
 		GameObject* go1 = gameobjects[i];
 		for (size_t j = 0; j < gameobjects.size(); j++) {
 			GameObject* go2 = gameobjects[j];
 			if (go1 != go2) {
-				if (AABBCollision(go1, go2)) {
+				if (AABBCollision(go1, go2,go1->velocity,go2->velocity)) {
 					go1->onInteract(go2);
 				}
 			}
-			
 		}
 	}
-	*/
+	
 	updatePhysics();
+
+	std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
+	std::chrono::duration<double> time_span = std::chrono::duration_cast<std::chrono::duration<double>>(t1 - t0);
+	accumulated_total += time_span.count();
+	numcounts++;
+	if (numcounts >= sample_size) {
+		std::cout << "update done in " << (accumulated_total/numcounts) * 1000 << " ms" << std::endl;
+		numcounts = 0;
+		accumulated_total = 0;
+	}
+	
 }
 
 TileSet * Area::getTilesetByName(std::string name)

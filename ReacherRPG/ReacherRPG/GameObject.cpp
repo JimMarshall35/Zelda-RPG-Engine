@@ -1,5 +1,5 @@
 #include "GameObject.h"
-
+#include "Game.h"
 #define TEST_SPEED      0.3
 #define TEST_ZOOM_SPEED 2
 #define UP_BIT       0
@@ -138,4 +138,17 @@ bool checkLua(lua_State * L, int r)
 		return false;
 	}
 	return true;
+}
+
+void DialogueTrigger::onInteract(GameObject * other)
+{
+	std::cout << "dialogue box collision" << std::endl;
+	switch (other->type) {
+	case GO_TYPE::PLAYER:
+		if (!spent) {
+			game->enqueueMsgBoxes(text);
+			spent = true;
+		}
+		break;
+	}
 }

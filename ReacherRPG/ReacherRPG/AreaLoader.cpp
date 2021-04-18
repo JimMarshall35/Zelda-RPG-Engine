@@ -313,6 +313,31 @@ bool AreaLoader::loadLayers(const rapidjson::Document & doc, Area & arearef)
 
 					arearef.gameobjects.push_back(s_sprite);
 				}
+				else if (objtype == "dialogue_trigger") {
+					TiledProperty text;
+					if (!getTiledObjectProperty(object["properties"], "text", text)) {}
+					DialogueTrigger* d_trigger = new DialogueTrigger(arearef.getGamePtr(), "hello world");
+					glm::vec2 json_pos(object["x"].GetFloat(), object["y"].GetFloat());
+					d_trigger->position = tiledPosToGameEnginePos(json_pos, arearef);
+					d_trigger->scale *= glm::vec2(
+						object["width"].GetFloat() / (arearef.tilelayers.tilewidth * 40.0),
+						object["height"].GetFloat() / (arearef.tilelayers.tileheight * 40.0)
+					);
+
+					d_trigger->position += glm::vec2(             // need to properly sort out translation from tiled coordinates to this game's
+						(d_trigger->scale.x * (2.0f)) / 2.0f,
+						-(d_trigger->scale.y * (2.0f)) / 2.0f
+					);
+					d_trigger->setString(text.s);
+					d_trigger->collider.pixelswidth = object["width"].GetFloat();
+					d_trigger->collider.pixelsheight = object["height"].GetFloat();
+					d_trigger->collider.top_offset = 0;
+					d_trigger->collider.bottom_offset = 0;
+					d_trigger->collider.left_offset = 0;
+					d_trigger->collider.right_offset = 0;
+					d_trigger->collider.init(d_trigger);
+					arearef.gameobjects.push_back(d_trigger);
+				}
 			}
 		}
 	}
