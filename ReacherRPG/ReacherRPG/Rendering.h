@@ -121,9 +121,9 @@ private:
 	GLuint VAO, VBO;
 	Shader shader;
 };
-
+/*
 struct MessageBox {                           // not used yet
-	std::vector < std::string> lines;
+	std::vector<std::string> lines;
 	float text_x_offset = 25;
 	float text_y_offset = -50;
 	float msgbox_scale = 2.5;
@@ -132,5 +132,6 @@ struct MessageBox {                           // not used yet
 	float xpos;
 	float ypos;
 };
+*/
 void initRendering();
 void cleanupRendering();

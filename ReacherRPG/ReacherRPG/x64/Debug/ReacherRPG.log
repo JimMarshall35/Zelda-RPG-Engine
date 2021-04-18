@@ -1,4 +1,49 @@
-﻿  UI.cpp
+﻿  Animator.cpp
 c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\shader.h(58): warning C4101: 'e': unreferenced local variable
-c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\ui.cpp(65): warning C4244: 'initializing': conversion from 'float' to 'unsigned int', possible loss of data
+  Area.cpp
+c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\shader.h(58): warning C4101: 'e': unreferenced local variable
+c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\area.cpp(123): warning C4101: 'bottom1': unreferenced local variable
+c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\area.cpp(123): warning C4101: 'right1': unreferenced local variable
+c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\area.cpp(127): warning C4101: 'right2': unreferenced local variable
+c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\area.cpp(127): warning C4101: 'bottom2': unreferenced local variable
+c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\area.cpp(154): warning C4101: 'bottom1': unreferenced local variable
+c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\area.cpp(154): warning C4101: 'right1': unreferenced local variable
+c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\area.cpp(161): warning C4101: 'right2': unreferenced local variable
+c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\area.cpp(161): warning C4101: 'bottom2': unreferenced local variable
+  AreaLoader.cpp
+c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\shader.h(58): warning C4101: 'e': unreferenced local variable
+c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\arealoader.cpp(167): warning C4018: '<': signed/unsigned mismatch
+c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\arealoader.cpp(185): warning C4018: '<': signed/unsigned mismatch
+  GameObject.cpp
+c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\shader.h(58): warning C4101: 'e': unreferenced local variable
+  Rendering.cpp
+c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\shader.h(58): warning C4101: 'e': unreferenced local variable
+c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\rendering.cpp(272): warning C4838: conversion from 'FT_Pos' to 'unsigned int' requires a narrowing conversion
+  TileLayer.cpp
+c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\shader.h(58): warning C4101: 'e': unreferenced local variable
+c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\tilelayer.cpp(48): warning C4244: 'initializing': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\tilelayer.cpp(49): warning C4244: 'initializing': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\tilelayer.cpp(105): warning C4018: '<': signed/unsigned mismatch
+  TileSet.cpp
+c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\shader.h(58): warning C4101: 'e': unreferenced local variable
+c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\tileset.cpp(59): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\tileset.cpp(83): warning C4018: '<': signed/unsigned mismatch
+c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\tileset.cpp(92): warning C4018: '<': signed/unsigned mismatch
+c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\tileset.cpp(107): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  UI.cpp
+c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\shader.h(58): warning C4101: 'e': unreferenced local variable
+c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\ui.cpp(68): warning C4244: 'initializing': conversion from 'float' to 'unsigned int', possible loss of data
+  Generating Code...
+  Main.cpp
+c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\shader.h(58): warning C4101: 'e': unreferenced local variable
+c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\main.cpp(53): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\main.cpp(59): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
   ReacherRPG.vcxproj -> C:\Users\User1\source\repos\ReacherRPG\ReacherRPG\ReacherRPG\x64\Debug\ReacherRPG.exe
