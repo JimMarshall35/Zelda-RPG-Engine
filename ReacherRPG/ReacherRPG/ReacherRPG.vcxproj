@@ -136,6 +136,7 @@
     <ClCompile Include="Area.cpp" />
     <ClCompile Include="AreaLoader.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GLTextureHelper.cpp" />
     <ClCompile Include="Input.cpp" />
@@ -156,6 +157,7 @@
     <ClInclude Include="Area.h" />
     <ClInclude Include="AreaLoader.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GLTextureHelper.h" />
     <ClInclude Include="gl_error_handling.h" />

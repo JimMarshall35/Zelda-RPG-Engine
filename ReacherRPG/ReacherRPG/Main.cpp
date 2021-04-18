@@ -7,9 +7,9 @@
 #include <glm/glm.hpp>
 #include "Input.h"
 #include "Shader.h"
-#include "AreaLoader.h"
 #include "Camera.h"
 #include "UI.h"
+#include "Game.h"
 GLFWwindow* window;
 using namespace glm;
 int GLFWInit();
@@ -28,16 +28,19 @@ int main(void)
 	initRendering();
 	Shader shader("shaders/sprite_vert.glsl", "shaders/sprite_frag.glsl");
 	Camera* camera = Camera::Instance();
-	Area a;
+	//Area a;
 
-	if (!AreaLoader::Instance()->loadArea("json", "lvl1_test5.json", a)) {
-		std::cout << "failed to load level" << std::endl;
-	}
+	//if (!AreaLoader::Instance()->loadArea("json", "lvl1_test5.json", a)) {
+	//	std::cout << "failed to load level" << std::endl;
+	//}
 	
 
-	UI ui = UI("fonts/NineteenEightySeven-MzMJ.ttf");
+	//UI ui = UI("fonts/NineteenEightySeven-MzMJ.ttf");
+	//std::queue<MessageBox> queue;
+	Game g;
+	g.loadArea("json", "lvl1_test5.json");
+	g.enqueueMsgBoxes("You wake up late for school, man you don't want to go You ask you mom, please ? but she still says, no You missed two classes, and no homework But your teacher preaches class like you're some kind of jerk You gotta fight for your right to party Your pops caught you smoking, and he says, \"No way!\" That hypocrite smokes two packs a day Man, living at home is such a drag Now your mom threw away your best porno mag(bust it!) You ask you mom, please ? but she still says, no You missed two classes, and no homework But your teacher preaches class like you're some kind of jerk You gotta fight for your right to party Your pops caught you smoking, and he says, \"No way!\" That hypocrite smokes two packs a day Man, living at home is such a drag Now your mom threw away your best porno mag(bust it!)");
 
-	
 
 	glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
 	double delta;
@@ -50,21 +53,21 @@ int main(void)
 		last = now;
 		//update
 		//Camera::Instance()->testUpdate(keys, delta, a.getBackGround()->get_base_scale());
-		a.update(delta, keys); 
+		g.update(delta, keys); 
 		//render
 		glClear(GL_COLOR_BUFFER_BIT);
-		a.draw(shader, camera);
+		g.draw(shader, camera);
 
 		
-		ui.drawFPS(delta);
+		//ui.drawFPS(delta);
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 
 		if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS) {
-			AreaLoader::Instance()->loadArea("json", "lvl1_test5.json", a);
+			g.loadArea("json", "lvl1_test5.json");
 		}
 		if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS) {
-			AreaLoader::Instance()->loadArea("json", "lvl1_test3.json", a);
+			g.loadArea("json", "lvl1_test3.json");
 		}
 		if (glfwGetKey(window, GLFW_KEY_3) == GLFW_PRESS) {
 
@@ -73,7 +76,6 @@ int main(void)
 	} // Check if the ESC key was pressed or the window was closed
 	while (glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS &&
 		glfwWindowShouldClose(window) == 0);
-	ui.freeData();
 	cleanupRendering();
 	// Close OpenGL window and terminate GLFW
 	glfwTerminate();

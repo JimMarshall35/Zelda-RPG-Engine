@@ -8,6 +8,7 @@
 #define RIGHT_BIT 3
 #define ZOOM_IN_BIT 4
 #define ZOOM_OUT_BIT 5
+#define SELECT_BIT 6
 
 void window_size_callback(GLFWwindow* window, int width, int height)
 {
@@ -63,6 +64,14 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 		}
 		else if (action == GLFW_RELEASE) {
 			keys &= ~(1 << ZOOM_IN_BIT);
+		}
+		break;
+	case GLFW_KEY_SPACE:
+		if (action == GLFW_PRESS) {
+			keys |= (1 << SELECT_BIT);
+		}
+		else if (action == GLFW_RELEASE) {
+			keys &= ~(1 << SELECT_BIT);
 		}
 		break;
 	case GLFW_KEY_1:
