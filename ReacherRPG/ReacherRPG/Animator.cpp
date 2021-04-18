@@ -21,7 +21,7 @@ void Animator::freeData()
 	animations.clear();
 }
 
-void Animator::draw(const glm::vec2 pos, const glm::vec2 scale, Shader & s, const Camera * camera)
+void Animator::draw(const glm::vec2 pos, const glm::vec2 scale, const Shader & s, const Camera * camera)
 {
 	if (current_frame != nullptr) {
 		current_frame->draw(pos, glm::vec3(scale, 1.0), s, camera);

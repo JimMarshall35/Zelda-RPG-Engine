@@ -1,15 +1,15 @@
 #pragma once
 #include "Rendering.h"
 #include <queue>
-
+\
 struct MessageBox {                           // not used yet
 	std::vector<std::string> lines;
 	//std::string lines[20];
 	float text_x_offset = 35;
 	float text_y_offset = 50;
 	float msgbox_scale = 3;
-	float msgbox_bottom_offset = 50;
-	float text_scale = 0.5f;
+	float msgbox_bottom_offset = 100;
+	float text_scale = 0.7f;
 	float xpos;
 	float ypos;
 };

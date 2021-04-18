@@ -9,7 +9,7 @@ public:
 	friend class Game;
 	Area();
 	~Area() { freeData(); }
-	void draw(Shader& s, const Camera* camera);
+	void draw(const Shader& s, const Camera* camera);
 	void update(float delta, GLuint keys);
 	TileLayers* getBackGround() { return &tilelayers; }
 	TileSet*    getTilesetByName(std::string name);

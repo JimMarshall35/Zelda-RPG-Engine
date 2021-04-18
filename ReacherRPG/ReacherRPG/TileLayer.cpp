@@ -67,7 +67,7 @@ void TileLayers::debugPrint()
 
 }
 
-void TileLayers::draw_fg(Shader& s, const Camera* camera)
+void TileLayers::draw_fg(const Shader& s, const Camera* camera)
 {
 
 
@@ -77,7 +77,7 @@ void TileLayers::draw_fg(Shader& s, const Camera* camera)
 		layer.sprite.draw(position, base_scale, s, camera);
 	}
 }
-void TileLayers::draw_bg(Shader& s, const Camera* camera)
+void TileLayers::draw_bg(const Shader& s, const Camera* camera)
 {
 
 

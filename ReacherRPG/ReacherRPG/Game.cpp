@@ -41,7 +41,7 @@ void Game::update(float delta, GLuint keys)
 	lastkeys = keys;
 }
 
-void Game::draw(Shader& s, const Camera * c)
+void Game::draw(const Shader& s, const Camera * c)
 {
 	area.draw(s, c);
 	ui.draw();

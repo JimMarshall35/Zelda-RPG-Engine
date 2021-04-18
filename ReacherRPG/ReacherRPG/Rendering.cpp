@@ -123,7 +123,7 @@ void Sprite::freeData() {
 	glDeleteTextures(1, &TextureID);
 }
 
-void Sprite::draw(const glm::vec2 pos, const glm::vec3 scale, Shader& s, const Camera* camera)
+void Sprite::draw(const glm::vec2 pos, const glm::vec3 scale, const Shader& s, const Camera* camera)
 {
 	GLClearErrors();
 
@@ -276,6 +276,8 @@ void TextRenderer::init( std::string font)
 	FT_Done_FreeType(ft);
 	genBuffers();
 	std::cout << "text renderer initialized successfully" << std::endl;
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 TextRenderer::TextRenderer()
 {
@@ -290,7 +292,7 @@ void TextRenderer::RenderText(std::string text, float x, float y, float scale, g
 	//glUniform3f(glGetUniformLocation(s.Program, "textColor"), color.x, color.y, color.z);
 
 	
-	shader.setVec3("textColour",colour);
+	//shader.setVec3("textColour",colour);
 	GLPrintErrors("s.setVec3(\"textColour\",colour);");
 	glActiveTexture(GL_TEXTURE0);
 	GLPrintErrors("glActiveTexture(GL_TEXTURE0);");

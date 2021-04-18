@@ -63,7 +63,7 @@ public:
 
 	virtual void    onInteract(GameObject* other) = 0;
 	virtual void    update(float delta, GLuint keys) = 0;
-	virtual void    draw(Shader& s, const Camera* camera) {};
+	virtual void    draw(const Shader& s, const Camera* camera) {};
 	virtual void    freeData() {};
 };
 
@@ -73,7 +73,7 @@ public:
 	~Player();
 	virtual void onInteract(GameObject* other);          // when another game object collides with it
 	virtual void update(float delta, GLuint keys);
-	virtual void draw(Shader& s, const Camera* camera);
+	virtual void draw(const Shader& s, const Camera* camera);
 	virtual void freeData() { animator.freeData(); }
 	Animator animator;
 private:
@@ -101,7 +101,7 @@ public:
 	}
 	virtual void onInteract(GameObject* other) {};
 	virtual void update(float delta, GLuint keys) {};
-	virtual void draw(Shader& s, const Camera* camera) { 
+	virtual void draw(const Shader& s, const Camera* camera) {
 		sprite->draw(position, glm::vec3(scale,1.0f), s, camera);  
 	}
 	Sprite* sprite;
@@ -139,7 +139,7 @@ public:
 	ScriptableGameObject(std::string script);
 	virtual void    onInteract(GameObject* other);
 	virtual void    update(float delta, GLuint keys);
-	virtual void    draw(Shader& s, const Camera* camera) {};
+	virtual void    draw(const Shader& s, const Camera* camera) {};
 	virtual void    freeData() {};
 private:
 	lua_State*      L;

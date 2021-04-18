@@ -2215,6 +2215,42 @@
                  "width":32,
                  "x":80,
                  "y":432
+                }, 
+                {
+                 "gid":1035,
+                 "height":16,
+                 "id":81,
+                 "name":"statue dialogue",
+                 "properties":[
+                        {
+                         "name":"text",
+                         "type":"string",
+                         "value":"A statue of some guy, probably somebody imporant, but perhaps not, who knows."
+                        }],
+                 "rotation":0,
+                 "type":"dialogue_trigger",
+                 "visible":true,
+                 "width":64,
+                 "x":384,
+                 "y":80
+                }, 
+                {
+                 "gid":1035,
+                 "height":64,
+                 "id":82,
+                 "name":"waste_grownd_dialogue",
+                 "properties":[
+                        {
+                         "name":"text",
+                         "type":"string",
+                         "value":"A poorly maintained patch of waste ground. For some reason I can't go right up to the edge of the fence from the inside. Some kind of strange forcefield..."
+                        }],
+                 "rotation":0,
+                 "type":"dialogue_trigger",
+                 "visible":true,
+                 "width":112,
+                 "x":48,
+                 "y":80
                 }],
          "opacity":0.97,
          "type":"objectgroup",
@@ -2223,7 +2259,7 @@
          "y":0
         }],
  "nextlayerid":99,
- "nextobjectid":81,
+ "nextobjectid":83,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.5.0",

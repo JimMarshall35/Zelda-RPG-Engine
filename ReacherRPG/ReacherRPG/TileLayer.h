@@ -28,8 +28,8 @@ public:
 				   TileLayers();
 	               ~TileLayers() { freeData(); }
 	void           debugPrint();
-	void           draw_bg(Shader& s, const Camera* camera);
-	void           draw_fg(Shader& s, const Camera* camera);
+	void           draw_bg(const Shader& s, const Camera* camera);
+	void           draw_fg(const Shader& s, const Camera* camera);
 	glm::vec2      get_base_scale() { return glm::vec2(base_scale); }
 	void           freeData();
 	unsigned int   getTileAtPosition(glm::vec2 pos, std::string layername);

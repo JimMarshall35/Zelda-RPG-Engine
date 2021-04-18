@@ -92,7 +92,7 @@ void Player::update(float delta, GLuint keys)
 	lastkeys = keys;
 }
 
-void Player::draw(Shader & s, const Camera * camera)
+void Player::draw(const Shader & s, const Camera * camera)
 {
 	animator.draw(position, scale, s, camera);
 }
@@ -142,9 +142,10 @@ bool checkLua(lua_State * L, int r)
 
 void DialogueTrigger::onInteract(GameObject * other)
 {
-	std::cout << "dialogue box collision" << std::endl;
+	
 	switch (other->type) {
 	case GO_TYPE::PLAYER:
+		//std::cout << "dialogue box collision" << std::endl;
 		if (!spent) {
 			game->enqueueMsgBoxes(text);
 			spent = true;

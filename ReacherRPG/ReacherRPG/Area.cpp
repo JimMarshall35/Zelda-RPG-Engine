@@ -13,7 +13,7 @@ bool compareGO(GameObject* go1, GameObject* go2) {
 	return (go1->position.y - go1->scale.y > go2->position.y - go2->scale.y);
 }
 
-void Area::draw(Shader & s, const Camera * camera)
+void Area::draw(const Shader & s, const Camera * camera)
 {
 	tilelayers.draw_bg(s, camera);
 	// want to sort by y value in descending order - draw from top of window down
@@ -61,7 +61,7 @@ void Area::update(float delta, GLuint keys)
 	accumulated_total += time_span.count();
 	numcounts++;
 	if (numcounts >= sample_size) {
-		std::cout << "update done in " << (accumulated_total/numcounts) * 1000 << " ms" << std::endl;
+		//std::cout << "update done in " << (accumulated_total/numcounts) * 1000 << " ms" << std::endl;
 		numcounts = 0;
 		accumulated_total = 0;
 	}

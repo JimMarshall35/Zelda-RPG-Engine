@@ -60,7 +60,7 @@ public:
 
 
 	void freeData();
-	void draw(const glm::vec2 pos, const glm::vec3 scale, Shader& s, const Camera* camera);
+	void draw(const glm::vec2 pos, const glm::vec3 scale, const Shader& s, const Camera* camera);
 	GLuint getPixelsHeight() { return height_pixels; }
 	GLuint getPixelsWidth() { return width_pixels; }
 	static void generateFullImgVAO();

@@ -4,7 +4,7 @@
 
 UI::UI()
 {
-	text_renderer.init("fonts/NineteenEightySeven-MzMJ.ttf");
+	text_renderer.init("fonts/Verdana Bold.ttf");
 	sprite_renderer.SetVAOandVBO(text_renderer.getVAO(), text_renderer.getVBO()); // need to make a third separate class that 
 																				  // contains the vao and vbo's used for ui rendering
 																				  // to prevent this weird  bit
@@ -70,7 +70,7 @@ void UI::renderMsgBox()
 	sprite_renderer.RenderSprite("msgbox", xpos, ypos, m.msgbox_scale);
 	for (size_t i = 0; i < m.lines.size(); i++) {
 		std::string line = m.lines[i];
-		text_renderer.RenderText(line, xpos + m.text_x_offset, ypos - m.text_y_offset - (i*base_text_height*m.text_scale), 0.5, glm::vec3(1.0, 1.0, 1.0));
+		text_renderer.RenderText(line, xpos + m.text_x_offset, ypos - m.text_y_offset - (i*base_text_height*m.text_scale), m.text_scale, glm::vec3(1.0, 1.0, 0.0));
 	}
 	
 	
@@ -81,7 +81,6 @@ void UI::emqueueMsgBoxes(std::string text, std::queue<MessageBox>& queue)
 
 	MessageBox m;
 	glm::ivec2 msgbox_size = sprite_renderer.getSpriteSize("msgbox");
-	unsigned int string_length = text_renderer.geTextWidth(text) * m.text_scale;
 
 	float accumulated_length = 0;
 	std::string::const_iterator c;

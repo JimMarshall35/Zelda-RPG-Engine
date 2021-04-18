@@ -16,7 +16,7 @@ public:
 	Animator();
 	~Animator();
 	void freeData();
-	void draw(const glm::vec2 pos, const glm::vec2 scale, Shader& s, const Camera* camera);
+	void draw(const glm::vec2 pos, const glm::vec2 scale, const Shader& s, const Camera* camera);
 	void update(float delta);
 	void push_animation(std::string anim_name, Sprite** frames, int numframes, float fps, bool loop);
 	void start_anim();
