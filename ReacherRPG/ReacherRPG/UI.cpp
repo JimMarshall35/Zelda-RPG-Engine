@@ -126,7 +126,7 @@ void UI::updateFPS(float delta)
 	const int fpscount_period = 50;
 	static int onfpscount = 0;
 	static float fps_accumulated = 0;
-	static float fps = 0;
+
 	fps_accumulated += delta;
 	onfpscount++;
 	if (onfpscount >= fpscount_period) {
