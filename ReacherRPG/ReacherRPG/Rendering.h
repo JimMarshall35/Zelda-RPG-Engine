@@ -87,7 +87,9 @@ public:
 	GLuint getVBO() { return VBO; }
 	void freeData();
 	unsigned int geTextWidth(std::string text);
+	unsigned int getBaseTextHeight() { return base_text_height; }
 private:
+	const unsigned int base_text_height = 48;
 	void genBuffers();
 	struct Character {
 		unsigned int TextureID;  // ID handle of the glyph texture
@@ -120,6 +122,15 @@ private:
 	Shader shader;
 };
 
-
+struct MessageBox {                           // not used yet
+	std::vector < std::string> lines;
+	float text_x_offset = 25;
+	float text_y_offset = -50;
+	float msgbox_scale = 2.5;
+	float msgbox_bottom_offset = 50;
+	float text_scale = 0.5f;
+	float xpos;
+	float ypos;
+};
 void initRendering();
 void cleanupRendering();

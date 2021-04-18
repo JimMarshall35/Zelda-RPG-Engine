@@ -39,7 +39,7 @@ void UI::drawFPS(float delta)
 	sprite_renderer.RenderSprite("heart", 25.0, 960, 1);
 	sprite_renderer.RenderSprite("heart", 57, 960, 1);
 	sprite_renderer.RenderSprite("heart", 89, 960, 1);
-	renderMsgBox("hello world! The quick brown fox jumped over the lazy dog. GOod game mate");
+	renderMsgBox("hello world! The quick brown fox jumped over the lazy dog. Good game mate - when's it coming out? Can i get it on steam? No?!");
 }
 
 void UI::freeData()
@@ -48,16 +48,24 @@ void UI::freeData()
 	sprite_renderer.freeData();
 }
 #define ASCII_SPACE  0x20
+
 void UI::renderMsgBox(std::string Contents)
 {
-	const float text_x_offset = 20;
+	// this function will take a message box struct as its argument.
+	// there will be a function that splits a string of whatever arbitrary length into a series of message box structs using the method below
+	// to split into lines, then when the message box height has been reached move onto a new message box struct.
+	// there will be some high level "Game" class that will contain a queue of these message box structs and pauses player input while 
+	// the queue is not empty, input will de-queue the next message box and cause it to be rendered. UI class will only have a pointer to a single message box
+	// - the one currently being rendered
+	const float text_x_offset = 25;
 	const float text_y_offset = -50;
 	const float msgbox_scale = 2.5;
 	const float msgbox_bottom_offset = 50;
 	const float text_scale = 0.5f;
+	unsigned int base_text_height = text_renderer.getBaseTextHeight();
 	glm::ivec2 msgbox_size = sprite_renderer.getSpriteSize("msgbox");
 	std::vector<std::string> lines;
-	unsigned int string_length = text_renderer.geTextWidth(Contents) *0.5;
+	unsigned int string_length = text_renderer.geTextWidth(Contents) *text_scale;
 
 	float accumulated_length = 0;
 	std::string::const_iterator c;
@@ -80,6 +88,7 @@ void UI::renderMsgBox(std::string Contents)
 				string_being_built = "";
 			}
 		}
+
 		c++;
 	}
 	lines.push_back(string_being_built);
@@ -88,7 +97,7 @@ void UI::renderMsgBox(std::string Contents)
 	sprite_renderer.RenderSprite("msgbox", xpos, ypos, msgbox_scale);
 	for (size_t i = 0; i < lines.size(); i++) {
 		std::string line = lines[i];
-		text_renderer.RenderText(line, xpos + text_x_offset, ypos + text_y_offset - (i*48), 0.5, glm::vec3(1.0, 1.0, 1.0));
+		text_renderer.RenderText(line, xpos + text_x_offset, ypos + text_y_offset - (i*base_text_height*text_scale), 0.5, glm::vec3(1.0, 1.0, 1.0));
 	}
 	
 	
