@@ -4,13 +4,13 @@
 
 UI::UI()
 {
-	text_renderer.init("fonts/Verdana Bold.ttf");
+	text_renderer.init("fonts/Final_Fantasy_VII.ttf");
 	sprite_renderer.SetVAOandVBO(text_renderer.getVAO(), text_renderer.getVBO()); // need to make a third separate class that 
 																				  // contains the vao and vbo's used for ui rendering
 																				  // to prevent this weird  bit
 	sprite_renderer.init();
 	sprite_renderer.loadUISprite("Spritesheet/heart pixel art 32x32.png", "heart");
-	sprite_renderer.loadUISprite("Spritesheet/msg_box_2.png", "msgbox");
+	sprite_renderer.loadUISprite("Spritesheet/msg_box_3.png", "msgbox");
 }
 
 UI::UI(std::string font)
@@ -42,7 +42,7 @@ void UI::drawFPS()
 {
 	
 	std::string fps_str = std::to_string(fps).substr(0,6) + " fps";
-	text_renderer.RenderText(fps_str, 25.0f, 970, 0.5f, glm::vec3(0.5, 0.8f, 0.2f));
+	text_renderer.RenderText(fps_str, 25.0f, 970, 1.2f, glm::vec3(0.5, 0.8f, 0.2f));
 	sprite_renderer.RenderSprite("heart", 25.0, 960, 1);
 	sprite_renderer.RenderSprite("heart", 57, 960, 1);
 	sprite_renderer.RenderSprite("heart", 89, 960, 1);

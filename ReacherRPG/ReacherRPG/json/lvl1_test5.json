@@ -2243,7 +2243,7 @@
                         {
                          "name":"text",
                          "type":"string",
-                         "value":"A poorly maintained patch of waste ground. For some reason I can't go right up to the edge of the fence from the inside. Some kind of strange forcefield..."
+                         "value":"A poorly maintained patch of waste ground. For some reason I can't go right up to the edge of the fence from the inside. Some kind of strange forcefield... Or perhaps it's just poor programming. Probably the case. "
                         }],
                  "rotation":0,
                  "type":"dialogue_trigger",
