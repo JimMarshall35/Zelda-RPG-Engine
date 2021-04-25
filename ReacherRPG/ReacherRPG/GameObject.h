@@ -76,6 +76,7 @@ public:
 	bool            isstatic = false;
 	FloorCollider   collider;
 
+
 	virtual void    onInteract(GameObject* other) = 0;
 	virtual void    update(float delta, GLuint keys) = 0;
 	virtual void    draw(const Shader& s, const Camera* camera) {};

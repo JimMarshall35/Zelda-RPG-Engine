@@ -157,11 +157,11 @@ void ScriptableGameObject::init(std::string script)
 			std::cerr << "game object at " << script << " has an init function that isn't a function " << std::endl;
 			return;
 		}
-		lua_getglobal(L, "GameObject");                    // pushes gameobject onto stack
-		if (!checkLua(L, lua_pcall(L, 1, 0, 0))) {           // pops init function, gameobject
+		lua_getglobal(L, "GameObject");                        // pushes gameobject onto stack
+		if (!checkLua(L, lua_pcall(L, 1, 0, 0))) {             // pops init function, gameobject
 			std::cerr << "lua init call failed" << std::endl;
 		}
-		luaRef =luaL_ref(L, LUA_REGISTRYINDEX);  // pops gameobject table from stack
+		luaRef = luaL_ref(L, LUA_REGISTRYINDEX);               // pops gameobject table from stack
 
 	}
 }

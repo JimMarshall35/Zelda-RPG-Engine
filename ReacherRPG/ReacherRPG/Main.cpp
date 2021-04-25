@@ -110,7 +110,7 @@ int GLFWInit() {
 
 	GLClearErrors();
 	// Ensure we can capture the escape key being pressed below
-	glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
+	//glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
 	GLPrintErrors("glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);");
 	glEnable(GL_BLEND);
 	GLPrintErrors("glEnable(GL_BLEND);");
