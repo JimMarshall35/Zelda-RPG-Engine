@@ -79,6 +79,10 @@ bool AreaLoader::loadArea(std::string folder, std::string file, Area & arearef)
 	std::chrono::duration<double> time_span = std::chrono::duration_cast<std::chrono::duration<double>>(t1 - t0);
 	std::cout << "area loading done in " << time_span.count() * 1000 << " ms" << std::endl;
 	std::cout << std::endl << std::endl;
+	ScriptableGameObject* testgo1 = new ScriptableGameObject("scripts/test1.lua");
+	ScriptableGameObject* testgo2 = new ScriptableGameObject("scripts/test2.lua");
+	arearef.gameobjects.push_back(testgo1);
+	arearef.gameobjects.push_back(testgo2);
 	return true;
 }
 

@@ -3,6 +3,7 @@
 #define TEST_SPEED      0.3
 #define TEST_ZOOM_SPEED 2
 #include "inputdefs.h"
+#include "Scripting.h"
 Player::Player()
 {
 	isdrawable = true;
@@ -111,10 +112,10 @@ void FloorCollider::init(GameObject* parent)
 	resolutiony = parent->scale.y / pixelsheight;
 }
 
-ScriptableGameObject::ScriptableGameObject(std::string script)
+ScriptableGameObject::ScriptableGameObject()
 {
-	L = luaL_newstate();
-	luaL_openlibs(L);
+	L = Scripting::s_instance.getL();
+
 }
 
 void ScriptableGameObject::onInteract(GameObject * other)
@@ -123,6 +124,46 @@ void ScriptableGameObject::onInteract(GameObject * other)
 
 void ScriptableGameObject::update(float delta, GLuint keys)
 {
+	lua_rawgeti(L, LUA_REGISTRYINDEX, luaRef);              // pushes the corresponding lua object to luaRef
+	if (!lua_istable(L, -1)) {
+		std::cerr << "reference " << luaRef << "is not a valid table" << std::endl;
+	}
+	lua_getfield(L, -1, "update");                           // pushes update 
+	if (lua_isfunction(L, -1)) {
+		lua_rawgeti(L, LUA_REGISTRYINDEX, luaRef);           // pushes the corresponding lua object 
+		lua_pushnumber(L,delta);                             // pushes delta 
+		lua_pushinteger(L, keys);                            // pushes keys
+		if (!checkLua(L, lua_pcall(L, 3, 0, 0))) {           // pops keys, delta, self, update
+			std::cerr << "lua update call failed" << std::endl;
+		}
+
+	}
+	lua_settop(L, 0);                                       // clear stack
+}
+
+void ScriptableGameObject::init(std::string script)
+{
+	L = Scripting::s_instance.getL();
+	if (checkLua(L, luaL_dofile(L,script.c_str()))) {
+		lua_getglobal(L, "GameObject");           // pushes gameobject onto stack
+		if (!lua_istable(L, -1)) {
+			std::cerr << "GameObject is not a table in file " << script << std::endl;
+			return;
+		}
+		lua_pushlightuserdata(L, this);          // pushes this pointer onto the stack
+		lua_setfield(L, -2, "host");             // pops this pointer off the stack
+		lua_getfield(L, -1, "init");             // push init function onto stack
+		if (!lua_isfunction(L, -1)) {
+			std::cerr << "game object at " << script << " has an init function that isn't a function " << std::endl;
+			return;
+		}
+		lua_getglobal(L, "GameObject");                    // pushes gameobject onto stack
+		if (!checkLua(L, lua_pcall(L, 1, 0, 0))) {           // pops init function, gameobject
+			std::cerr << "lua init call failed" << std::endl;
+		}
+		luaRef =luaL_ref(L, LUA_REGISTRYINDEX);  // pops gameobject table from stack
+
+	}
 }
 
 bool checkLua(lua_State * L, int r)
@@ -147,4 +188,15 @@ void DialogueTrigger::onInteract(GameObject * other)
 		}
 		break;
 	}
+}
+Scripting::Scripting::Scripting()
+{
+	L = luaL_newstate();
+	luaL_openlibs(L);
+}
+
+
+Scripting::Scripting::~Scripting()
+{
+	lua_close(L);
 }

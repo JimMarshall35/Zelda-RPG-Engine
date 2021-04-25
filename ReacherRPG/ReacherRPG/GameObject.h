@@ -3,13 +3,28 @@
 #include "Rendering.h"
 #include "Animator.h"
 
+//#include "Scripting.h"
+class Game;
+#pragma once
 extern "C" {
 #include "lua535/include/lua.h"
 #include "lua535/include/lauxlib.h"
 #include "lua535/include/lualib.h"
 }
-class Game;
 
+namespace Scripting {
+	class Scripting
+	{
+	public:
+		Scripting();
+		~Scripting();
+		lua_State* getL() { return L; }
+	private:
+		lua_State* L;
+
+	};
+	static Scripting s_instance;
+}
 enum class GO_TYPE {
 	PLAYER,
 	DOOR,
@@ -136,11 +151,16 @@ private:
 bool checkLua(lua_State* L, int r);
 class ScriptableGameObject : public GameObject {
 public:
-	ScriptableGameObject(std::string script);
+	ScriptableGameObject();
+	ScriptableGameObject(std::string script) { init(script); }
+	~ScriptableGameObject() { freeData(); }
 	virtual void    onInteract(GameObject* other);
 	virtual void    update(float delta, GLuint keys);
 	virtual void    draw(const Shader& s, const Camera* camera) {};
-	virtual void    freeData() {};
+	virtual void    freeData() { luaL_unref(Scripting::s_instance.getL(), LUA_REGISTRYINDEX, luaRef); };
+	void            init(std::string script);
+	Animator        animator;
 private:
+	int             luaRef = LUA_NOREF;
 	lua_State*      L;
 };

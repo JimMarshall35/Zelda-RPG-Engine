@@ -146,6 +146,7 @@
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\GL\glm;C:\GL\glew\include;C:\GL\glfw\include</AdditionalIncludeDirectories>
     </ClCompile>
     <ClCompile Include="Rendering.cpp" />
+    <ClCompile Include="Scripting.cpp" />
     <ClCompile Include="stb_image.cpp" />
     <ClCompile Include="stb_image_write.cpp" />
     <ClCompile Include="TileLayer.cpp" />
@@ -166,6 +167,7 @@
     <ClInclude Include="inputdefs.h" />
     <ClInclude Include="jsonhelper.h" />
     <ClInclude Include="Rendering.h" />
+    <ClInclude Include="Scripting.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="stb_image_write.h" />

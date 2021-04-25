@@ -3,6 +3,7 @@
 #include "UI.h"
 #include <queue>
 #include "inputdefs.h"
+#include "Scripting.h"
 class Game
 {
 public:
