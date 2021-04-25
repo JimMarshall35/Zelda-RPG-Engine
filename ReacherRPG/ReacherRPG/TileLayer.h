@@ -36,7 +36,7 @@ public:
 private:
 	TileLayer*     bg_layers;
 	TileLayer*     fg_layers;
-	void           genLayersTextures(TileSet& tileset, TileLayer* layers, size_t numlayers);
+	void           genLayersTextures(TileSet* tilesets, TileLayer* layers, size_t numlayers);
 	unsigned int   num_bg_layers;
 	unsigned int   num_fg_layers;
 	unsigned int   numtilesets;

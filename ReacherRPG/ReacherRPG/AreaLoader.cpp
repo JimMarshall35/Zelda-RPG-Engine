@@ -71,7 +71,7 @@ bool AreaLoader::loadArea(std::string folder, std::string file, Area & arearef)
 	if (!loadTilesets(doc, arearef, folder)) { return false; }
 	if (!loadLayers(doc, arearef)) { return false; }
 
-	TileSet t = arearef.tilesets[0];
+	TileSet* t = arearef.tilesets;
 	arearef.tilelayers.genLayersTextures(t, arearef.tilelayers.bg_layers, arearef.tilelayers.num_bg_layers);
 	arearef.tilelayers.genLayersTextures(t, arearef.tilelayers.fg_layers, arearef.tilelayers.num_fg_layers);
 	arearef.tilelayers.setInitialScale();

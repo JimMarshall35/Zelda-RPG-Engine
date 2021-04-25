@@ -2,12 +2,7 @@
 #include "Game.h"
 #define TEST_SPEED      0.3
 #define TEST_ZOOM_SPEED 2
-#define UP_BIT       0
-#define DOWN_BIT     1
-#define LEFT_BIT     2
-#define RIGHT_BIT    3
-#define ZOOM_IN_BIT  4
-#define ZOOM_OUT_BIT 5
+#include "inputdefs.h"
 Player::Player()
 {
 	isdrawable = true;

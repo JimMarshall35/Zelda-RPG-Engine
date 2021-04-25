@@ -9,11 +9,11 @@ public:
 	friend class Game;
 	Area();
 	~Area() { freeData(); }
-	void draw(const Shader& s, const Camera* camera);
-	void update(float delta, GLuint keys);
-	TileLayers* getBackGround() { return &tilelayers; }
-	TileSet*    getTilesetByName(std::string name);
-	Game*       getGamePtr() { return game; }
+	void                     draw(const Shader& s, const Camera* camera);
+	void                     update(float delta, GLuint keys);
+	TileLayers*              getBackGround() { return &tilelayers; }
+	TileSet*                 getTilesetByName(std::string name);
+	Game*                    getGamePtr() { return game; }
 private:
 	TileSet*				 tilesets;
 	unsigned int			 numtilesets;

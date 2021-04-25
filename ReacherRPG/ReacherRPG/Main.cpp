@@ -61,7 +61,7 @@ int main(void)
 			g.loadArea("json", "lvl1_test3.json");
 		}
 		if (glfwGetKey(window, GLFW_KEY_3) == GLFW_PRESS) {
-
+			g.loadArea("json", "interior_test.json");
 		}
 
 	} // Check if the ESC key was pressed or the window was closed

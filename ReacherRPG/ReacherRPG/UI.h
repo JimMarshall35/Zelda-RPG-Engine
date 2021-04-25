@@ -2,9 +2,8 @@
 #include "Rendering.h"
 #include <queue>
 \
-struct MessageBox {                           // not used yet
+struct MessageBox {                         
 	std::vector<std::string> lines;
-	//std::string lines[20];
 	float text_x_offset = 35;
 	float text_y_offset = 65;
 	float msgbox_scale = 3;

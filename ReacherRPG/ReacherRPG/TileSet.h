@@ -12,8 +12,8 @@ class TileSet
 public:
 	TileSet();
 	~TileSet();
-	void getTileBytes(unsigned int tilenum, unsigned char * output);
-	void tileDirectMemCpy(unsigned int tilenum, TileSet& tileset, unsigned char* output);
+	void				getTileBytes(unsigned int tilenum, unsigned char * output);
+	void				tileDirectMemCpy(unsigned int tilenum, unsigned char* output, unsigned int output_width);
 	std::string         imgpath;
 	std::string         name;
 	unsigned int        columns;
@@ -34,6 +34,6 @@ public:
 	Sprite*             getNamedSprite(std::string name) { return &sprites[namedSpriteMap[name]]; }
 private:
 	std::vector<Sprite>            sprites;
-	std::map<std::string, int> namedSpriteMap;
+	std::map<std::string, int>	   namedSpriteMap;
 };
 

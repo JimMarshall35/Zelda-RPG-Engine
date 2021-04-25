@@ -2,7 +2,7 @@
 #include "AreaLoader.h"
 #include "UI.h"
 #include <queue>
-#define SELECT_BIT 6
+#include "inputdefs.h"
 class Game
 {
 public:

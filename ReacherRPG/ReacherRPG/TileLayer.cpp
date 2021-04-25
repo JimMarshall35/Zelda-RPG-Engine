@@ -88,11 +88,10 @@ void TileLayers::draw_bg(const Shader& s, const Camera* camera)
 	}
 }
 
-void TileLayers::genLayersTextures(TileSet& tileset, TileLayer* layers, size_t numlayers)
+void TileLayers::genLayersTextures(TileSet* tilesets, TileLayer* layers, size_t numlayers)
 {
-
-	// alocate a single tiles worth of pixel bytes to be used to copy from spritesheet to our generated texture
-	unsigned char* single_tile_buffer = new unsigned char[tileset.tileheight*tileset.tilewidth * NUM_CHANNELS];
+	size_t  tileset_index = 0;
+	TileSet tileset = tilesets[tileset_index];
 	for (size_t i = 0; i < numlayers; i++) {
 		TileLayer& layer = layers[i];
 		const unsigned int numtiles = layer.width*layer.height;
@@ -109,19 +108,24 @@ void TileLayers::genLayersTextures(TileSet& tileset, TileLayer* layers, size_t n
 			// tile to be written - 0 means no tile
 			const int tile = layer.tiles[j];
 			if (tile > 0) {
-				// get bytes from sprite sheet that make up the tile
-				tileset.getTileBytes(tile, single_tile_buffer);
-				for (size_t k = 0; k < tileset.tileheight; k++) {
-					// write row by row to texture being generated
-					unsigned char* dest = write_start_ptr + (k*tileset.tilewidth*layer.width*NUM_CHANNELS);
-					const unsigned char* src = single_tile_buffer + (k*tileset.tilewidth*NUM_CHANNELS);
-					memcpy(dest, src, tileset.tilewidth*NUM_CHANNELS);
+				// logic to find the right tileset to use
+				int realtile = tile;
+				tileset_index = 0;
+				tileset = tilesets[tileset_index];
+				int cumulative_total = tileset.tilecount;
+				while (tile > cumulative_total) {
+					tileset_index++;
+					realtile -= tileset.tilecount;
+					tileset = tilesets[tileset_index];
+					cumulative_total += tileset.tilecount;
 				}
+				// copy bytes that make up the tile from tilesheet to the new texture
+				tileset.tileDirectMemCpy(realtile, write_start_ptr, layer.width*tileset.tilewidth);
 			}
 			// increment write_start_pointer 
 			write_start_ptr = tex_data + (x*tileset.tilewidth*NUM_CHANNELS) + (y*tileset.tileheight*tileset.tilewidth*(layer.width)*NUM_CHANNELS);
 		}
-
+		// setup the layers sprite with the newly created texture
 		layer.sprite.setup(
 			tex_data,
 			layer.width*tileset.tilewidth, layer.height*tileset.tileheight
@@ -131,7 +135,7 @@ void TileLayers::genLayersTextures(TileSet& tileset, TileLayer* layers, size_t n
 
 		delete[] tex_data;
 	}
-	delete[] single_tile_buffer;
+	//delete[] single_tile_buffer;
 }
 
 void TileLayers::setInitialScale() {
