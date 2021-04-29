@@ -166,7 +166,20 @@ public:
 	virtual void    freeData() { luaL_unref(Scripting::s_instance.getL(), LUA_REGISTRYINDEX, luaRef); };
 	void            init(std::string script);
 	Animator        animator;
-	static int      l_enqueueMsgBoxes(lua_State* L);// enqueueMsgBoxes(host,msg)
+	// lua API
+	static int      l_getPos(lua_State* L);          // getPos(host) - returns x, y
+	static int      l_setPos(lua_State* L);          // setPos(host,x,y)
+	static int      l_enqueueMsgBoxes(lua_State* L); // enqueueMsgBoxes(host,msg)
+	static int      l_getTilesetByName(lua_State* L);// getTilesetByName(host,name) - returns ptr to tileset
+	static int      l_pushAnimation(lua_State* L);   // push_animation(host, name, tileset, frames, fps, shouldloop)
+	static int      l_setVelocity(lua_State* L);     // setVelocity(host,x,y)
+	static int      l_getScale(lua_State* L);        // getScale(host) - returns x, y
+	static int      l_setScale(lua_State* L);        // setScale(host,x,y)
+	static int      l_animatorStart(lua_State* L);   // animatorStart(host);
+	static int      l_animatorStop(lua_State* L);    // animatorStop(host);
+	static int      l_setAnimation(lua_State* L);    // setAnimation(host,anim_name)
+	static int      l_setCamClamped(lua_State* L);   // setCamClamped(x,y)
+	static int      l_setCamZoom(lua_State* L);      // setCamZoom(zoom)
 private:
 	int             luaRef = LUA_NOREF;
 	lua_State*      L;

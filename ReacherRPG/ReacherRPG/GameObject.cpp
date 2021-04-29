@@ -119,6 +119,7 @@ void ScriptableGameObject::onInteract(GameObject * other)
 
 void ScriptableGameObject::update(float delta, GLuint keys)
 {
+	animator.update(delta);
 	lua_rawgeti(L, LUA_REGISTRYINDEX, luaRef);              // pushes the lua object corresponding to luaRef
 	if (!lua_istable(L, -1)) {
 		std::cerr << "reference " << luaRef << "is not a valid table" << std::endl;
@@ -164,6 +165,26 @@ void ScriptableGameObject::init(std::string script)
 	}
 }
 
+int ScriptableGameObject::l_getPos(lua_State * L)
+{	
+	ScriptableGameObject* go = (ScriptableGameObject*)lua_touserdata(L, 1);
+	float x = go->position.x;
+	float y = go->position.y;
+	lua_pushnumber(L, x);
+	lua_pushnumber(L, y);
+	return 2;
+}
+
+int ScriptableGameObject::l_setPos(lua_State * L)
+{
+	ScriptableGameObject* go = (ScriptableGameObject*)lua_touserdata(L, 1);
+	float x = luaL_checknumber(L, 2);
+	float y = luaL_checknumber(L, 3);
+	go->position.x = x;
+	go->position.y = y;
+	return 0;
+}
+
 int ScriptableGameObject::l_enqueueMsgBoxes(lua_State * L)
 {
 	// enqueueMsgBoxes(host,msg)
@@ -171,6 +192,116 @@ int ScriptableGameObject::l_enqueueMsgBoxes(lua_State * L)
 	std::string msg = std::string(luaL_checkstring(L, 2));
 	go->game->enqueueMsgBoxes(msg);
 	// no need to pop from stack - new stack per c function call
+	return 0;
+}
+
+int ScriptableGameObject::l_getTilesetByName(lua_State * L)
+{
+	// getTilesetByName(host,name) - returns ptr to tileset
+	ScriptableGameObject* go = (ScriptableGameObject*)lua_touserdata(L, 1);
+	std::string name = std::string(luaL_checkstring(L, 2));
+	TileSet* tileset = go->game->getAreaPtr()->getTilesetByName(name);
+	if (tileset == nullptr) {
+		std::cerr << name << " Error - No tileset. l_getTilesetByName" << std::endl;
+	}
+	lua_pushlightuserdata(L, (void*)tileset);
+	return 1;
+}
+
+int ScriptableGameObject::l_pushAnimation(lua_State * L)
+{
+	// push_animation(host, name, tileset, fps, shouldloop, frames)
+	ScriptableGameObject* go = (ScriptableGameObject*)lua_touserdata(L, 1);
+	std::string name = std::string(luaL_checkstring(L, 2));
+	TileSet* tileset = (TileSet*)lua_touserdata(L, 3);
+	float fps = luaL_checknumber(L, 4);
+	bool shouldloop = lua_toboolean(L, 5);
+	if (!lua_istable(L, 6)) {
+		std::cerr << "lua argument 6 is not a table l_pushAnimation" << std::endl;
+	}
+
+	size_t frames_size = lua_rawlen(L, 6);
+	Sprite** frames = new Sprite*[frames_size];
+	for (size_t i = 0; i < frames_size; i++) {
+		int type = lua_rawgeti(L, 6, i+1);
+		if (type != LUA_TNUMBER) {
+			std::cerr << "frame at index "<< i+1 << std::endl;
+		}
+		int sindex = lua_tointeger(L, -1);
+		lua_pop(L, 1);
+		frames[i] = tileset->getSprite(sindex);
+	}
+	go->animator.push_animation(name, frames, frames_size, fps, shouldloop);
+	return 0;
+}
+
+int ScriptableGameObject::l_setVelocity(lua_State * L)
+{
+	ScriptableGameObject* go = (ScriptableGameObject*)lua_touserdata(L, 1);
+	float x = luaL_checknumber(L, 2);
+	float y = luaL_checknumber(L, 3);
+	go->velocity.x = x;
+	go->velocity.y = y;
+	return 0;
+}
+
+int ScriptableGameObject::l_getScale(lua_State * L)
+{
+	// getScale(host) - returns x, y
+	ScriptableGameObject* go = (ScriptableGameObject*)lua_touserdata(L, 1);
+	float x = go->scale.x;
+	float y = go->scale.y;
+	lua_pushnumber(L, x);
+	lua_pushnumber(L, y);
+	return 2;
+	return 0;
+}
+
+int ScriptableGameObject::l_setScale(lua_State * L)
+{
+	// setScale(host,x,y)
+	ScriptableGameObject* go = (ScriptableGameObject*)lua_touserdata(L, 1);
+	float x = luaL_checknumber(L, 2);
+	float y = luaL_checknumber(L, 3);
+	go->scale.x = x;
+	go->scale.y = y;
+	return 0;
+}
+
+int ScriptableGameObject::l_animatorStart(lua_State * L)
+{
+	ScriptableGameObject* go = (ScriptableGameObject*)lua_touserdata(L, 1);
+	go->animator.start_anim();
+	return 0;
+}
+
+int ScriptableGameObject::l_animatorStop(lua_State * L)
+{
+	ScriptableGameObject* go = (ScriptableGameObject*)lua_touserdata(L, 1);
+	go->animator.stop_anim();
+	return 0;
+}
+
+int ScriptableGameObject::l_setAnimation(lua_State * L)
+{
+	// setAnimation(host,anim_name)
+	ScriptableGameObject* go = (ScriptableGameObject*)lua_touserdata(L, 1);
+	std::string name = std::string(luaL_checkstring(L, 2));
+	go->animator.set_anim(name);
+	return 0;
+}
+
+int ScriptableGameObject::l_setCamClamped(lua_State * L)
+{
+	float x = luaL_checknumber(L, 1);
+	float y = luaL_checknumber(L, 2);
+	Camera::Instance()->setPositionClamped(glm::vec2(x, y));
+	return 0;
+}
+
+int ScriptableGameObject::l_setCamZoom(lua_State * L)
+{
+	Camera::Instance()->zoom = (float)luaL_checknumber(L, 1);
 	return 0;
 }
 
@@ -202,7 +333,24 @@ Scripting::Scripting::Scripting()
 	L = luaL_newstate();
 	luaL_openlibs(L);
 
-	registerFunction(ScriptableGameObject::l_enqueueMsgBoxes, "enqueueMsgBoxes"); // enqueueMsgBoxes(host,msg)
+	registerFunction(ScriptableGameObject::l_enqueueMsgBoxes, "enqueueMsgBoxes");   // void                 enqueueMsgBoxes(host,msg)
+
+	registerFunction(ScriptableGameObject::l_getTilesetByName, "getTIlesetByName"); // TileSet*             getTilesetByName(host,name) 
+	
+	registerFunction(ScriptableGameObject::l_setPos, "setPos");                     // void                 setPos(host,x,y)
+	registerFunction(ScriptableGameObject::l_getPos, "getPos");                     // float x, float y     getPos(host)
+	registerFunction(ScriptableGameObject::l_setVelocity, "setVelocity");           // void                 setVelocity(host,x,y)
+
+	registerFunction(ScriptableGameObject::l_setScale, "setScale");                 // void                 setsetScale(host,x,y)
+	registerFunction(ScriptableGameObject::l_getScale, "getScale");                 // float x, float y     getScale(host)
+
+	registerFunction(ScriptableGameObject::l_pushAnimation, "pushAnimation");       // void                 push_animation(host, name, tileset, fps, shouldloop, frames)
+	registerFunction(ScriptableGameObject::l_animatorStart, "animatorStart");       // void                 animatorStart(host)
+	registerFunction(ScriptableGameObject::l_animatorStop, "animatorStop");         // void                 animatorStop(host)
+	registerFunction(ScriptableGameObject::l_setAnimation, "setAnimation");         // void                 setAnimation(host,name)
+
+	registerFunction(ScriptableGameObject::l_setCamClamped, "setCamClamped");       // void                 setCamClamped(x,y)
+	registerFunction(ScriptableGameObject::l_setCamZoom, "setCamZoom");             // void                 setCamZoom(zoom)
 
 }
 

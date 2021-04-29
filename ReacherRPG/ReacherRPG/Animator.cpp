@@ -48,7 +48,8 @@ void Animator::update(float delta)
 		current_frame = current_animation->frames[onframe];
 	}
 	else {
-		current_frame = current_animation->frames[0];
+		if(current_animation != nullptr)
+			current_frame = current_animation->frames[0];
 	}
 	
 }
