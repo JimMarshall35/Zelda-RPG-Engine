@@ -81,6 +81,8 @@ bool AreaLoader::loadArea(std::string folder, std::string file, Area & arearef)
 	std::cout << std::endl << std::endl;
 	ScriptableGameObject* testgo1 = new ScriptableGameObject("scripts/test1.lua");
 	ScriptableGameObject* testgo2 = new ScriptableGameObject("scripts/test2.lua");
+	testgo1->setGamePtr(arearef.getGamePtr());
+	testgo2->setGamePtr(arearef.getGamePtr());
 	arearef.gameobjects.push_back(testgo1);
 	arearef.gameobjects.push_back(testgo2);
 	return true;

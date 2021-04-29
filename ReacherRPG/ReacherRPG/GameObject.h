@@ -5,7 +5,6 @@
 
 //#include "Scripting.h"
 class Game;
-#pragma once
 extern "C" {
 #include "lua535/include/lua.h"
 #include "lua535/include/lauxlib.h"
@@ -19,6 +18,8 @@ namespace Scripting {
 		Scripting();
 		~Scripting();
 		lua_State* getL() { return L; }
+
+		inline void registerFunction(int(*func)(lua_State*L), std::string func_name);
 	private:
 		lua_State* L;
 
@@ -62,6 +63,7 @@ public:
 	float resolutiony;
 
 	void init(GameObject* parent);
+
 };
 class GameObject
 {
@@ -81,6 +83,9 @@ public:
 	virtual void    update(float delta, GLuint keys) = 0;
 	virtual void    draw(const Shader& s, const Camera* camera) {};
 	virtual void    freeData() {};
+	void            setGamePtr(Game* g) { game = g; }
+protected:
+	Game*       game = nullptr;
 };
 
 class Player : public GameObject {
@@ -145,7 +150,7 @@ public:
 private:
 	std::string text;
 	bool        spent = false;
-	Game*       game = nullptr;
+	
 
 };
 
@@ -161,6 +166,7 @@ public:
 	virtual void    freeData() { luaL_unref(Scripting::s_instance.getL(), LUA_REGISTRYINDEX, luaRef); };
 	void            init(std::string script);
 	Animator        animator;
+	static int      l_enqueueMsgBoxes(lua_State* L);// enqueueMsgBoxes(host,msg)
 private:
 	int             luaRef = LUA_NOREF;
 	lua_State*      L;

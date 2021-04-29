@@ -95,12 +95,7 @@ void Player::draw(const Shader & s, const Camera * camera)
 
 void FloorCollider::init(GameObject* parent)
 {
-	/*
-	top1 = go1->position.y + go1->scale.y - (go1->collider.top_offset / go1->collider.pixelsheight) * 2.0f * go1->scale.y;
-	bottom1 = go1->position.y - go1->scale.y + (go1->collider.bottom_offset / go1->collider.pixelsheight) * 2.0f * go1->scale.y;
-	left1 = go1->position.x - go1->scale.x + (go1->collider.left_offset / go1->collider.pixelswidth) * 2.0f * go1->scale.x;
-	right1 = go1->position.x + go1->scale.x - (go1->collider.right_offset / go1->collider.pixelswidth) * 2.0f * go1->scale.x;
-	*/
+
 	top = parent->scale.y - (top_offset / pixelsheight) * 2.0f * parent->scale.y;
 	bottom = -parent->scale.y + (bottom_offset / pixelsheight) * 2.0f * parent->scale.y;
 	left = -parent->scale.x + (left_offset / pixelswidth) * 2.0f * parent->scale.x;
@@ -124,11 +119,11 @@ void ScriptableGameObject::onInteract(GameObject * other)
 
 void ScriptableGameObject::update(float delta, GLuint keys)
 {
-	lua_rawgeti(L, LUA_REGISTRYINDEX, luaRef);              // pushes the corresponding lua object to luaRef
+	lua_rawgeti(L, LUA_REGISTRYINDEX, luaRef);              // pushes the lua object corresponding to luaRef
 	if (!lua_istable(L, -1)) {
 		std::cerr << "reference " << luaRef << "is not a valid table" << std::endl;
 	}
-	lua_getfield(L, -1, "update");                           // pushes update 
+	lua_getfield(L, -1, "update");
 	if (lua_isfunction(L, -1)) {
 		lua_rawgeti(L, LUA_REGISTRYINDEX, luaRef);           // pushes the corresponding lua object 
 		lua_pushnumber(L,delta);                             // pushes delta 
@@ -137,6 +132,9 @@ void ScriptableGameObject::update(float delta, GLuint keys)
 			std::cerr << "lua update call failed" << std::endl;
 		}
 
+	}
+	else {
+		std::cerr << "reference " << luaRef << " member 'update' is not a function" << std::endl;
 	}
 	lua_settop(L, 0);                                       // clear stack
 }
@@ -154,16 +152,26 @@ void ScriptableGameObject::init(std::string script)
 		lua_setfield(L, -2, "host");             // pops this pointer off the stack
 		lua_getfield(L, -1, "init");             // push init function onto stack
 		if (!lua_isfunction(L, -1)) {
-			std::cerr << "game object at " << script << " has an init function that isn't a function " << std::endl;
+			std::cerr << "GameObject at " << script << " has an init function that isn't a function " << std::endl;
 			return;
 		}
 		lua_getglobal(L, "GameObject");                        // pushes gameobject onto stack
 		if (!checkLua(L, lua_pcall(L, 1, 0, 0))) {             // pops init function, gameobject
-			std::cerr << "lua init call failed" << std::endl;
+			std::cerr << "lua init call failed, script: " << script << std::endl;
 		}
 		luaRef = luaL_ref(L, LUA_REGISTRYINDEX);               // pops gameobject table from stack
 
 	}
+}
+
+int ScriptableGameObject::l_enqueueMsgBoxes(lua_State * L)
+{
+	// enqueueMsgBoxes(host,msg)
+	ScriptableGameObject* go = (ScriptableGameObject*)lua_touserdata(L, 1);
+	std::string msg = std::string(luaL_checkstring(L, 2));
+	go->game->enqueueMsgBoxes(msg);
+	// no need to pop from stack - new stack per c function call
+	return 0;
 }
 
 bool checkLua(lua_State * L, int r)
@@ -193,10 +201,19 @@ Scripting::Scripting::Scripting()
 {
 	L = luaL_newstate();
 	luaL_openlibs(L);
+
+	registerFunction(ScriptableGameObject::l_enqueueMsgBoxes, "enqueueMsgBoxes"); // enqueueMsgBoxes(host,msg)
+
 }
 
 
 Scripting::Scripting::~Scripting()
 {
 	lua_close(L);
+}
+
+inline void Scripting::Scripting::registerFunction(int(*func)(lua_State *L), std::string func_name)
+{
+	lua_pushcfunction(L, func);
+	lua_setglobal(L, func_name.c_str());
 }
