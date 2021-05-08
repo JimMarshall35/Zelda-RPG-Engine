@@ -228,7 +228,7 @@ int ScriptableGameObject::l_pushAnimation(lua_State * L)
 	size_t frames_size = lua_rawlen(L, 6);
 	Sprite** frames = new Sprite*[frames_size];
 	for (size_t i = 0; i < frames_size; i++) {
-		int type = lua_rawgeti(L, 6, i+1);
+		int type = lua_rawgeti(L, 6, i+1);        // lua counts from 1... for some reason 
 		if (type != LUA_TNUMBER) {
 			std::cerr << "frame at index "<< i+1 << std::endl;
 		}
@@ -317,6 +317,14 @@ int ScriptableGameObject::l_getCamZoom(lua_State * L)
 	return 1;
 }
 
+int ScriptableGameObject::l_getIsAnimating(lua_State * L)
+{
+	ScriptableGameObject* go = (ScriptableGameObject*)lua_touserdata(L, 1);
+	bool b = go->animator.get_isanimating();
+	lua_pushboolean(L, b);
+	return 1;
+}
+
 bool checkLua(lua_State * L, int r)
 {
 	if (r != LUA_OK) {
@@ -362,6 +370,7 @@ Scripting::Scripting::Scripting()
 	registerFunction(ScriptableGameObject::l_animatorStart, "animatorStart");       // void                 animatorStart(host)
 	registerFunction(ScriptableGameObject::l_animatorStop, "animatorStop");         // void                 animatorStop(host)
 	registerFunction(ScriptableGameObject::l_setAnimation, "setAnimation");         // void                 setAnimation(host,name)
+	registerFunction(ScriptableGameObject::l_getIsAnimating, "getIsAnimating");     // bool                 getIsAnimating(host)
 
 	registerFunction(ScriptableGameObject::l_setCamClamped, "setCamClamped");       // void                 setCamClamped(x,y)
 	registerFunction(ScriptableGameObject::l_setCamZoom, "setCamZoom");             // void                 setCamZoom(zoom)

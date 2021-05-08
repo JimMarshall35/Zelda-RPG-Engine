@@ -143,6 +143,10 @@
         {
          "firstgid":14896,
          "source":"interior_bank.json"
+        }, 
+        {
+         "firstgid":15856,
+         "source":"24by24ModernRPGGuy_edit.json"
         }],
  "tilewidth":16,
  "type":"map",

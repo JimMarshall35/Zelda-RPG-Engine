@@ -1,6 +1,6 @@
 
 #include "AreaLoader.h"
-#define PLAYER_TILESET_NAME "24by24ModernRPGGuy"
+#define PLAYER_TILESET_NAME "24by24ModernRPGGuy_edit"
 AreaLoader* AreaLoader::instance;
 #pragma region json file checks
 bool AreaLoader::tilesetFileChecks(const rapidjson::Value& val) {

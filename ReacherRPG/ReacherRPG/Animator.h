@@ -22,7 +22,9 @@ public:
 	void start_anim();
 	void stop_anim();
 	void set_anim(std::string anim_name);
+	bool get_isanimating() { return isanimating; }
 private:
+	int                              onframe = 0;
 	std::map<std::string, Animation> animations;
 	float                            timer;
 	Sprite*                          current_frame = nullptr;

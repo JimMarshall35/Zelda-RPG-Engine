@@ -181,6 +181,7 @@ public:
 	static int      l_setCamClamped(lua_State* L);   // setCamClamped(x,y)
 	static int      l_setCamZoom(lua_State* L);      // setCamZoom(zoom)
 	static int      l_getCamZoom(lua_State* L);      // getCamZoom()  - returns a float - the cameras zoom
+	static int      l_getIsAnimating(lua_State* L); // getIsAnimating(host) - returns bool
 private:
 	int             luaRef = LUA_NOREF;
 	lua_State*      L;
