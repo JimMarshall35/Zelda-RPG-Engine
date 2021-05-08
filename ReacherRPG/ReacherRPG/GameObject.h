@@ -120,7 +120,12 @@ public:
 		issolidvsgameobjects = true;
 		isstatic = true;
 	}
-	virtual void onInteract(GameObject* other) {};
+	virtual void onInteract(GameObject* other) { 
+		if (other->issolidvsgameobjects && issolidvsgameobjects) {
+			other->position += -other->velocity;
+		}
+		
+	};
 	virtual void update(float delta, GLuint keys) {};
 	virtual void draw(const Shader& s, const Camera* camera) {
 		sprite->draw(position, glm::vec3(scale,1.0f), s, camera);  
@@ -167,22 +172,27 @@ public:
 	void            init(std::string script);
 	Animator        animator;
 	// lua API
-	static int      l_getPos(lua_State* L);          // getPos(host) - returns x, y
-	static int      l_setPos(lua_State* L);          // setPos(host,x,y)
-	static int      l_enqueueMsgBoxes(lua_State* L); // enqueueMsgBoxes(host,msg)
-	static int      l_getTilesetByName(lua_State* L);// getTilesetByName(host,name) - returns ptr to tileset
-	static int      l_pushAnimation(lua_State* L);   // push_animation(host, name, tileset, frames, fps, shouldloop)
-	static int      l_setVelocity(lua_State* L);     // setVelocity(host,x,y)
-	static int      l_getScale(lua_State* L);        // getScale(host) - returns x, y
-	static int      l_setScale(lua_State* L);        // setScale(host,x,y)
-	static int      l_animatorStart(lua_State* L);   // animatorStart(host);
-	static int      l_animatorStop(lua_State* L);    // animatorStop(host);
-	static int      l_setAnimation(lua_State* L);    // setAnimation(host,anim_name)
-	static int      l_setCamClamped(lua_State* L);   // setCamClamped(x,y)
-	static int      l_setCamZoom(lua_State* L);      // setCamZoom(zoom)
-	static int      l_getCamZoom(lua_State* L);      // getCamZoom()  - returns a float - the cameras zoom
-	static int      l_getIsAnimating(lua_State* L); // getIsAnimating(host) - returns bool
+	static int      l_getPos(lua_State* L);                      // getPos(host) - returns x, y
+	static int      l_setPos(lua_State* L);                      // setPos(host,x,y)
+	static int      l_enqueueMsgBoxes(lua_State* L);             // enqueueMsgBoxes(host,msg)
+	static int      l_getTilesetByName(lua_State* L);            // getTilesetByName(host,name) - returns ptr to tileset
+	static int      l_pushAnimation(lua_State* L);               // push_animation(host, name, tileset, frames, fps, shouldloop)
+	static int      l_setVelocity(lua_State* L);                 // setVelocity(host,x,y)
+	static int      l_getScale(lua_State* L);                    // getScale(host) - returns x, y
+	static int      l_setScale(lua_State* L);                    // setScale(host,x,y)
+	static int      l_animatorStart(lua_State* L);               // animatorStart(host);
+	static int      l_animatorStop(lua_State* L);                // animatorStop(host);
+	static int      l_setAnimation(lua_State* L);                // setAnimation(host,anim_name)
+	static int      l_setCamClamped(lua_State* L);               // setCamClamped(x,y)
+	static int      l_setCamZoom(lua_State* L);                  // setCamZoom(zoom)
+	static int      l_getCamZoom(lua_State* L);                  // getCamZoom()  - returns a float - the cameras zoom
+	static int      l_getIsAnimating(lua_State* L);              // getIsAnimating(host) - returns bool
+	static int      l_setFloorCollider(lua_State* L);            // setFloorCollider(host, collider)
+	static int      l_setCollidableVsBackground(lua_State* L);   // setCollidableVsBackground(host,value)
+	static int      l_setCollidableVsGameObjects(lua_State* L);  // setCollidableVsGameObjects(host,value)
+	static int      l_setDrawable(lua_State* L);                 // setDrawable(host,value)
 private:
+	static inline bool     getLuaTableNumber(lua_State* L, std::string key, int tableIndex, float& out);
 	int             luaRef = LUA_NOREF;
 	lua_State*      L;
 };

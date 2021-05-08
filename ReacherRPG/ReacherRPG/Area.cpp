@@ -44,11 +44,13 @@ void Area::update(float delta, GLuint keys)
 	
 	for (size_t i = 0; i < gameobjects.size(); i++) {
 		GameObject* go1 = gameobjects[i];
-		for (size_t j = 0; j < gameobjects.size(); j++) {
+		go1->position += go1->velocity;
+		for (size_t j = i; j < gameobjects.size(); j++) {
 			GameObject* go2 = gameobjects[j];
 			if (go1 != go2) {
 				if (AABBCollision(go1, go2,go1->velocity,go2->velocity)) {
 					go1->onInteract(go2);
+					go2->onInteract(go1);
 				}
 			}
 		}
@@ -99,25 +101,14 @@ void Area::updatePhysics()
 	{
 
 		GameObject* go = gameobjects[i];
-		go->position += go->velocity;
-		if (go->issolidvsgameobjects && !go->isstatic) {
-			for (size_t j = 0; j < gameobjects.size(); j++) {
-				GameObject* go2 = gameobjects[j];
-				if (go != go2 && go2->issolidvsgameobjects) {
-					if (AABBCollision(go, go2)) {
-						go->position += -go->velocity;
-						break;
-					}
-				}
 
-			}
-		}
 		if (go->issolidvsbackground) {
 			
 			float xstart = go->position.x + go->collider.left;
 			float xend = go->position.x + go->collider.right;
 			float ystart = go->position.y + go->collider.bottom;
 			float yend = go->position.y + go->collider.top;
+
 			for (float x = xstart; x < xend; x += go->collider.resolutionx) {
 				for (float y = ystart; y < yend; y += go->collider.resolutiony) {
 					int tile = tilelayers.getTileAtPosition(glm::vec2(x, y), "structure");
@@ -128,9 +119,9 @@ void Area::updatePhysics()
 				}
 
 			}
-nextGO:     
-			continue;
 		}
+nextGO:
+		continue;
 	}
 }
 

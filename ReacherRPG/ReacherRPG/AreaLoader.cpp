@@ -227,66 +227,20 @@ bool AreaLoader::loadLayers(const rapidjson::Document & doc, Area & arearef)
 					float json_y = object["y"].GetFloat();
 
 					glm::vec2 player_start_pos = tiledPosToGameEnginePos(glm::vec2(json_x, json_y), arearef);
-					/////////////////////////////// BAD HARD CODED CODE STARTS
+					/////////////////////////////////////////////////
 					TileSet* player_tileset = arearef.getTilesetByName(PLAYER_TILESET_NAME);
 					ScriptableGameObject* player = new ScriptableGameObject();
-					/*
-					Player* player = new Player();
-					
-					Sprite** upFrames = new Sprite*[4]{
-						player_tileset->getSprite(0),
-						player_tileset->getSprite(1),
-						player_tileset->getSprite(2),
-						player_tileset->getSprite(3)
-					};
-					Sprite** downFrames = new Sprite*[4]{
-						player_tileset->getSprite(4),
-						player_tileset->getSprite(5),
-						player_tileset->getSprite(6),
-						player_tileset->getSprite(7)
-					};
-					Sprite** rightFrames = new Sprite*[4]{
-						player_tileset->getSprite(8),
-						player_tileset->getSprite(9),
-						player_tileset->getSprite(10),
-						player_tileset->getSprite(11)
-					};
-					Sprite** leftFrames = new Sprite*[4]{
-						player_tileset->getSprite(12),
-						player_tileset->getSprite(13),
-						player_tileset->getSprite(14),
-						player_tileset->getSprite(15)
-					};
 
-					player->animator.push_animation("walk_up", upFrames, 4, 10, true);
-					player->animator.push_animation("walk_down", downFrames, 4, 10, true);
-					player->animator.push_animation("walk_left", leftFrames, 4, 10, true);
-					player->animator.push_animation("walk_right", rightFrames, 4, 10, true);
-					player->animator.set_anim("walk_down");
-					*/
 					player->scale *= glm::vec2(
 						player_tileset->tilewidth / (arearef.tilelayers.tilewidth * 40.0),
 						player_tileset->tileheight / (arearef.tilelayers.tileheight * 40.0)
 					);
 					player->position = player_start_pos;
-#define RESOLUTION 16.0f
-#define LOFFSET 7.0f
-#define ROFFSET 8.0f
-#define TOFFSET 18.0f
-#define BOFFSET 0.0f
-#define PLAYER_W 24
-#define PLAYER_H 24
-					player->collider.left_offset = LOFFSET;
-					player->collider.right_offset = ROFFSET;
-					player->collider.top_offset = TOFFSET;
-					player->collider.bottom_offset = BOFFSET;
-					player->collider.pixelswidth = PLAYER_W;//object["width"].GetFloat();
-					player->collider.pixelsheight = PLAYER_H; //object["height"].GetFloat();
-					player->collider.init(player);
+
 					player->setGamePtr(arearef.getGamePtr());
 					player->init("scripts/player.lua");
 					arearef.gameobjects.push_back(player);
-					////////////////// BAD CODE ENDS! /////////////////////////////////////
+					////////////////////////////////////////////////////
 				}
 				else if (objtype == "static_metasprite_object") {
 

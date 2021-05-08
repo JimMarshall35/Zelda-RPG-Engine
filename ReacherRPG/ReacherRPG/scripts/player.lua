@@ -25,6 +25,16 @@ GameObject = {
 	attacking = false,
 	canattack = true,
 
+	collider = {
+		left_offset = 7.0,
+		right_offset = 8.0,
+		top_offset = 18.0,
+		bottom_offset = 0.0,
+		pixelswidth = 24.0,
+		pixelsheight = 24.0
+	},
+
+
 	host = 0,
 	
 	update = function( self,delta,keys )
@@ -131,7 +141,6 @@ GameObject = {
 			setCamClamped(self.x,self.y)
 		elseif self.attacking == true then
 			local isanimating = getIsAnimating(self.host)
-			print(isanimating)
 			if isanimating == false then
 				self.attacking = false
 				if self.lastdirection == self.UP then
@@ -163,12 +172,16 @@ GameObject = {
  		pushAnimation(self.host, "attack_left", tileset, 12, false, {22,23})
 
  		setAnimation(self.host, "walk_down")
- 		animatorStop(self.host)
+ 		
+ 		setCollidableBG(self.host, true)
+ 		setCollidableGO(self.host, true)
+ 		setDrawable(self.host, true)
+ 		setFloorCollider(self.host,self.collider)
  		self.direction = self.DOWN
  		self.lastdirection = self.DOWN
  		self.cam_zoom = getCamZoom();
 	end,
 	onInteract = function ( self,other )
-
+		print("collision!")
 	end
 }

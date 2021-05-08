@@ -110,15 +110,28 @@ void FloorCollider::init(GameObject* parent)
 ScriptableGameObject::ScriptableGameObject()
 {
 	L = Scripting::s_instance.getL();
-	isdrawable = true;
-	issolidvsbackground = true;
-	issolidvsgameobjects = true;
 	type = GO_TYPE::PLAYER;
 }
 
 void ScriptableGameObject::onInteract(GameObject * other)
 {
+	lua_rawgeti(L, LUA_REGISTRYINDEX, luaRef);              // pushes the lua object corresponding to luaRef
+	if (!lua_istable(L, -1)) {
+		std::cerr << "reference " << luaRef << "is not a valid table" << std::endl;
+	}
+	lua_getfield(L, -1, "onInteract");
+	if (lua_isfunction(L, -1)) {
+		lua_rawgeti(L, LUA_REGISTRYINDEX, luaRef);           // pushes the corresponding lua object 
+		lua_pushlightuserdata(L, other);                     // pushes delta 
+		if (!checkLua(L, lua_pcall(L, 2, 0, 0))) {           // pops keys, delta, self, update
+			std::cerr << "lua onInteract call failed" << std::endl;
+		}
 
+	}
+	else {
+		std::cerr << "reference " << luaRef << " member 'onInteract' is not a function" << std::endl;
+	}
+	lua_settop(L, 0);                                       // clear stack
 }
 
 void ScriptableGameObject::update(float delta, GLuint keys)
@@ -325,6 +338,79 @@ int ScriptableGameObject::l_getIsAnimating(lua_State * L)
 	return 1;
 }
 
+int ScriptableGameObject::l_setFloorCollider(lua_State * L)
+{
+	ScriptableGameObject* go = (ScriptableGameObject*)lua_touserdata(L, 1);
+	if (!lua_istable(L, 2)) {
+		std::cerr << "argument 2 passed to l_setFloorCollider is not a table" << std::endl;
+		return 0;
+	}
+	float l_offset, r_offset, t_offset, b_offset, px_width, px_height;
+	if (!getLuaTableNumber(L, "left_offset", 2, l_offset)) { return false; }
+	if (!getLuaTableNumber(L, "right_offset", 2, r_offset)) { return false; }
+	if (!getLuaTableNumber(L, "top_offset", 2, t_offset)) { return false; }
+	if (!getLuaTableNumber(L, "bottom_offset", 2, b_offset)) { return false; }
+	if (!getLuaTableNumber(L, "pixelswidth", 2, px_width)) { return false; }
+	if (!getLuaTableNumber(L, "pixelsheight", 2, px_height)) { return false; }
+
+	go->collider.left_offset   = l_offset;
+	go->collider.right_offset  = r_offset;
+	go->collider.top_offset    = t_offset;
+	go->collider.bottom_offset = b_offset;
+	go->collider.pixelsheight  = px_height;
+	go->collider.pixelswidth   = px_width;
+
+	go->collider.init(go);
+
+	return 0;
+}
+
+int ScriptableGameObject::l_setCollidableVsBackground(lua_State * L)
+{
+	ScriptableGameObject* go = (ScriptableGameObject*)lua_touserdata(L, 1);
+	if (!lua_isboolean(L, 2)) {
+		std::cerr << "argument 2 must be a boolean l_setCollidableVsBackground" << std::endl;
+	}
+	bool b = lua_toboolean(L, 2);
+	go->issolidvsbackground = b;
+ 	return 0;
+}
+
+int ScriptableGameObject::l_setCollidableVsGameObjects(lua_State * L)
+{
+	ScriptableGameObject* go = (ScriptableGameObject*)lua_touserdata(L, 1);
+	if (!lua_isboolean(L, 2)) {
+		std::cerr << "argument 2 must be a boolean l_setCollidableVsGameObjects" << std::endl;
+	}
+	bool b = lua_toboolean(L, 2);
+	go->issolidvsgameobjects = b;
+	return 0;
+}
+
+int ScriptableGameObject::l_setDrawable(lua_State * L)
+{
+	ScriptableGameObject* go = (ScriptableGameObject*)lua_touserdata(L, 1);
+	if (!lua_isboolean(L, 2)) {
+		std::cerr << "argument 2 must be a boolean l_setDrawable" << std::endl;
+	}
+	bool b = lua_toboolean(L, 2);
+	go->isdrawable = b;
+	return 0;
+}
+
+inline bool ScriptableGameObject::getLuaTableNumber(lua_State * L, std::string key, int tableIndex, float& out)
+{
+	lua_pushstring(L, key.c_str());
+	int type = lua_gettable(L, 2);
+	if (type != LUA_TNUMBER) {
+		std::cerr << "key "<< key <<" is not a number." << std::endl;
+		return false;
+	}
+	out = lua_tonumber(L, -1);
+	lua_pop(L, 1);
+	return true;
+}
+
 bool checkLua(lua_State * L, int r)
 {
 	if (r != LUA_OK) {
@@ -354,28 +440,42 @@ Scripting::Scripting::Scripting()
 	luaL_openlibs(L);
 
 
-	registerFunction(ScriptableGameObject::l_getTilesetByName, "getTilesetByName"); // TileSet*             getTilesetByName(host,name) 
-	registerFunction(ScriptableGameObject::l_enqueueMsgBoxes, "enqueueMsgBoxes");   // void                 enqueueMsgBoxes(host,msg)
+	registerFunction(ScriptableGameObject::l_getTilesetByName, "getTilesetByName");             // TileSet*             getTilesetByName(host,name) 
+	registerFunction(ScriptableGameObject::l_enqueueMsgBoxes, "enqueueMsgBoxes");               // void                 enqueueMsgBoxes(host,msg)
 
 	
 	
-	registerFunction(ScriptableGameObject::l_setPos, "setPos");                     // void                 setPos(host,x,y)
-	registerFunction(ScriptableGameObject::l_getPos, "getPos");                     // float x, float y     getPos(host)
-	registerFunction(ScriptableGameObject::l_setVelocity, "setVelocity");           // void                 setVelocity(host,x,y)
+	registerFunction(ScriptableGameObject::l_setPos, "setPos");                                 // void                 setPos(host,x,y)
+	registerFunction(ScriptableGameObject::l_getPos, "getPos");                                 // float x, float y     getPos(host)
+	registerFunction(ScriptableGameObject::l_setVelocity, "setVelocity");                       // void                 setVelocity(host,x,y)
 
-	registerFunction(ScriptableGameObject::l_setScale, "setScale");                 // void                 setsetScale(host,x,y)
-	registerFunction(ScriptableGameObject::l_getScale, "getScale");                 // float x, float y     getScale(host)
+	registerFunction(ScriptableGameObject::l_setScale, "setScale");                             // void                 setsetScale(host,x,y)
+	registerFunction(ScriptableGameObject::l_getScale, "getScale");                             // float x, float y     getScale(host)
 
-	registerFunction(ScriptableGameObject::l_pushAnimation, "pushAnimation");       // void                 push_animation(host, name, tileset, fps, shouldloop, frames)
-	registerFunction(ScriptableGameObject::l_animatorStart, "animatorStart");       // void                 animatorStart(host)
-	registerFunction(ScriptableGameObject::l_animatorStop, "animatorStop");         // void                 animatorStop(host)
-	registerFunction(ScriptableGameObject::l_setAnimation, "setAnimation");         // void                 setAnimation(host,name)
-	registerFunction(ScriptableGameObject::l_getIsAnimating, "getIsAnimating");     // bool                 getIsAnimating(host)
+	registerFunction(ScriptableGameObject::l_pushAnimation, "pushAnimation");                   // void                 push_animation(host, name, tileset, fps, shouldloop, frames)
+	registerFunction(ScriptableGameObject::l_animatorStart, "animatorStart");                   // void                 animatorStart(host)
+	registerFunction(ScriptableGameObject::l_animatorStop, "animatorStop");                     // void                 animatorStop(host)
+	registerFunction(ScriptableGameObject::l_setAnimation, "setAnimation");                     // void                 setAnimation(host,name)
+	registerFunction(ScriptableGameObject::l_getIsAnimating, "getIsAnimating");                 // bool                 getIsAnimating(host)
 
-	registerFunction(ScriptableGameObject::l_setCamClamped, "setCamClamped");       // void                 setCamClamped(x,y)
-	registerFunction(ScriptableGameObject::l_setCamZoom, "setCamZoom");             // void                 setCamZoom(zoom)
-	registerFunction(ScriptableGameObject::l_getCamZoom, "getCamZoom");             // float                getCamZoom()
+	registerFunction(ScriptableGameObject::l_setCamClamped, "setCamClamped");                   // void                 setCamClamped(x,y)
+	registerFunction(ScriptableGameObject::l_setCamZoom, "setCamZoom");                         // void                 setCamZoom(zoom)
+	registerFunction(ScriptableGameObject::l_getCamZoom, "getCamZoom");                         // float                getCamZoom()
 
+	registerFunction(ScriptableGameObject::l_setFloorCollider, "setFloorCollider");             //void                  setFloorCollider(host,collider)
+																								/*
+																									collider = {
+																										left_offset = float,
+																										right_offset = float,
+																										top_offset = float,
+																										bottom_offset = float,
+																										pixelswidth = float,
+																										pixelsheight = float
+																									}
+																								*/
+	registerFunction(ScriptableGameObject::l_setCollidableVsBackground, "setCollidableBG");     // void                 setCollidableBG(host,value) value = bool
+	registerFunction(ScriptableGameObject::l_setCollidableVsGameObjects, "setCollidableGO");    // void                 setCollidableGO(host,value) value = bool
+	registerFunction(ScriptableGameObject::l_setDrawable , "setDrawable");                      // void                 setDrawable(host,value)     value = bool
 }
 
 

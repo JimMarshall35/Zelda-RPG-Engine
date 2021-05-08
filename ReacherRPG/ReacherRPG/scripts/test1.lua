@@ -16,7 +16,7 @@ GameObject = {
 	init = function( self )
 		print("this is test1.lua");
 	end,
-	onInteract = function ( other )
+	onInteract = function ( self, other )
 
 	end
 }
