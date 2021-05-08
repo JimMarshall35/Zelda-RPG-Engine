@@ -228,9 +228,11 @@ bool AreaLoader::loadLayers(const rapidjson::Document & doc, Area & arearef)
 
 					glm::vec2 player_start_pos = tiledPosToGameEnginePos(glm::vec2(json_x, json_y), arearef);
 					/////////////////////////////// BAD HARD CODED CODE STARTS
-
-					Player* player = new Player();
 					TileSet* player_tileset = arearef.getTilesetByName(PLAYER_TILESET_NAME);
+					ScriptableGameObject* player = new ScriptableGameObject();
+					/*
+					Player* player = new Player();
+					
 					Sprite** upFrames = new Sprite*[4]{
 						player_tileset->getSprite(0),
 						player_tileset->getSprite(1),
@@ -261,6 +263,7 @@ bool AreaLoader::loadLayers(const rapidjson::Document & doc, Area & arearef)
 					player->animator.push_animation("walk_left", leftFrames, 4, 10, true);
 					player->animator.push_animation("walk_right", rightFrames, 4, 10, true);
 					player->animator.set_anim("walk_down");
+					*/
 					player->scale *= glm::vec2(
 						player_tileset->tilewidth / (arearef.tilelayers.tilewidth * 40.0),
 						player_tileset->tileheight / (arearef.tilelayers.tileheight * 40.0)
@@ -271,13 +274,17 @@ bool AreaLoader::loadLayers(const rapidjson::Document & doc, Area & arearef)
 #define ROFFSET 8.0f
 #define TOFFSET 18.0f
 #define BOFFSET 0.0f
+#define PLAYER_W 24
+#define PLAYER_H 24
 					player->collider.left_offset = LOFFSET;
 					player->collider.right_offset = ROFFSET;
 					player->collider.top_offset = TOFFSET;
 					player->collider.bottom_offset = BOFFSET;
-					player->collider.pixelswidth = 24;//object["width"].GetFloat();
-					player->collider.pixelsheight = 24; object["height"].GetFloat();
+					player->collider.pixelswidth = PLAYER_W;//object["width"].GetFloat();
+					player->collider.pixelsheight = PLAYER_H; //object["height"].GetFloat();
 					player->collider.init(player);
+					player->setGamePtr(arearef.getGamePtr());
+					player->init("scripts/player.lua");
 					arearef.gameobjects.push_back(player);
 					////////////////// BAD CODE ENDS! /////////////////////////////////////
 				}
@@ -343,6 +350,42 @@ bool AreaLoader::loadLayers(const rapidjson::Document & doc, Area & arearef)
 					d_trigger->collider.right_offset = 0;
 					d_trigger->collider.init(d_trigger);
 					arearef.gameobjects.push_back(d_trigger);
+				}
+				else if (objtype == "scriptable_gameobject"){
+					std::cout << "sciptable_gameobject" << std::endl;
+					TiledProperty script_url , t_offset, b_offset, l_offset, r_offset, collidable;
+					ScriptableGameObject* scriptable = new ScriptableGameObject();
+					if (!getTiledObjectProperty(object["properties"], "scripts", script_url)) {}//continue; }
+					if (!getTiledObjectProperty(object["properties"], "collider_b_offset", b_offset)) {}
+					if (!getTiledObjectProperty(object["properties"], "collider_t_offset", t_offset)) {}
+					if (!getTiledObjectProperty(object["properties"], "collider_l_offset", l_offset)) {}
+					if (!getTiledObjectProperty(object["properties"], "collider_r_offset", r_offset)) {}
+					if (!getTiledObjectProperty(object["properties"], "collidable", collidable)) { std::cout << "error" << std::endl; }
+					scriptable->init(script_url.s);
+					scriptable->collider.pixelswidth = object["width"].GetFloat();
+					scriptable->collider.pixelsheight = object["height"].GetFloat();
+					scriptable->collider.top_offset = 0;
+					scriptable->collider.bottom_offset = 0;
+					scriptable->collider.left_offset = 0;
+					scriptable->collider.right_offset = 0;
+					scriptable->collider.init(scriptable);
+					glm::vec2 json_pos(object["x"].GetFloat(), object["y"].GetFloat());
+					scriptable->position = tiledPosToGameEnginePos(json_pos, arearef);
+					scriptable->scale *= glm::vec2(
+						object["width"].GetFloat() / (arearef.tilelayers.tilewidth * 40.0),
+						object["height"].GetFloat() / (arearef.tilelayers.tileheight * 40.0)
+					);
+					if (!collidable.b) {
+						scriptable->issolidvsgameobjects = false;
+					}
+					else {
+						scriptable->issolidvsgameobjects = true;
+					}
+					scriptable->position += glm::vec2(
+						(scriptable->scale.x * 2.0f) / 2.0f,
+						(scriptable->scale.y * 2.0f) / 2.0f
+					);
+					arearef.gameobjects.push_back(scriptable);
 				}
 			}
 		}

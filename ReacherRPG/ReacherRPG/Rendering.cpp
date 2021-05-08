@@ -195,7 +195,7 @@ void Sprite::genbuffers()
 	GLPrintErrors("glBindBuffer(GL_ARRAY_BUFFER, 0);");
 	glBindVertexArray(0); // Unbind VAO (it's always a good thing to unbind any buffer/array to prevent strange bugs)
 	GLPrintErrors("glBindVertexArray(0);");
-	std::cout << "VAO = " << VAO << std::endl;
+	//std::cout << "VAO = " << VAO << std::endl;
 }
 void Sprite::setup(unsigned char* img_data, unsigned int img_width, unsigned int img_height) {
 	GPULoadTexture(img_data, img_width, img_height, &TextureID);

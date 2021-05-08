@@ -72,7 +72,10 @@ void Animator::start_anim()
 void Animator::stop_anim()
 {
 	isanimating = false;
-	current_frame = current_animation->frames[0];
+	if (current_animation != nullptr) {
+		current_frame = current_animation->frames[0];
+	}
+	
 	timer = 0;
 }
 

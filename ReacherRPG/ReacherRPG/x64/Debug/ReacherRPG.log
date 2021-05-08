@@ -16,17 +16,17 @@ c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\areaload
 c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\shader.h(58): warning C4101: 'e': unreferenced local variable
   GameObject.cpp
 c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\shader.h(58): warning C4101: 'e': unreferenced local variable
-c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\gameobject.cpp(181): warning C4244: 'initializing': conversion from 'lua_Number' to 'float', possible loss of data
-c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\gameobject.cpp(182): warning C4244: 'initializing': conversion from 'lua_Number' to 'float', possible loss of data
-c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\gameobject.cpp(217): warning C4244: 'initializing': conversion from 'lua_Number' to 'float', possible loss of data
-c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\gameobject.cpp(230): warning C4244: 'initializing': conversion from 'lua_Integer' to 'int', possible loss of data
-c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\gameobject.cpp(234): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\gameobject.cpp(241): warning C4244: 'initializing': conversion from 'lua_Number' to 'float', possible loss of data
-c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\gameobject.cpp(242): warning C4244: 'initializing': conversion from 'lua_Number' to 'float', possible loss of data
-c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\gameobject.cpp(264): warning C4244: 'initializing': conversion from 'lua_Number' to 'float', possible loss of data
-c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\gameobject.cpp(265): warning C4244: 'initializing': conversion from 'lua_Number' to 'float', possible loss of data
-c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\gameobject.cpp(296): warning C4244: 'initializing': conversion from 'lua_Number' to 'float', possible loss of data
-c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\gameobject.cpp(297): warning C4244: 'initializing': conversion from 'lua_Number' to 'float', possible loss of data
+c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\gameobject.cpp(186): warning C4244: 'initializing': conversion from 'lua_Number' to 'float', possible loss of data
+c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\gameobject.cpp(187): warning C4244: 'initializing': conversion from 'lua_Number' to 'float', possible loss of data
+c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\gameobject.cpp(222): warning C4244: 'initializing': conversion from 'lua_Number' to 'float', possible loss of data
+c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\gameobject.cpp(235): warning C4244: 'initializing': conversion from 'lua_Integer' to 'int', possible loss of data
+c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\gameobject.cpp(239): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\gameobject.cpp(246): warning C4244: 'initializing': conversion from 'lua_Number' to 'float', possible loss of data
+c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\gameobject.cpp(247): warning C4244: 'initializing': conversion from 'lua_Number' to 'float', possible loss of data
+c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\gameobject.cpp(269): warning C4244: 'initializing': conversion from 'lua_Number' to 'float', possible loss of data
+c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\gameobject.cpp(270): warning C4244: 'initializing': conversion from 'lua_Number' to 'float', possible loss of data
+c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\gameobject.cpp(301): warning C4244: 'initializing': conversion from 'lua_Number' to 'float', possible loss of data
+c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\gameobject.cpp(302): warning C4244: 'initializing': conversion from 'lua_Number' to 'float', possible loss of data
   Generating Code...
   Main.cpp
 c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\shader.h(58): warning C4101: 'e': unreferenced local variable

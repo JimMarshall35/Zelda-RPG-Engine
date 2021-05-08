@@ -18,7 +18,7 @@ Player::~Player()
 
 void Player::onInteract(GameObject * other)
 {
-	std::cout << "COLLISION!" << std::endl;
+	//std::cout << "COLLISION!" << std::endl;
 }
 
 
@@ -110,15 +110,20 @@ void FloorCollider::init(GameObject* parent)
 ScriptableGameObject::ScriptableGameObject()
 {
 	L = Scripting::s_instance.getL();
-
+	isdrawable = true;
+	issolidvsbackground = true;
+	issolidvsgameobjects = true;
+	type = GO_TYPE::PLAYER;
 }
 
 void ScriptableGameObject::onInteract(GameObject * other)
 {
+
 }
 
 void ScriptableGameObject::update(float delta, GLuint keys)
 {
+	//std::cout << keys << std::endl;
 	animator.update(delta);
 	lua_rawgeti(L, LUA_REGISTRYINDEX, luaRef);              // pushes the lua object corresponding to luaRef
 	if (!lua_istable(L, -1)) {
@@ -305,6 +310,13 @@ int ScriptableGameObject::l_setCamZoom(lua_State * L)
 	return 0;
 }
 
+int ScriptableGameObject::l_getCamZoom(lua_State * L)
+{
+	float zoom = Camera::Instance()->zoom;
+	lua_pushnumber(L, zoom);
+	return 1;
+}
+
 bool checkLua(lua_State * L, int r)
 {
 	if (r != LUA_OK) {
@@ -333,9 +345,11 @@ Scripting::Scripting::Scripting()
 	L = luaL_newstate();
 	luaL_openlibs(L);
 
+
+	registerFunction(ScriptableGameObject::l_getTilesetByName, "getTilesetByName"); // TileSet*             getTilesetByName(host,name) 
 	registerFunction(ScriptableGameObject::l_enqueueMsgBoxes, "enqueueMsgBoxes");   // void                 enqueueMsgBoxes(host,msg)
 
-	registerFunction(ScriptableGameObject::l_getTilesetByName, "getTIlesetByName"); // TileSet*             getTilesetByName(host,name) 
+	
 	
 	registerFunction(ScriptableGameObject::l_setPos, "setPos");                     // void                 setPos(host,x,y)
 	registerFunction(ScriptableGameObject::l_getPos, "getPos");                     // float x, float y     getPos(host)
@@ -351,6 +365,7 @@ Scripting::Scripting::Scripting()
 
 	registerFunction(ScriptableGameObject::l_setCamClamped, "setCamClamped");       // void                 setCamClamped(x,y)
 	registerFunction(ScriptableGameObject::l_setCamZoom, "setCamZoom");             // void                 setCamZoom(zoom)
+	registerFunction(ScriptableGameObject::l_getCamZoom, "getCamZoom");             // float                getCamZoom()
 
 }
 

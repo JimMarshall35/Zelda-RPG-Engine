@@ -162,7 +162,7 @@ public:
 	~ScriptableGameObject() { freeData(); }
 	virtual void    onInteract(GameObject* other);
 	virtual void    update(float delta, GLuint keys);
-	virtual void    draw(const Shader& s, const Camera* camera) {};
+	virtual void    draw(const Shader& s, const Camera* camera) { animator.draw(position, scale, s, camera); }
 	virtual void    freeData() { luaL_unref(Scripting::s_instance.getL(), LUA_REGISTRYINDEX, luaRef); };
 	void            init(std::string script);
 	Animator        animator;
@@ -180,6 +180,7 @@ public:
 	static int      l_setAnimation(lua_State* L);    // setAnimation(host,anim_name)
 	static int      l_setCamClamped(lua_State* L);   // setCamClamped(x,y)
 	static int      l_setCamZoom(lua_State* L);      // setCamZoom(zoom)
+	static int      l_getCamZoom(lua_State* L);      // getCamZoom()  - returns a float - the cameras zoom
 private:
 	int             luaRef = LUA_NOREF;
 	lua_State*      L;

@@ -1,4 +1,3 @@
-
 GameObject = {
 	x = 0,
 	y = 3,
@@ -15,7 +14,7 @@ GameObject = {
 
 	end,
 	init = function( self )
-		print("this is test1");
+		print("this is test1.lua");
 	end,
 	onInteract = function ( other )
 

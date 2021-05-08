@@ -6,6 +6,9 @@ GameObject = {
 		self.x = self.x + 1
 	end,
 	init = function( self )
-		print("this is test2");
+		print("this is test2.lua");
+	end,
+	onInteract = function ( self,other )
+
 	end
 }
