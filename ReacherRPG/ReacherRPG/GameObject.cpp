@@ -103,6 +103,7 @@ void FloorCollider::init(GameObject* parent)
 
 	width = right - left;
 	height = top - bottom;
+ 
 	resolutionx = parent->scale.x / pixelswidth;
 	resolutiony = parent->scale.y / pixelsheight;
 }
@@ -110,7 +111,6 @@ void FloorCollider::init(GameObject* parent)
 ScriptableGameObject::ScriptableGameObject()
 {
 	L = Scripting::s_instance.getL();
-	type = GO_TYPE::PLAYER;
 }
 
 void ScriptableGameObject::onInteract(GameObject * other)
@@ -398,6 +398,41 @@ int ScriptableGameObject::l_setDrawable(lua_State * L)
 	return 0;
 }
 
+int ScriptableGameObject::l_setGOType(lua_State * L)
+{
+	ScriptableGameObject* go = (ScriptableGameObject*)lua_touserdata(L, 1);
+	if (!lua_isinteger(L, 2)) {
+		std::cerr << "argument 2 not an integer l_setGOType" << std::endl;
+		return 0;
+	}
+	GO_TYPE t = (GO_TYPE)lua_tointeger(L, 2);
+	go->type = t;
+	return 0;
+}
+
+int ScriptableGameObject::l_getGOType(lua_State * L)
+{
+	ScriptableGameObject* go = (ScriptableGameObject*)lua_touserdata(L, 1);
+	lua_pushinteger(L, (int)go->type);
+	return 1;
+}
+
+int ScriptableGameObject::l_getVelocity(lua_State * L)
+{
+	ScriptableGameObject* go = (ScriptableGameObject*)lua_touserdata(L, 1);
+	lua_pushnumber(L, go->velocity.x);
+	lua_pushnumber(L, go->velocity.y);
+	return 2;
+}
+
+int ScriptableGameObject::l_getPlayerPtr(lua_State * L)
+{
+	ScriptableGameObject* go = (ScriptableGameObject*)lua_touserdata(L, 1);
+	lua_pushlightuserdata(L, (void*)go->game->getAreaPtr()->getPlayerPtr());
+	
+	return 1;
+}
+
 inline bool ScriptableGameObject::getLuaTableNumber(lua_State * L, std::string key, int tableIndex, float& out)
 {
 	lua_pushstring(L, key.c_str());
@@ -439,7 +474,7 @@ Scripting::Scripting::Scripting()
 	L = luaL_newstate();
 	luaL_openlibs(L);
 
-
+	if (checkLua(L, luaL_dofile(L, "scripts/engine_defs.lua"))) {}
 	registerFunction(ScriptableGameObject::l_getTilesetByName, "getTilesetByName");             // TileSet*             getTilesetByName(host,name) 
 	registerFunction(ScriptableGameObject::l_enqueueMsgBoxes, "enqueueMsgBoxes");               // void                 enqueueMsgBoxes(host,msg)
 
@@ -448,6 +483,7 @@ Scripting::Scripting::Scripting()
 	registerFunction(ScriptableGameObject::l_setPos, "setPos");                                 // void                 setPos(host,x,y)
 	registerFunction(ScriptableGameObject::l_getPos, "getPos");                                 // float x, float y     getPos(host)
 	registerFunction(ScriptableGameObject::l_setVelocity, "setVelocity");                       // void                 setVelocity(host,x,y)
+	registerFunction(ScriptableGameObject::l_getVelocity, "getVelocity");                       // float x, float y     getVelocity(host)
 
 	registerFunction(ScriptableGameObject::l_setScale, "setScale");                             // void                 setsetScale(host,x,y)
 	registerFunction(ScriptableGameObject::l_getScale, "getScale");                             // float x, float y     getScale(host)
@@ -476,16 +512,26 @@ Scripting::Scripting::Scripting()
 	registerFunction(ScriptableGameObject::l_setCollidableVsBackground, "setCollidableBG");     // void                 setCollidableBG(host,value) value = bool
 	registerFunction(ScriptableGameObject::l_setCollidableVsGameObjects, "setCollidableGO");    // void                 setCollidableGO(host,value) value = bool
 	registerFunction(ScriptableGameObject::l_setDrawable , "setDrawable");                      // void                 setDrawable(host,value)     value = bool
+
+	registerFunction(ScriptableGameObject::l_setGOType, "setGOType");                           // void                 setGOType(host,type) type is GO_TYPE
+	registerFunction(ScriptableGameObject::l_getGOType, "getGOType");                           // GO_TYPE              getGOType(host)
+	
+	registerFunction(ScriptableGameObject::l_getPlayerPtr, "getPlayerPtr");                     // GameObject*          getPlayerPtr(host)
 }
 
 
 Scripting::Scripting::~Scripting()
 {
-	lua_close(L);
+	freeData();
 }
 
 inline void Scripting::Scripting::registerFunction(int(*func)(lua_State *L), std::string func_name)
 {
 	lua_pushcfunction(L, func);
 	lua_setglobal(L, func_name.c_str());
+}
+
+void Scripting::Scripting::freeData()
+{
+	lua_close(L);
 }

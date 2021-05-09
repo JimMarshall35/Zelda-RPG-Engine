@@ -80,6 +80,16 @@ TileSet * Area::getTilesetByName(std::string name)
 	return nullptr;
 }
 
+GameObject * Area::getPlayerPtr()
+{
+	for (GameObject* p : gameobjects) {
+		if (p->type == GO_TYPE::PLAYER) {
+			return p;
+		}
+	}
+	return nullptr;
+}
+
 void Area::freeData()
 {
 	for (size_t i = 0; i < numtilesets; i++) {
@@ -109,8 +119,8 @@ void Area::updatePhysics()
 			float ystart = go->position.y + go->collider.bottom;
 			float yend = go->position.y + go->collider.top;
 
-			for (float x = xstart; x < xend; x += go->collider.resolutionx) {
-				for (float y = ystart; y < yend; y += go->collider.resolutiony) {
+			for (float x = xstart; x <= xend; x += xend-xstart) {
+				for (float y = ystart; y <= yend; y += yend-ystart) {
 					int tile = tilelayers.getTileAtPosition(glm::vec2(x, y), "structure");
 					if (tile > 0) {
 						go->position += -go->velocity;

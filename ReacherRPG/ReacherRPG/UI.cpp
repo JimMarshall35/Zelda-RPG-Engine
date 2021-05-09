@@ -121,7 +121,7 @@ void UI::emqueueMsgBoxes(std::string text, std::queue<MessageBox>& queue)
 
 void UI::updateFPS(float delta)
 {
-	const int fpscount_period = 50;
+	const int fpscount_period = 25;
 	static int onfpscount = 0;
 	static float fps_accumulated = 0;
 

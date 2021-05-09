@@ -1,21 +1,10 @@
 GameObject = {
-	UP_BIT = 0,
-	DOWN_BIT = 1,
-	LEFT_BIT = 2,
-	RIGHT_BIT = 3,
-	ZOOM_IN_BIT = 4,
-	ZOOM_OUT_BIT = 5,
-	SELECT_BIT = 6,
+	
 
 	TEST_SPEED = 0.3,
 	TEST_ZOOM_SPEED  = 2,
 
-	NONE = 0,
-	UP = 1,
-	DOWN = 2,
-	LEFT = 3,
-	RIGHT = 4,
-
+	
 	x = 0,
 	y = 3,
 	lastkeys = 0,
@@ -50,20 +39,20 @@ GameObject = {
 				newkeys = keys;                    
 			end
 
-			if newkeys & (1 << self.UP_BIT) > 0 then
-				self.direction = self.UP
-			elseif newkeys & (1 << self.DOWN_BIT) > 0 then
-				self.direction = self.DOWN
-			elseif newkeys & (1 << self.LEFT_BIT) > 0 then
-				self.direction = self.LEFT
-			elseif newkeys & (1 << self.RIGHT_BIT) > 0 then
-				self.direction = self.RIGHT
+			if newkeys & (1 << INPUT.UP_BIT) > 0 then
+				self.direction = DIRECTION.UP
+			elseif newkeys & (1 << INPUT.DOWN_BIT) > 0 then
+				self.direction = DIRECTION.DOWN
+			elseif newkeys & (1 << INPUT.LEFT_BIT) > 0 then
+				self.direction = DIRECTION.LEFT
+			elseif newkeys & (1 << INPUT.RIGHT_BIT) > 0 then
+				self.direction = DIRECTION.RIGHT
 			end
 
-			if (keys & (1 << self.UP_BIT) == 0) and
-				(keys & (1 << self.DOWN_BIT) == 0) and
-			   	(keys & (1 << self.LEFT_BIT) == 0) and
-			   	(keys & (1 << self.RIGHT_BIT) == 0) then
+			if (keys & (1 << INPUT.UP_BIT) == 0) and
+				(keys & (1 << INPUT.DOWN_BIT) == 0) and
+			   	(keys & (1 << INPUT.LEFT_BIT) == 0) and
+			   	(keys & (1 << INPUT.RIGHT_BIT) == 0) then
 			   	if self.direction ~= self.NONE then
 			   		self.lastdirection = self.direction
 			   	end
@@ -74,22 +63,22 @@ GameObject = {
 				velx = 0
 			   	vely = 0
 			   	animatorStop(self.host)
-			elseif self.direction == self.UP then
+			elseif self.direction == DIRECTION.UP then
 				velx = 0
 				vely = 1
 				setAnimation(self.host, "walk_up")
 				animatorStart(self.host)
-			elseif self.direction == self.DOWN then
+			elseif self.direction == DIRECTION.DOWN then
 				velx = 0
 				vely = -1
 				setAnimation(self.host, "walk_down")
 				animatorStart(self.host)
-			elseif self.direction == self.LEFT then
+			elseif self.direction == DIRECTION.LEFT then
 				velx = -1
 				vely = 0
 				setAnimation(self.host, "walk_left")
 				animatorStart(self.host)
-			elseif self.direction == self.RIGHT then
+			elseif self.direction == DIRECTION.RIGHT then
 				velx = 1
 				vely = 0
 				setAnimation(self.host, "walk_right")
@@ -101,10 +90,10 @@ GameObject = {
 			
 			setVelocity(self.host, velx, vely)
 
-			if keys & (1<<self.ZOOM_IN_BIT) > 0 then
+			if keys & (1<<INPUT.ZOOM_IN_BIT) > 0 then
 				self.cam_zoom = self.cam_zoom + (self.TEST_ZOOM_SPEED*delta)
 				setCamZoom(self.cam_zoom)
-			elseif keys & (1<<self.ZOOM_OUT_BIT) > 0 then
+			elseif keys & (1<<INPUT.ZOOM_OUT_BIT) > 0 then
 				self.cam_zoom = self.cam_zoom - (self.TEST_ZOOM_SPEED*delta)
 				if self.cam_zoom < 1.0 then
 					self.cam_zoom = 1.0
@@ -112,7 +101,7 @@ GameObject = {
 				setCamZoom(self.cam_zoom)
 			end
 
-			if keys & (1<<self.SELECT_BIT) > 0  and self.canattack == true then
+			if keys & (1<<INPUT.SELECT_BIT) > 0  and self.canattack == true then
 				self.attacking = true
 				self.canattack = false
 				local direc = self.direction
@@ -120,36 +109,37 @@ GameObject = {
 					direc = self.lastdirection 
 				end
 
-				if direc == self.UP then
+				if direc == DIRECTION.UP then
 					setAnimation(self.host, "attack_up")
 					animatorStart(self.host)
-				elseif direc == self.DOWN then
+				elseif direc == DIRECTION.DOWN then
 					setAnimation(self.host, "attack_down")
 					animatorStart(self.host)
-				elseif direc == self.LEFT then
+				elseif direc == DIRECTION.LEFT then
 					setAnimation(self.host, "attack_left")
 					animatorStart(self.host)
-				elseif direc == self.RIGHT then
+				elseif direc == DIRECTION.RIGHT then
 					setAnimation(self.host, "attack_right")
 					animatorStart(self.host)
 				end
 				self.lastdirection = direc
-			elseif keys & (1<<self.SELECT_BIT) == 0  and self.canattack == false then
+			elseif keys & (1<<INPUT.SELECT_BIT) == 0  and self.canattack == false then
 				self.canattack = true
 			end
 
 			setCamClamped(self.x,self.y)
 		elseif self.attacking == true then
 			local isanimating = getIsAnimating(self.host)
+			--print(isanimating)
 			if isanimating == false then
 				self.attacking = false
-				if self.lastdirection == self.UP then
+				if self.lastdirection == DIRECTION.UP then
 					setAnimation(self.host, "walk_up")
-				elseif self.lastdirection == self.DOWN then
+				elseif self.lastdirection == DIRECTION.DOWN then
 					setAnimation(self.host, "walk_down")
-				elseif self.lastdirection == self.LEFT then
+				elseif self.lastdirection == DIRECTION.LEFT then
 					setAnimation(self.host, "walk_left")
-				elseif self.lastdirection == self.RIGHT then
+				elseif self.lastdirection == DIRECTION.RIGHT then
 					setAnimation(self.host, "walk_right")
 				end
 				animatorStop(self.host)
@@ -159,29 +149,37 @@ GameObject = {
 		self.lastkeys = keys
 	end,
 	init = function( self )
-		print("this is player.lua");
  		local tileset = getTilesetByName(self.host,"24by24ModernRPGGuy_edit")
- 		pushAnimation(self.host, "walk_up", tileset, 10, true, {0,1,2,3})
- 		pushAnimation(self.host, "walk_down", tileset, 10, true, {4,5,6,7})
- 		pushAnimation(self.host, "walk_right", tileset, 10, true, {8,9,10,11})
- 		pushAnimation(self.host, "walk_left", tileset, 10, true, {12,13,14,15})
+ 		local tile_w = 24
+ 		local tile_h = 24
 
- 		pushAnimation(self.host, "attack_up", tileset, 12, false, {16,17})
- 		pushAnimation(self.host, "attack_down", tileset, 12, false, {18,19})
- 		pushAnimation(self.host, "attack_right", tileset, 12, false, {20,21})
- 		pushAnimation(self.host, "attack_left", tileset, 12, false, {22,23})
+ 		local scalex = tile_w / SCREEN_WIDTH
+ 		local scaley = tile_h / SCREEN_HEIGHT
+
+ 		setScale(self.host,scalex,scaley)
+
+ 		pushAnimation(self.host, "walk_up",    tileset, 10, true, { 0,  1,  2,  3})
+ 		pushAnimation(self.host, "walk_down",  tileset, 10, true, { 4,  5,  6,  7})
+ 		pushAnimation(self.host, "walk_right", tileset, 10, true, { 8,  9, 10, 11})
+ 		pushAnimation(self.host, "walk_left",  tileset, 10, true, {12, 13, 14, 15})
+
+ 		pushAnimation(self.host, "attack_up",    tileset, 12, false, {16, 17})
+ 		pushAnimation(self.host, "attack_down",  tileset, 12, false, {18, 19})
+ 		pushAnimation(self.host, "attack_right", tileset, 12, false, {20, 21})
+ 		pushAnimation(self.host, "attack_left",  tileset, 12, false, {22, 23})
 
  		setAnimation(self.host, "walk_down")
  		
  		setCollidableBG(self.host, true)
  		setCollidableGO(self.host, true)
  		setDrawable(self.host, true)
- 		setFloorCollider(self.host,self.collider)
- 		self.direction = self.DOWN
- 		self.lastdirection = self.DOWN
+ 		setFloorCollider(self.host, self.collider)
+ 		setGOType(self.host, GO_TYPE.PLAYER)
+ 		self.direction = DIRECTION.DOWN
+ 		self.lastdirection = DIRECTION.DOWN
  		self.cam_zoom = getCamZoom();
 	end,
 	onInteract = function ( self,other )
-		print("collision!")
+		--print("collision!")
 	end
 }

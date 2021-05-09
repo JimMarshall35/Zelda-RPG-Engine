@@ -11,5 +11,5 @@ c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\gameobje
 c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\gameobject.cpp(283): warning C4244: 'initializing': conversion from 'lua_Number' to 'float', possible loss of data
 c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\gameobject.cpp(314): warning C4244: 'initializing': conversion from 'lua_Number' to 'float', possible loss of data
 c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\gameobject.cpp(315): warning C4244: 'initializing': conversion from 'lua_Number' to 'float', possible loss of data
-c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\gameobject.cpp(409): warning C4244: '=': conversion from 'lua_Number' to 'float', possible loss of data
+c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\gameobject.cpp(444): warning C4244: '=': conversion from 'lua_Number' to 'float', possible loss of data
   ReacherRPG.vcxproj -> C:\Users\User1\source\repos\ReacherRPG\ReacherRPG\ReacherRPG\x64\Debug\ReacherRPG.exe

@@ -14,6 +14,7 @@ bool AreaLoader::tilesetFileChecks(const rapidjson::Value& val) {
 	if (!checkJSONValue("tilecount", JSONTYPE::INT, val)) { return false; }
 	if (!checkJSONValue("tileheight", JSONTYPE::INT, val)) { return false; }
 	if (!checkJSONValue("tilewidth", JSONTYPE::INT, val)) { return false; }
+	//if (!checkJSONValue("gensprites", JSONTYPE::BOOL, val)) { return false; }
 	return true;
 }
 bool AreaLoader::layersChecks(const rapidjson::Value& val) {
@@ -79,12 +80,14 @@ bool AreaLoader::loadArea(std::string folder, std::string file, Area & arearef)
 	std::chrono::duration<double> time_span = std::chrono::duration_cast<std::chrono::duration<double>>(t1 - t0);
 	std::cout << "area loading done in " << time_span.count() * 1000 << " ms" << std::endl;
 	std::cout << std::endl << std::endl;
+	/*
 	ScriptableGameObject* testgo1 = new ScriptableGameObject("scripts/test1.lua");
 	ScriptableGameObject* testgo2 = new ScriptableGameObject("scripts/test2.lua");
 	testgo1->setGamePtr(arearef.getGamePtr());
 	testgo2->setGamePtr(arearef.getGamePtr());
 	arearef.gameobjects.push_back(testgo1);
 	arearef.gameobjects.push_back(testgo2);
+	*/
 	return true;
 }
 
@@ -118,11 +121,15 @@ bool AreaLoader::loadTilesets(const rapidjson::Document & doc, Area & arearef, s
 		tileset.tilecount = doc["tilecount"].GetInt();
 		tileset.tileheight = doc["tileheight"].GetInt();
 		tileset.tilewidth = doc["tilewidth"].GetInt();
+		
 		if (!loadTilesetImgData(tileset)) { return false; }
-		if (tileset.name == PLAYER_TILESET_NAME) {
-			tileset.genTexture();
-			tileset.genSprites();
+		if (checkJSONValue("gensprites", JSONTYPE::BOOL, doc)) {
+			if (doc["gensprites"].GetBool()) {
+				tileset.genTexture();
+				tileset.genSprites();
+			}
 		}
+
 		if (checkJSONValue("metasprites", JSONTYPE::ARRAY, doc)) {
 			for (SizeType j = 0; j < doc["metasprites"].Size(); j++) {
 				const Value& metasprite = doc["metasprites"][j];
@@ -219,30 +226,35 @@ bool AreaLoader::loadLayers(const rapidjson::Document & doc, Area & arearef)
 				const Value& object = val["objects"][i];
 				std::string objname = object["name"].GetString();
 				std::string objtype = object["type"].GetString();
-				if (objname == "start_point") {
+				
+				if (objtype == "sciptable_gameobject") {
 
 					if (!checkJSONValue("x", JSONTYPE::NUMBER, object)) { continue; }
 					if (!checkJSONValue("y", JSONTYPE::NUMBER, object)) { continue; }
 					float json_x = object["x"].GetFloat();
 					float json_y = object["y"].GetFloat();
-
+					TiledProperty script_url;
+					if (!getTiledObjectProperty(object["properties"], "scripts", script_url)) {}//continue; }
 					glm::vec2 player_start_pos = tiledPosToGameEnginePos(glm::vec2(json_x, json_y), arearef);
 					/////////////////////////////////////////////////
-					TileSet* player_tileset = arearef.getTilesetByName(PLAYER_TILESET_NAME);
-					ScriptableGameObject* player = new ScriptableGameObject();
+					ScriptableGameObject* scriptable = new ScriptableGameObject();
 
-					player->scale *= glm::vec2(
-						player_tileset->tilewidth / (arearef.tilelayers.tilewidth * 40.0),
-						player_tileset->tileheight / (arearef.tilelayers.tileheight * 40.0)
+
+					scriptable->position = player_start_pos;
+
+					scriptable->setGamePtr(arearef.getGamePtr());
+					scriptable->init(script_url.s);
+					/*
+					player->position += glm::vec2(
+						(player->scale.x * 2.0f) / 2.0f,
+						(player->scale.y * 2.0f) / 2.0f
 					);
-					player->position = player_start_pos;
-
-					player->setGamePtr(arearef.getGamePtr());
-					player->init("scripts/player.lua");
-					arearef.gameobjects.push_back(player);
+					*/
+					arearef.gameobjects.push_back(scriptable);
 					////////////////////////////////////////////////////
 				}
-				else if (objtype == "static_metasprite_object") {
+				
+				if (objtype == "static_metasprite_object") {
 
 					TiledProperty tileset_name_value, metasprite_name_value, t_offset, b_offset, l_offset, r_offset, collidable;
 					StaticSprite* s_sprite = new StaticSprite();
@@ -305,42 +317,26 @@ bool AreaLoader::loadLayers(const rapidjson::Document & doc, Area & arearef)
 					d_trigger->collider.init(d_trigger);
 					arearef.gameobjects.push_back(d_trigger);
 				}
+				/*
 				else if (objtype == "scriptable_gameobject"){
 					std::cout << "sciptable_gameobject" << std::endl;
-					TiledProperty script_url , t_offset, b_offset, l_offset, r_offset, collidable;
+					TiledProperty script_url;
 					ScriptableGameObject* scriptable = new ScriptableGameObject();
 					if (!getTiledObjectProperty(object["properties"], "scripts", script_url)) {}//continue; }
-					if (!getTiledObjectProperty(object["properties"], "collider_b_offset", b_offset)) {}
-					if (!getTiledObjectProperty(object["properties"], "collider_t_offset", t_offset)) {}
-					if (!getTiledObjectProperty(object["properties"], "collider_l_offset", l_offset)) {}
-					if (!getTiledObjectProperty(object["properties"], "collider_r_offset", r_offset)) {}
-					if (!getTiledObjectProperty(object["properties"], "collidable", collidable)) { std::cout << "error" << std::endl; }
-					scriptable->init(script_url.s);
-					scriptable->collider.pixelswidth = object["width"].GetFloat();
-					scriptable->collider.pixelsheight = object["height"].GetFloat();
-					scriptable->collider.top_offset = 0;
-					scriptable->collider.bottom_offset = 0;
-					scriptable->collider.left_offset = 0;
-					scriptable->collider.right_offset = 0;
-					scriptable->collider.init(scriptable);
+
 					glm::vec2 json_pos(object["x"].GetFloat(), object["y"].GetFloat());
 					scriptable->position = tiledPosToGameEnginePos(json_pos, arearef);
-					scriptable->scale *= glm::vec2(
-						object["width"].GetFloat() / (arearef.tilelayers.tilewidth * 40.0),
-						object["height"].GetFloat() / (arearef.tilelayers.tileheight * 40.0)
-					);
-					if (!collidable.b) {
-						scriptable->issolidvsgameobjects = false;
-					}
-					else {
-						scriptable->issolidvsgameobjects = true;
-					}
+
+					scriptable->setGamePtr(arearef.getGamePtr());
+					scriptable->init(script_url.s);
+
 					scriptable->position += glm::vec2(
 						(scriptable->scale.x * 2.0f) / 2.0f,
 						(scriptable->scale.y * 2.0f) / 2.0f
 					);
 					arearef.gameobjects.push_back(scriptable);
 				}
+				*/
 			}
 		}
 	}
@@ -357,7 +353,7 @@ bool AreaLoader::getTiledObjectProperty(const rapidjson::Value & props_array, st
 		const Value& val = props_array[i];
 		if (!checkJSONValue("name", JSONTYPE::STRING, val)) { return false; }
 		if (!checkJSONValue("type", JSONTYPE::STRING, val)) { return false; }
-		if (!checkJSONValue("value", JSONTYPE::ANY, val)) { return false; }
+		if (!checkJSONValue("value", JSONTYPE::ANY,   val)) { return false; }
 		std::string jsonname = val["name"].GetString();
 		if (jsonname == name) {
 			std::string type = val["type"].GetString();

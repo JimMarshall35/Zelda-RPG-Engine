@@ -20,6 +20,7 @@ namespace Scripting {
 		lua_State* getL() { return L; }
 
 		inline void registerFunction(int(*func)(lua_State*L), std::string func_name);
+		void freeData();
 	private:
 		lua_State* L;
 
@@ -27,13 +28,14 @@ namespace Scripting {
 	static Scripting s_instance;
 }
 enum class GO_TYPE {
-	PLAYER,
-	DOOR,
-	PICKUP,
-	ENEMY,
-	SCENERY,
-	ZONE,
-	NONE
+	NONE = 0,
+	PLAYER = 1,
+	DOOR = 2,
+	PICKUP = 3,
+	ENEMY = 4,
+	SCENERY = 5,
+	ZONE = 6
+	
 };
 struct Rect {
 	float x;
@@ -191,6 +193,10 @@ public:
 	static int      l_setCollidableVsBackground(lua_State* L);   // setCollidableVsBackground(host,value)
 	static int      l_setCollidableVsGameObjects(lua_State* L);  // setCollidableVsGameObjects(host,value)
 	static int      l_setDrawable(lua_State* L);                 // setDrawable(host,value)
+	static int      l_setGOType(lua_State* L);                   // setGOType(host,value) 
+	static int      l_getGOType(lua_State* L);                   // getGOType(host) -> returns int
+	static int      l_getVelocity(lua_State* L);                 // getVelocity(host) -> returns x, y
+	static int      l_getPlayerPtr(lua_State* L);                // getPlayerPtr(host) -> returns ptr to player
 private:
 	static inline bool     getLuaTableNumber(lua_State* L, std::string key, int tableIndex, float& out);
 	int             luaRef = LUA_NOREF;

@@ -14,6 +14,7 @@ public:
 	TileLayers*              getBackGround() { return &tilelayers; }
 	TileSet*                 getTilesetByName(std::string name);
 	Game*                    getGamePtr() { return game; }
+	GameObject*              getPlayerPtr();
 private:
 	TileSet*				 tilesets;
 	unsigned int			 numtilesets;

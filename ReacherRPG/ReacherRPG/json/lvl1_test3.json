@@ -148,18 +148,6 @@
          "name":"gameobjects",
          "objects":[
                 {
-                 "gid":1042,
-                 "height":24,
-                 "id":22,
-                 "name":"start_point",
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":24,
-                 "x":380.666666666667,
-                 "y":279.333333333333
-                }, 
-                {
                  "gid":631,
                  "height":48,
                  "id":24,
@@ -1327,6 +1315,24 @@
                  "width":64,
                  "x":544,
                  "y":528
+                }, 
+                {
+                 "height":0,
+                 "id":56,
+                 "name":"start_point",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"scripts",
+                         "type":"string",
+                         "value":"scripts\/player.lua"
+                        }],
+                 "rotation":0,
+                 "type":"sciptable_gameobject",
+                 "visible":true,
+                 "width":0,
+                 "x":416,
+                 "y":256
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -1335,7 +1341,7 @@
          "y":0
         }],
  "nextlayerid":96,
- "nextobjectid":55,
+ "nextobjectid":57,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.5.0",
