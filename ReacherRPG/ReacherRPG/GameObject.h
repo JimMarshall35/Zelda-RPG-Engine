@@ -170,7 +170,10 @@ public:
 	virtual void    onInteract(GameObject* other);
 	virtual void    update(float delta, GLuint keys);
 	virtual void    draw(const Shader& s, const Camera* camera) { animator.draw(position, scale, s, camera); }
-	virtual void    freeData() { luaL_unref(Scripting::s_instance.getL(), LUA_REGISTRYINDEX, luaRef); };
+	virtual void    freeData() { 
+		luaL_unref(Scripting::s_instance.getL(), LUA_REGISTRYINDEX, luaRef); 
+		animator.freeData();
+	};
 	void            init(std::string script);
 	Animator        animator;
 	// lua API
@@ -197,6 +200,9 @@ public:
 	static int      l_getGOType(lua_State* L);                   // getGOType(host) -> returns int
 	static int      l_getVelocity(lua_State* L);                 // getVelocity(host) -> returns x, y
 	static int      l_getPlayerPtr(lua_State* L);                // getPlayerPtr(host) -> returns ptr to player
+	static int      l_getEnemiesPtrs(lua_State* L);              // getEnemiesPtrs(host) -> returns table of GO's of type ENEMY
+	static int      l_getLuaObject(lua_State* L);                // getLuaObject(host)
+	static int      l_deleteGO(lua_State* L);                    // deleteGO(host)
 private:
 	static inline bool     getLuaTableNumber(lua_State* L, std::string key, int tableIndex, float& out);
 	int             luaRef = LUA_NOREF;

@@ -18,6 +18,7 @@ GameObject = {
 	wait_timer = 0,
 	player_ptr = 0,
 	attack_distance = 0.1,
+	HP = 3,
 
 	update = function( self,delta,keys )
 		self.x, self.y = getPos(self.host)
@@ -77,32 +78,16 @@ GameObject = {
 		self.player_ptr = getPlayerPtr(self.host)
 	end,
 	onInteract = function ( self,other )
-	--[[
+
 		if getGOType(other) == GO_TYPE.PLAYER then
-			local mydx, mydy = getVelocity(self.host)
-			local dx, dy = getVelocity(other)
-			local  x,  y = getPos(other)
-			setPos(other, x + (-dx) + mydx, y + (-dy) + mydy)
+			local player_lua = getLuaObject(other)
+			player_lua.onHit(player_lua)
 		end
-    ]]--
+
 	end,
 
 	setAnimation = function( self, dir )
-		local compass = {
-			[DIRECTION.UP]    = {x =  0, y =  1},
-			[DIRECTION.DOWN]  = {x =  0, y = -1},
-			[DIRECTION.LEFT]  = {x = -1, y =  0},
-			[DIRECTION.RIGHT] = {x =  1, y =  0}
-		}
-		local max_dot = -math.huge
-		local my_dir = 0
-		for index, value in ipairs(compass) do
-		    local dot = vec2_dot(dir, value)
-		    if dot > max_dot then 
-		    	max_dot = dot
-		    	my_dir = index
-		    end
-		end
+		local my_dir = getNearestCardDir(dir)
 		if     my_dir == DIRECTION.UP    then
 			setAnimation(self.host,"walk_up")
 		elseif my_dir == DIRECTION.DOWN  then
@@ -113,5 +98,15 @@ GameObject = {
 			setAnimation(self.host,"walk_right")
 		end
 		animatorStart(self.host)
+	end,
+	onHit = function (self)
+		self.HP = self.HP - 1
+		if self.HP <= 0 then
+			print("I'm Dead")
+			deleteGO(self.host)
+		else
+			print("HP: ", self.HP)
+		end
+
 	end
 }

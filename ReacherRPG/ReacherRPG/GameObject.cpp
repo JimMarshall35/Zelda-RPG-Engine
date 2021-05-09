@@ -433,6 +433,37 @@ int ScriptableGameObject::l_getPlayerPtr(lua_State * L)
 	return 1;
 }
 
+int ScriptableGameObject::l_getEnemiesPtrs(lua_State * L)
+{
+	ScriptableGameObject* go = (ScriptableGameObject*)lua_touserdata(L, 1);
+	std::vector<GameObject*> gos = go->game->getAreaPtr()->getEnemiesPtrs();
+	lua_newtable(L);
+	for (size_t i = 0; i < gos.size(); i++) {
+		GameObject* enemy = gos[i];
+		lua_pushlightuserdata(L, enemy);
+		lua_rawseti(L, -2, i + 1);
+	}
+	return 1;
+}
+
+int ScriptableGameObject::l_getLuaObject(lua_State * L)
+{
+	ScriptableGameObject* go = (ScriptableGameObject*)lua_touserdata(L, 1);
+	int luaRef = go->luaRef;
+	lua_rawgeti(L, LUA_REGISTRYINDEX, luaRef);              // pushes the lua object corresponding to luaRef
+	if (!lua_istable(L, -1)) {
+		std::cerr << "reference " << luaRef << "is not a valid table" << std::endl;
+	}
+	return 1;
+}
+
+int ScriptableGameObject::l_deleteGO(lua_State * L)
+{
+	ScriptableGameObject* go = (ScriptableGameObject*)lua_touserdata(L, 1);
+	go->game->getAreaPtr()->deleteGO(go);
+	return 0;
+}
+
 inline bool ScriptableGameObject::getLuaTableNumber(lua_State * L, std::string key, int tableIndex, float& out)
 {
 	lua_pushstring(L, key.c_str());
@@ -517,6 +548,10 @@ Scripting::Scripting::Scripting()
 	registerFunction(ScriptableGameObject::l_getGOType, "getGOType");                           // GO_TYPE              getGOType(host)
 	
 	registerFunction(ScriptableGameObject::l_getPlayerPtr, "getPlayerPtr");                     // GameObject*          getPlayerPtr(host)
+	registerFunction(ScriptableGameObject::l_getEnemiesPtrs, "getEnemiesPtrs");                 // GameObject*[]        getEnemiesPtrs(host)
+	
+	registerFunction(ScriptableGameObject::l_getLuaObject, "getLuaObject");                     // (lua object)         getLuaObject(host)
+	registerFunction(ScriptableGameObject::l_deleteGO, "deleteGO");                             // void                 deleteGO(host)
 }
 
 

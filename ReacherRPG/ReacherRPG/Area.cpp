@@ -47,7 +47,7 @@ void Area::update(float delta, GLuint keys)
 		go1->position += go1->velocity;
 		for (size_t j = i; j < gameobjects.size(); j++) {
 			GameObject* go2 = gameobjects[j];
-			if (go1 != go2) {
+			if (go1 != go2 && go1 != nullptr && go2 != nullptr) {
 				if (AABBCollision(go1, go2,go1->velocity,go2->velocity)) {
 					go1->onInteract(go2);
 					go2->onInteract(go1);
@@ -88,6 +88,30 @@ GameObject * Area::getPlayerPtr()
 		}
 	}
 	return nullptr;
+}
+
+std::vector<GameObject*> Area::getEnemiesPtrs()
+{
+	std::vector<GameObject*> returnvec;
+	for (GameObject* go : gameobjects) {
+		if (go->type == GO_TYPE::ENEMY) {
+			returnvec.push_back(go);
+		}
+	}
+	return returnvec;
+}
+
+void Area::deleteGO(GameObject * go)
+{
+	for (size_t i = 0; i < gameobjects.size(); i++) {
+		GameObject* g = gameobjects[i];
+		if (g == go) {
+			gameobjects.erase(gameobjects.begin() + i);
+			go->freeData();
+			delete go;
+			return;
+		}
+	}
 }
 
 void Area::freeData()

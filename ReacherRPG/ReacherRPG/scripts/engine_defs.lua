@@ -64,3 +64,22 @@ function vec2_normalize( v )
 		y = v.y / mag
 	}
 end
+
+function getNearestCardDir( dir )
+	local compass = {
+		[DIRECTION.UP]    = {x =  0, y =  1},
+		[DIRECTION.DOWN]  = {x =  0, y = -1},
+		[DIRECTION.LEFT]  = {x = -1, y =  0},
+		[DIRECTION.RIGHT] = {x =  1, y =  0}
+	}
+	local max_dot = -math.huge
+	local ret_dir = 0
+	for index, value in ipairs(compass) do
+	    local dot = vec2_dot(dir, value)
+	    if dot > max_dot then 
+	    	max_dot = dot
+	    	ret_dir = index
+	    end
+	end
+	return ret_dir
+end

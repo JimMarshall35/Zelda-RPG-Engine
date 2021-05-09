@@ -17,6 +17,9 @@ GameObject = {
 
 	wait_time = 3,
 	wait_timer = 0,
+	enemies = {},
+
+	HP = 5,
 
 	update = function( self,delta,keys )
 		if self.wait_timer >= self.wait_time then
@@ -51,7 +54,6 @@ GameObject = {
 		end
 	end,
 	init = function( self )
-		print("this is aliens")
 		local tileset = getTilesetByName(self.host,"aliens")
  		local tile_w = 24
  		local tile_h = 24
@@ -79,7 +81,9 @@ GameObject = {
  		math.randomseed(os.time())
 		math.random() math.random() math.random()
 		self.current_direction = self.randomDirection(self)
-		print(self.current_direction)
+
+
+
 	end,
 	onInteract = function ( self,other )
 		if getGOType(other) == GO_TYPE.PLAYER then
@@ -87,6 +91,8 @@ GameObject = {
 			local dx, dy = getVelocity(other)
 			local  x,  y = getPos(other)
 			setPos(other, x + (-dx) + mydx, y + (-dy) + mydy)
+			local player_lua = getLuaObject(other)
+			player_lua.onHit(player_lua)
 		end
 
 	end,
@@ -105,5 +111,15 @@ GameObject = {
 			setAnimation(self.host, "walk_right")
 			return DIRECTION.RIGHT
 		end
+	end,
+	onHit = function (self)
+		self.HP = self.HP - 1
+		if self.HP <= 0 then
+			print("I'm Dead")
+			deleteGO(self.host)
+		else
+			print("HP: ", self.HP)
+		end
+
 	end
 }

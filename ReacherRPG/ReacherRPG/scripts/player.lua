@@ -13,6 +13,9 @@ GameObject = {
 	cam_zoom = 0.0,
 	attacking = false,
 	canattack = true,
+	enemies = {},
+	hitrange = 0.1,
+	HP = 5,
 
 	collider = {
 		left_offset = 7.0,
@@ -27,38 +30,38 @@ GameObject = {
 	host = 0,
 	
 	update = function( self,delta,keys )
-		--print(self.lastdirection)
+		self.x, self.y = getPos(self.host)
+		
+		
+		local velx = 0
+		local vely = 0
+
+		local newkeys = keys & (~self.lastkeys)
+
+		if newkeys == 0 and keys ~= self.lastkeys then
+			newkeys = keys;                    
+		end
+
+		if newkeys & (1 << INPUT.UP_BIT) > 0 then
+			self.direction = DIRECTION.UP
+		elseif newkeys & (1 << INPUT.DOWN_BIT) > 0 then
+			self.direction = DIRECTION.DOWN
+		elseif newkeys & (1 << INPUT.LEFT_BIT) > 0 then
+			self.direction = DIRECTION.LEFT
+		elseif newkeys & (1 << INPUT.RIGHT_BIT) > 0 then
+			self.direction = DIRECTION.RIGHT
+		end
+
+		if (keys & (1 << INPUT.UP_BIT) == 0) and
+			(keys & (1 << INPUT.DOWN_BIT) == 0) and
+		   	(keys & (1 << INPUT.LEFT_BIT) == 0) and
+		   	(keys & (1 << INPUT.RIGHT_BIT) == 0) then
+		   	if self.direction ~= self.NONE then
+		   		self.lastdirection = self.direction
+		   	end
+		   	self.direction = self.NONE
+		end
 		if self.attacking == false then
-			self.x, self.y = getPos(self.host)
-			local velx = 0
-			local vely = 0
-
-			local newkeys = keys & (~self.lastkeys)
-
-			if newkeys == 0 and keys ~= self.lastkeys then
-				newkeys = keys;                    
-			end
-
-			if newkeys & (1 << INPUT.UP_BIT) > 0 then
-				self.direction = DIRECTION.UP
-			elseif newkeys & (1 << INPUT.DOWN_BIT) > 0 then
-				self.direction = DIRECTION.DOWN
-			elseif newkeys & (1 << INPUT.LEFT_BIT) > 0 then
-				self.direction = DIRECTION.LEFT
-			elseif newkeys & (1 << INPUT.RIGHT_BIT) > 0 then
-				self.direction = DIRECTION.RIGHT
-			end
-
-			if (keys & (1 << INPUT.UP_BIT) == 0) and
-				(keys & (1 << INPUT.DOWN_BIT) == 0) and
-			   	(keys & (1 << INPUT.LEFT_BIT) == 0) and
-			   	(keys & (1 << INPUT.RIGHT_BIT) == 0) then
-			   	if self.direction ~= self.NONE then
-			   		self.lastdirection = self.direction
-			   	end
-			   	self.direction = self.NONE
-			end
-
 			if self.direction == self.NONE then
 				velx = 0
 			   	vely = 0
@@ -123,6 +126,7 @@ GameObject = {
 					animatorStart(self.host)
 				end
 				self.lastdirection = direc
+				self.detectAttackHits(self)
 			elseif keys & (1<<INPUT.SELECT_BIT) == 0  and self.canattack == false then
 				self.canattack = true
 			end
@@ -178,8 +182,43 @@ GameObject = {
  		self.direction = DIRECTION.DOWN
  		self.lastdirection = DIRECTION.DOWN
  		self.cam_zoom = getCamZoom();
+ 		
+
 	end,
 	onInteract = function ( self,other )
 		--print("collision!")
+	end,
+	detectAttackHits = function (self)
+		self.enemies = getEnemiesPtrs(self.host)
+		local mypos = {x=self.x,y=self.y}
+		local no_enemies = 0 
+		for k, enemy_ptr in pairs(self.enemies) do
+			no_enemies = no_enemies + 1
+		  	local enemypos = {x=0,y=0}
+		  	enemypos.x, enemypos.y = getPos(enemy_ptr)
+		  	local me_2_enemy = vec2_sub(enemypos,mypos)
+		  	local direction = getNearestCardDir(me_2_enemy)
+		  	if direction == self.lastdirection then
+		  		if vec2_mag(me_2_enemy) <= self.hitrange then
+		  			print("enemy hit!!")
+		  			self.processAttackHit(self,enemy_ptr)
+		  		end
+		  	end
+		end
+	end,
+	processAttackHit = function(self,enemy)
+		local enemy_lua = getLuaObject(enemy)
+		enemy_lua.onHit(enemy_lua)
+	end,
+	onHit = function (self)
+		self.HP = self.HP - 1
+		if self.HP <= 0 then
+			print("PLAYER: I'm Dead")
+			--deleteGO(self.host)
+		else
+			print("PLAYER HP: ", self.HP)
+		end
+
 	end
+
 }
