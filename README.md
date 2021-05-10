@@ -13,7 +13,7 @@ game engine for 2d top down games written in c++
 - classic RPG message box system
 
 To Do:
-- make an in engine level editor (imgui?)
+- make an in engine level editor (using imgui?)
 - add sound
 - add particle effects system
 - add screen shake 
