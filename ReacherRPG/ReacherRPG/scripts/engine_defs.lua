@@ -1,3 +1,10 @@
+--[[ 
+
+enums and constants used in the c++ code.
+Also some useful lua helper functions.
+This file is made avaliable to all lua scripts.
+
+]]--
 GO_TYPE = {
 	NONE = 0,
 	PLAYER = 1,
