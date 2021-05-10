@@ -94,3 +94,7 @@ function getNearestCardDir( dir )
 	end
 	return ret_dir
 end
+
+function testBit( value,bit )
+	return value & (1<<bit) > 0
+end
