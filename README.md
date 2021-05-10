@@ -18,7 +18,7 @@ To Do:
 - make an in-engine level editor (using imgui?)
 - add sound
 - add particle effects system
-- add screen shake 
+- add screen shake effect
 - add shader based visual effects
 - add lua scripting to the ui overlay
 - add cutscene mode - lua scriptable cutscenes
