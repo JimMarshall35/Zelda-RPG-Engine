@@ -11,7 +11,7 @@ game engine for 2d top down games written in c++
 - unity style scripting of game objects (see ScriptableGameObject class)
 - main loop, level loading, rendering, collision detection, creating and destroying game objects happens in C++
 - features different rendering for UI overlay, including text rendering using freetype
-- classic JRPG message box system, choose box position, text size, font and background box sprite
+- classic JRPG message box system, choose box position, size, text size, font and background box sprite
 - automatically split arbitrary lengths of string into a series of message boxes 
 
 To Do:
