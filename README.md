@@ -11,7 +11,7 @@ game engine for 2d top down games written in c++
 - all gameplay code written in lua - see scripts folder for examples and GameObject.cpp / GameObject.h for lua wrapped functions
 - main loop, level loading, rendering, collision detection, creating and destroying game objects happens in C++
 - features different rendering for UI overlay, including text rendering using freetype
-- classic RPG message box system
+- classic JRPG message box system, choose box position, text size, font and background box sprite
 
 To Do:
 - make an in-engine level editor (using imgui?)
