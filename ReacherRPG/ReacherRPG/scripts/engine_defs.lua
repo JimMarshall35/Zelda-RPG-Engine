@@ -73,6 +73,10 @@ function vec2_normalize( v )
 end
 
 function getNearestCardDir( dir )
+	--[[
+	returns the direction enum of the cardinal
+	direction which  'dir' is nearest to in angle
+	]]--
 	local compass = {
 		[DIRECTION.UP]    = {x =  0, y =  1},
 		[DIRECTION.DOWN]  = {x =  0, y = -1},
