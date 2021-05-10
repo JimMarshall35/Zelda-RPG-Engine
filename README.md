@@ -12,7 +12,7 @@ game engine for 2d top down games written in c++
 - main loop, level loading, rendering, collision detection, creating and destroying game objects happens in C++
 - features different rendering for UI overlay, including text rendering using freetype
 - classic JRPG message box system, choose box position, text size, font and background box sprite
-- split arbitrary lengths of string into a series of message boxes 
+- automatically split arbitrary lengths of string into a series of message boxes 
 
 To Do:
 - make an in-engine level editor (using imgui?)
