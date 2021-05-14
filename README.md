@@ -21,6 +21,6 @@ To Do:
 - add screen shake effect
 - add shader based visual effects
 - add lua scripting to the ui overlay
-- add cutscene mode - lua scriptable cutscenes
+- add cutscene mode - lua coroutine scriptable cutscenes
 
 https://www.youtube.com/watch?v=awqd1HGW3wA
