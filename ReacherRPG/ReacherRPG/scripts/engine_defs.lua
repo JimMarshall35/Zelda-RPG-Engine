@@ -5,6 +5,7 @@ Also some useful lua helper functions.
 This file is made avaliable to all lua scripts.
 
 ]]--
+
 GO_TYPE = {
 	NONE = 0,
 	PLAYER = 1,
@@ -98,3 +99,4 @@ end
 function testBit( value,bit )
 	return value & (1<<bit) > 0
 end
+
