@@ -17,6 +17,7 @@ public:
 	GameObject*              getPlayerPtr();
 	std::vector<GameObject*> getEnemiesPtrs();
 	void                     deleteGO(GameObject* go);
+	void                     deleteAllGO();
 private:
 	TileSet*				 tilesets;
 	unsigned int			 numtilesets;

@@ -49,8 +49,8 @@ void Area::update(float delta, GLuint keys)
 			GameObject* go2 = gameobjects[j];
 			if (go1 != go2 && go1 != nullptr && go2 != nullptr) {
 				if (AABBCollision(go1, go2,go1->velocity,go2->velocity)) {
-					go1->onInteract(go2);
-					go2->onInteract(go1);
+					if (go1->onInteract(go2)) return;
+					if (go2->onInteract(go1)) return;
 				}
 			}
 		}
@@ -109,8 +109,16 @@ void Area::deleteGO(GameObject * go)
 			gameobjects.erase(gameobjects.begin() + i);
 			go->freeData();
 			delete go;
+			gameobjects.shrink_to_fit();
 			return;
 		}
+	}
+}
+
+void Area::deleteAllGO()
+{
+	for (GameObject* g : gameobjects) {
+		deleteGO(g);
 	}
 }
 

@@ -317,26 +317,33 @@ bool AreaLoader::loadLayers(const rapidjson::Document & doc, Area & arearef)
 					d_trigger->collider.init(d_trigger);
 					arearef.gameobjects.push_back(d_trigger);
 				}
-				/*
-				else if (objtype == "scriptable_gameobject"){
-					std::cout << "sciptable_gameobject" << std::endl;
-					TiledProperty script_url;
-					ScriptableGameObject* scriptable = new ScriptableGameObject();
-					if (!getTiledObjectProperty(object["properties"], "scripts", script_url)) {}//continue; }
-
+				
+				else if (objtype == "area_change_trigger"){
+					TiledProperty folder, file;
+					if (!getTiledObjectProperty(object["properties"], "folder", folder)) {}
+					if (!getTiledObjectProperty(object["properties"], "file", file)) {}
+					AreaChangeTrigger* a_trigger = new AreaChangeTrigger(arearef.getGamePtr(), folder.s,file.s);
 					glm::vec2 json_pos(object["x"].GetFloat(), object["y"].GetFloat());
-					scriptable->position = tiledPosToGameEnginePos(json_pos, arearef);
-
-					scriptable->setGamePtr(arearef.getGamePtr());
-					scriptable->init(script_url.s);
-
-					scriptable->position += glm::vec2(
-						(scriptable->scale.x * 2.0f) / 2.0f,
-						(scriptable->scale.y * 2.0f) / 2.0f
+					a_trigger->position = tiledPosToGameEnginePos(json_pos, arearef);
+					a_trigger->scale *= glm::vec2(
+						object["width"].GetFloat() / (arearef.tilelayers.tilewidth * 40.0),
+						object["height"].GetFloat() / (arearef.tilelayers.tileheight * 40.0)
 					);
-					arearef.gameobjects.push_back(scriptable);
+
+					a_trigger->position += glm::vec2(             // need to properly sort out translation from tiled coordinates to this game's
+						(a_trigger->scale.x * (2.0f)) / 2.0f,
+						-(a_trigger->scale.y * (2.0f)) / 2.0f
+					);
+					a_trigger->collider.pixelswidth = object["width"].GetFloat();
+					a_trigger->collider.pixelsheight = object["height"].GetFloat();
+					a_trigger->collider.top_offset = 0;
+					a_trigger->collider.bottom_offset = 0;
+					a_trigger->collider.left_offset = 0;
+					a_trigger->collider.right_offset = 0;
+					a_trigger->collider.init(a_trigger);
+					arearef.gameobjects.push_back(a_trigger);
 				}
-				*/
+				
 			}
 		}
 	}

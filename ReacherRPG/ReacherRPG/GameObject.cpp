@@ -16,9 +16,10 @@ Player::~Player()
 {
 }
 
-void Player::onInteract(GameObject * other)
+bool Player::onInteract(GameObject * other)
 {
 	//std::cout << "COLLISION!" << std::endl;
+	return false;
 }
 
 
@@ -113,7 +114,7 @@ ScriptableGameObject::ScriptableGameObject()
 	L = Scripting::s_instance.getL();
 }
 
-void ScriptableGameObject::onInteract(GameObject * other)
+bool ScriptableGameObject::onInteract(GameObject * other)
 {
 	lua_rawgeti(L, LUA_REGISTRYINDEX, luaRef);              // pushes the lua object corresponding to luaRef
 	if (!lua_istable(L, -1)) {
@@ -132,6 +133,7 @@ void ScriptableGameObject::onInteract(GameObject * other)
 		std::cerr << "reference " << luaRef << " member 'onInteract' is not a function" << std::endl;
 	}
 	lua_settop(L, 0);                                       // clear stack
+	return false;
 }
 
 void ScriptableGameObject::update(float delta, GLuint keys)
@@ -464,6 +466,15 @@ int ScriptableGameObject::l_deleteGO(lua_State * L)
 	return 0;
 }
 
+int ScriptableGameObject::l_loadArea(lua_State * L)
+{
+	ScriptableGameObject* go = (ScriptableGameObject*)lua_touserdata(L, 1);
+	std::string folder = luaL_checkstring(L, 2);
+	std::string file = luaL_checkstring(L, 3);
+	go->game->loadArea(folder, file);
+	return 0;
+}
+
 inline bool ScriptableGameObject::getLuaTableNumber(lua_State * L, std::string key, int tableIndex, float& out)
 {
 	lua_pushstring(L, key.c_str());
@@ -487,7 +498,7 @@ bool checkLua(lua_State * L, int r)
 	return true;
 }
 
-void DialogueTrigger::onInteract(GameObject * other)
+bool DialogueTrigger::onInteract(GameObject * other)
 {
 	
 	switch (other->type) {
@@ -499,6 +510,7 @@ void DialogueTrigger::onInteract(GameObject * other)
 		}
 		break;
 	}
+	return false;
 }
 Scripting::Scripting::Scripting()
 {
@@ -552,6 +564,8 @@ Scripting::Scripting::Scripting()
 	
 	registerFunction(ScriptableGameObject::l_getLuaObject, "getLuaObject");                     // (lua object)         getLuaObject(host)
 	registerFunction(ScriptableGameObject::l_deleteGO, "deleteGO");                             // void                 deleteGO(host)
+
+	registerFunction(ScriptableGameObject::l_loadArea, "loadArea");                             // void                 loadArea(host,folder,file)
 }
 
 
@@ -569,4 +583,18 @@ inline void Scripting::Scripting::registerFunction(int(*func)(lua_State *L), std
 void Scripting::Scripting::freeData()
 {
 	lua_close(L);
+}
+
+bool AreaChangeTrigger::onInteract(GameObject * other)
+{
+	switch (other->type) {
+	case GO_TYPE::PLAYER:
+		//std::cout << "dialogue box collision" << std::endl;
+		if (!spent) {
+			game->loadArea(folder,file);
+			spent = true;
+		}
+		return true;
+	}
+	return false;
 }

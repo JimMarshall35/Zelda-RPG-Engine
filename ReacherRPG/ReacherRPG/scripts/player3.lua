@@ -40,17 +40,38 @@ GameObject = {
 		if newkeys == 0 and keys ~= self.lastkeys then
 			newkeys = keys;                    
 		end
+		local vel = {x=0,y=0}
 
-		if newkeys & (1 << INPUT.UP_BIT) > 0 then
-			self.direction = DIRECTION.UP
-		elseif newkeys & (1 << INPUT.DOWN_BIT) > 0 then
-			self.direction = DIRECTION.DOWN
-		elseif newkeys & (1 << INPUT.LEFT_BIT) > 0 then
-			self.direction = DIRECTION.LEFT
-		elseif newkeys & (1 << INPUT.RIGHT_BIT) > 0 then
-			self.direction = DIRECTION.RIGHT
+		
+		if keys & (1 << INPUT.LEFT_BIT) > 0 then
+			vel = vec2_add(vel,{x = -1, y = 0})
+		end
+		if keys & (1 << INPUT.RIGHT_BIT) > 0 then
+			vel = vec2_add(vel,{x = 1, y = 0})
+		end
+		if keys & (1 << INPUT.UP_BIT) > 0 then
+			vel = vec2_add(vel,{x = 0, y = 1})
+		end
+		if keys & (1 << INPUT.DOWN_BIT) > 0 then
+			vel = vec2_add(vel,{x = 0, y = -1})
 		end
 
+		if newkeys & (1 << INPUT.LEFT_BIT) > 0 then
+			self.direction = DIRECTION.LEFT
+		end
+		if newkeys & (1 << INPUT.RIGHT_BIT) > 0 then
+			self.direction = DIRECTION.RIGHT
+		end
+		if newkeys & (1 << INPUT.UP_BIT) > 0 then
+			self.direction = DIRECTION.UP
+		end
+		if newkeys & (1 << INPUT.DOWN_BIT) > 0 then
+			self.direction = DIRECTION.DOWN
+		end
+
+		if vel.x ~= 0 and vel.y ~= 0 then
+			vel = vec2_normalize(vel)
+		end
 		if (keys & (1 << INPUT.UP_BIT) == 0) and
 			(keys & (1 << INPUT.DOWN_BIT) == 0) and
 		   	(keys & (1 << INPUT.LEFT_BIT) == 0) and
@@ -61,43 +82,47 @@ GameObject = {
 		   	self.direction = self.NONE
 		end
 		self.lastkeys = keys
-
+		return vel.x, vel.y
 	end,
 	update = function( self,delta,keys )
 		self.delta = delta
 		self.x, self.y = getPos(self.host)
 		
 
+		local velx = 0
+		local vely = 0
 
-
-
-		local vel = {x=0, y=0}
-		self.setDirection(self,keys)
-		
+		velx, vely = self.setDirection(self,keys)
 		
 		if self.attacking == false then
 			if self.direction == self.NONE then
-
+				--velx = 0
+			   	--vely = 0
 			   	animatorStop(self.host)
 			elseif self.direction == DIRECTION.UP then
-				vel.y = 1
+				--velx = 0
+				--vely = 1
 				setAnimation(self.host, "walk_up")
 				animatorStart(self.host)
 			elseif self.direction == DIRECTION.DOWN then
-				vel.y = -1
+				--velx = 0
+				--vely = -1
 				setAnimation(self.host, "walk_down")
 				animatorStart(self.host)
 			elseif self.direction == DIRECTION.LEFT then
-				vel.x = -1
+				--velx = -1
+				--vely = 0
 				setAnimation(self.host, "walk_left")
 				animatorStart(self.host)
 			elseif self.direction == DIRECTION.RIGHT then
-				vel.x = 1
+				--velx = 1
+				--vely = 0
 				setAnimation(self.host, "walk_right")
 				animatorStart(self.host)
 			end
-			vel = vec2_scalar_mul(vel,self.TEST_SPEED*delta)
 
+			velx = velx * delta * self.TEST_SPEED
+			vely = vely * delta * self.TEST_SPEED
 			
 
 			if keys & (1<<INPUT.ZOOM_IN_BIT) > 0 then
@@ -155,9 +180,14 @@ GameObject = {
 				end
 				animatorStop(self.host)
 			end
-			vel = {x=0,y=0}
+			velx = 0
+			vely = 0
 		end
-		setVelocity(self.host,vel.x, vel.y)
+		if self.hit == false then
+			setVelocity(self.host,velx, vely)
+		else
+			self.hit = false
+		end
 		
 	end,
 	init = function( self )

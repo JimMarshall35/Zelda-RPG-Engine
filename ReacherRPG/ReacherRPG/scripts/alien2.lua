@@ -17,8 +17,9 @@ GameObject = {
 	wait_time = 3,
 	wait_timer = 0,
 	player_ptr = 0,
-	attack_distance = 0.1,
-	HP = 3,
+	attack_distance = 0.2,
+	HP = 1,
+	knockback = 0.5,
 
 	update = function( self,delta,keys )
 		self.x, self.y = getPos(self.host)
@@ -81,7 +82,7 @@ GameObject = {
 
 		if getGOType(other) == GO_TYPE.PLAYER then
 			local player_lua = getLuaObject(other)
-			player_lua.onHit(player_lua)
+			player_lua.onHit(player_lua,self)
 		end
 
 	end,
@@ -99,7 +100,7 @@ GameObject = {
 		end
 		animatorStart(self.host)
 	end,
-	onHit = function (self)
+	onHit = function (self,other)
 		self.HP = self.HP - 1
 		if self.HP <= 0 then
 			print("I'm Dead")

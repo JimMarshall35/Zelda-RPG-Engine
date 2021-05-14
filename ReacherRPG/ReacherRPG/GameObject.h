@@ -35,7 +35,6 @@ enum class GO_TYPE {
 	ENEMY = 4,
 	SCENERY = 5,
 	ZONE = 6
-	
 };
 struct Rect {
 	float x;
@@ -81,7 +80,7 @@ public:
 	FloorCollider   collider;
 
 
-	virtual void    onInteract(GameObject* other) = 0;
+	virtual bool    onInteract(GameObject* other) = 0;
 	virtual void    update(float delta, GLuint keys) = 0;
 	virtual void    draw(const Shader& s, const Camera* camera) {};
 	virtual void    freeData() {};
@@ -94,7 +93,7 @@ class Player : public GameObject {
 public:
 	Player();
 	~Player();
-	virtual void onInteract(GameObject* other);          // when another game object collides with it
+	virtual bool onInteract(GameObject* other);          // when another game object collides with it
 	virtual void update(float delta, GLuint keys);
 	virtual void draw(const Shader& s, const Camera* camera);
 	virtual void freeData() { animator.freeData(); }
@@ -122,15 +121,17 @@ public:
 		issolidvsgameobjects = true;
 		isstatic = true;
 	}
-	virtual void onInteract(GameObject* other) { 
+	virtual bool onInteract(GameObject* other) { 
 		if (other->issolidvsgameobjects && issolidvsgameobjects) {
 			other->position += -other->velocity;
 		}
-		
+		return false;
 	};
 	virtual void update(float delta, GLuint keys) {};
 	virtual void draw(const Shader& s, const Camera* camera) {
-		sprite->draw(position, glm::vec3(scale,1.0f), s, camera);  
+		if (isdrawable) {
+			sprite->draw(position, glm::vec3(scale, 1.0f), s, camera);
+		}
 	}
 	Sprite* sprite;
 };
@@ -150,7 +151,7 @@ public:
 		issolidvsgameobjects = false;
 		isstatic = true;
 	}
-	virtual void onInteract(GameObject* other);
+	virtual bool onInteract(GameObject* other);
 	virtual void update(float delta, GLuint keys){}
 	void         setGamePtr(Game* pui) { game = pui; }
 	void         setString(std::string ptext) { text = ptext; }
@@ -161,13 +162,37 @@ private:
 
 };
 
+class AreaChangeTrigger : public GameObject {
+public:
+	AreaChangeTrigger() {
+		type = GO_TYPE::ZONE;
+		isdrawable = false;
+		issolidvsgameobjects = false;
+		isstatic = true;
+	}
+	AreaChangeTrigger(Game* pgame, std::string pfolder, std::string pfile) {
+		game = pgame;
+		folder = pfolder;
+		file = pfile;
+	}
+	virtual bool onInteract(GameObject* other);
+	virtual void update(float delta, GLuint keys) {}
+	void         setGamePtr(Game* pui) { game = pui; }
+private:
+	std::string folder;
+	std::string file;
+	bool        spent = false;
+
+
+};
+
 bool checkLua(lua_State* L, int r);
 class ScriptableGameObject : public GameObject {
 public:
 	ScriptableGameObject();
 	ScriptableGameObject(std::string script) { init(script); }
 	~ScriptableGameObject() { freeData(); }
-	virtual void    onInteract(GameObject* other);
+	virtual bool    onInteract(GameObject* other);
 	virtual void    update(float delta, GLuint keys);
 	virtual void    draw(const Shader& s, const Camera* camera) { animator.draw(position, scale, s, camera); }
 	virtual void    freeData() { 
@@ -203,6 +228,7 @@ public:
 	static int      l_getEnemiesPtrs(lua_State* L);              // getEnemiesPtrs(host) -> returns table of GO's of type ENEMY
 	static int      l_getLuaObject(lua_State* L);                // getLuaObject(host)
 	static int      l_deleteGO(lua_State* L);                    // deleteGO(host)
+	static int      l_loadArea(lua_State* L);                    // loadArea(host,folder,file)
 private:
 	static inline bool     getLuaTableNumber(lua_State* L, std::string key, int tableIndex, float& out);
 	int             luaRef = LUA_NOREF;

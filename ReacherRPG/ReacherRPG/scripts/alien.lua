@@ -19,9 +19,10 @@ GameObject = {
 	wait_timer = 0,
 	enemies = {},
 
-	HP = 5,
+	HP = 1,
 
 	update = function( self,delta,keys )
+		self.x, self.y = getPos(self.host)
 		if self.wait_timer >= self.wait_time then
 			local velx = 0
 			local vely = 0 
@@ -87,12 +88,13 @@ GameObject = {
 	end,
 	onInteract = function ( self,other )
 		if getGOType(other) == GO_TYPE.PLAYER then
+
 			local mydx, mydy = getVelocity(self.host)
 			local dx, dy = getVelocity(other)
 			local  x,  y = getPos(other)
 			setPos(other, x + (-dx) + mydx, y + (-dy) + mydy)
 			local player_lua = getLuaObject(other)
-			player_lua.onHit(player_lua)
+			player_lua.onHit(player_lua,self)
 		end
 
 	end,
@@ -112,7 +114,7 @@ GameObject = {
 			return DIRECTION.RIGHT
 		end
 	end,
-	onHit = function (self)
+	onHit = function (self,other)
 		self.HP = self.HP - 1
 		if self.HP <= 0 then
 			print("I'm Dead")

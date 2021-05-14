@@ -1,3 +1,11 @@
+--[[ 
+
+enums and constants used in the c++ code.
+Also some useful lua helper functions.
+This file is made avaliable to all lua scripts.
+
+]]--
+
 GO_TYPE = {
 	NONE = 0,
 	PLAYER = 1,
@@ -66,6 +74,10 @@ function vec2_normalize( v )
 end
 
 function getNearestCardDir( dir )
+	--[[
+	returns the direction enum of the cardinal
+	direction which  'dir' is nearest to in angle
+	]]--
 	local compass = {
 		[DIRECTION.UP]    = {x =  0, y =  1},
 		[DIRECTION.DOWN]  = {x =  0, y = -1},
@@ -82,4 +94,8 @@ function getNearestCardDir( dir )
 	    end
 	end
 	return ret_dir
+end
+
+function testBit( value,bit )
+	return value & (1<<bit) > 0
 end

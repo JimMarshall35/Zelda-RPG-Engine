@@ -13,10 +13,9 @@ Game::~Game()
 
 void Game::loadArea(std::string folder, std::string file)
 {
-	area.game = this;
-	if (!AreaLoader::Instance()->loadArea(folder, file, area)) {
-		std::cout << "failed to load level" << std::endl;
-	}
+	next_area_folder = folder;
+	next_area_file = file;
+	should_load_next_area = true;
 }
 
 void Game::update(float delta, GLuint keys)
@@ -37,6 +36,14 @@ void Game::update(float delta, GLuint keys)
 		}
 		
 		area.update(delta, 0);
+	}
+	if (should_load_next_area) {
+		should_load_next_area = false;
+		area.game = this;
+		if (!AreaLoader::Instance()->loadArea(next_area_folder, next_area_file, area)) {
+			std::cout << "failed to load level" << std::endl;
+		}
+		std::cout << area.gameobjects.size() << " game objects" << std::endl;
 	}
 	lastkeys = keys;
 }

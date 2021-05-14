@@ -20,5 +20,8 @@ private:
 	Area                   area;
 	UI                     ui;
 	GLuint                 lastkeys;
+	std::string            next_area_folder;
+	std::string            next_area_file;
+	bool                   should_load_next_area = false;
 };
 
