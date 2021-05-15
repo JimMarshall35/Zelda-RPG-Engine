@@ -2,6 +2,7 @@
 #include "TileLayer.h"
 #include "GameObject.h"
 #include <vector>
+#include <queue>
 class Area
 {
 public:
@@ -16,8 +17,10 @@ public:
 	Game*                    getGamePtr() { return game; }
 	GameObject*              getPlayerPtr();
 	std::vector<GameObject*> getEnemiesPtrs();
-	void                     deleteGO(GameObject* go);
+	
 	void                     deleteAllGO();
+	void                     enqueueForDelete(GameObject* go);
+	void                     enqueueForCreate(GameObject* go);
 private:
 	TileSet*				 tilesets;
 	unsigned int			 numtilesets;
@@ -28,6 +31,9 @@ private:
 	bool                     AABBCollision(GameObject* go1, GameObject* go2);
 	bool                     AABBCollision(GameObject * go1, GameObject * go2, glm::vec2 go1_vel, glm::vec2 go2_vel);
 	Game*                    game;
-	
+	void                     deleteGO(GameObject* go);
+	std::queue<GameObject*>  deleteQueue;
+	std::queue<GameObject*>  createQueue;
+
 };
 

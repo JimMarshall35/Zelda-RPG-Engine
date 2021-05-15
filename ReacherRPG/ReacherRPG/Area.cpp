@@ -58,6 +58,14 @@ void Area::update(float delta, GLuint keys)
 	
 	updatePhysics();
 
+	while (deleteQueue.size() > 0) {
+		deleteGO(deleteQueue.front());
+		deleteQueue.pop();
+	}
+	while (createQueue.size() > 0) {
+		gameobjects.push_back(createQueue.front());
+		createQueue.pop();
+	}
 	std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
 	std::chrono::duration<double> time_span = std::chrono::duration_cast<std::chrono::duration<double>>(t1 - t0);
 	accumulated_total += time_span.count();
@@ -67,7 +75,6 @@ void Area::update(float delta, GLuint keys)
 		numcounts = 0;
 		accumulated_total = 0;
 	}
-	
 }
 
 TileSet * Area::getTilesetByName(std::string name)
@@ -121,6 +128,17 @@ void Area::deleteAllGO()
 		deleteGO(g);
 	}
 }
+
+void Area::enqueueForDelete(GameObject * go)
+{
+	deleteQueue.push(go);
+}
+
+void Area::enqueueForCreate(GameObject * go)
+{
+	createQueue.push(go);
+}
+
 
 void Area::freeData()
 {

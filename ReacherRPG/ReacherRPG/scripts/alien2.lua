@@ -13,11 +13,11 @@ GameObject = {
 	current_direction = DIRECTION.NONE,
 	move_timer = 0,
 	change_after_seconds = 0.5,
-	move_speed = 0.2,
+	move_speed = 0.25,
 	wait_time = 3,
 	wait_timer = 0,
 	player_ptr = 0,
-	attack_distance = 0.2,
+	attack_distance = 0.25,
 	HP = 1,
 	knockback = 0.5,
 

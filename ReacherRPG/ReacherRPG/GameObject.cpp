@@ -188,8 +188,17 @@ void ScriptableGameObject::init(std::string script)
 int ScriptableGameObject::l_getPos(lua_State * L)
 {	
 	ScriptableGameObject* go = (ScriptableGameObject*)lua_touserdata(L, 1);
-	float x = go->position.x;
-	float y = go->position.y;
+	
+	float x, y;
+	if (go == nullptr) {
+		x = 0;
+		y = 0;
+	}
+	else {
+		x = go->position.x;
+		y = go->position.y;
+	}
+	
 	lua_pushnumber(L, x);
 	lua_pushnumber(L, y);
 	return 2;
@@ -430,7 +439,14 @@ int ScriptableGameObject::l_getVelocity(lua_State * L)
 int ScriptableGameObject::l_getPlayerPtr(lua_State * L)
 {
 	ScriptableGameObject* go = (ScriptableGameObject*)lua_touserdata(L, 1);
-	lua_pushlightuserdata(L, (void*)go->game->getAreaPtr()->getPlayerPtr());
+	GameObject* p_ptr = go->game->getAreaPtr()->getPlayerPtr();
+	if (p_ptr == nullptr) {
+		lua_pushinteger(L, 0);
+	}
+	else {
+		lua_pushlightuserdata(L, (void*)p_ptr);
+	}
+	
 	
 	return 1;
 }
@@ -462,7 +478,10 @@ int ScriptableGameObject::l_getLuaObject(lua_State * L)
 int ScriptableGameObject::l_deleteGO(lua_State * L)
 {
 	ScriptableGameObject* go = (ScriptableGameObject*)lua_touserdata(L, 1);
-	go->game->getAreaPtr()->deleteGO(go);
+	if (go != nullptr) {
+		go->game->getAreaPtr()->enqueueForDelete(go);
+	}
+	
 	return 0;
 }
 
@@ -473,6 +492,21 @@ int ScriptableGameObject::l_loadArea(lua_State * L)
 	std::string file = luaL_checkstring(L, 3);
 	go->game->loadArea(folder, file);
 	return 0;
+}
+
+int ScriptableGameObject::l_createScriptableGO(lua_State * L)
+{
+	ScriptableGameObject* go = (ScriptableGameObject*)lua_touserdata(L, 1);
+	std::string script = luaL_checkstring(L, 2);
+	float x = luaL_checknumber(L, 3);
+	float y = luaL_checknumber(L, 4);
+	ScriptableGameObject* scriptable = new ScriptableGameObject();
+	scriptable->position = glm::vec2(x,y);
+	scriptable->setGamePtr(go->game);
+	scriptable->init(script);
+	go->game->getAreaPtr()->enqueueForCreate(scriptable);
+	lua_pushlightuserdata(L,(void*)scriptable);
+	return 1;
 }
 
 inline bool ScriptableGameObject::getLuaTableNumber(lua_State * L, std::string key, int tableIndex, float& out)
@@ -564,8 +598,10 @@ Scripting::Scripting::Scripting()
 	
 	registerFunction(ScriptableGameObject::l_getLuaObject, "getLuaObject");                     // (lua object)         getLuaObject(host)
 	registerFunction(ScriptableGameObject::l_deleteGO, "deleteGO");                             // void                 deleteGO(host)
-
+	registerFunction(ScriptableGameObject::l_createScriptableGO, "createScriptableGO");                   // GameObject*          createScriptableGO(host,script,x,y)
+	
 	registerFunction(ScriptableGameObject::l_loadArea, "loadArea");                             // void                 loadArea(host,folder,file)
+
 }
 
 

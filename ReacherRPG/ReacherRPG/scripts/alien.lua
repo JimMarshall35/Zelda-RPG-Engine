@@ -15,7 +15,7 @@ GameObject = {
 	change_after_seconds = 2,
 	move_speed = 0.1,
 
-	wait_time = 3,
+	wait_time = 1,
 	wait_timer = 0,
 	enemies = {},
 
@@ -29,19 +29,25 @@ GameObject = {
 			self.move_timer = self.move_timer + delta 
 			if self.move_timer >= self.change_after_seconds then
 				self.move_timer = 0
-				self.current_direction = self.randomDirection(self)
+				--self.randomDirection(self)
+				self.change_after_seconds = math.random() * 3.0 
+				self.setDirection(self)
+				self.shoot(self)
 			end
-
 			if     self.current_direction == DIRECTION.UP    then
+				--setAnimation(self.host, "walk_up")
 				velx = 0
 				vely = 1
 			elseif self.current_direction == DIRECTION.DOWN  then
+				--setAnimation(self.host, "walk_down")
 				velx = 0
 				vely = -1
 			elseif self.current_direction == DIRECTION.LEFT  then
+				--setAnimation(self.host, "walk_left")
 				velx = -1
 				vely = 0
 			elseif self.current_direction == DIRECTION.RIGHT then
+				--setAnimation(self.host, "walk_right")
 				velx = 1
 				vely = 0
 			end
@@ -101,17 +107,34 @@ GameObject = {
 	randomDirection = function(self)
 		local r = math.random(4)
 		if     r==1 then
+			self.current_direction = DIRECTION.UP
 			setAnimation(self.host, "walk_up")
-			return DIRECTION.UP
 		elseif r==2 then
-		    setAnimation(self.host, "walk_down")
-			return DIRECTION.DOWN
+			self.current_direction = DIRECTION.DOWN
+			setAnimation(self.host, "walk_up")
 		elseif r==3 then
+			self.current_direction = DIRECTION.LEFT
 			setAnimation(self.host, "walk_left")
-			return DIRECTION.LEFT
 		elseif r==4 then
+			self.current_direction = DIRECTION.RIGHT
 			setAnimation(self.host, "walk_right")
-			return DIRECTION.RIGHT
+		end
+	end,
+	setDirection = function(self)
+		local playerptr = getPlayerPtr(self.host)
+		local playerpos = {x=0,y=0}
+		local mypos     = {x=self.x,y=self.y}
+		playerpos.x,playerpos.y = getPos(playerptr)
+		local me_2_player = vec2_sub(playerpos,mypos)
+		self.current_direction = getNearestCardDir(me_2_player)
+		if     self.current_direction == DIRECTION.UP    then
+			setAnimation(self.host, "walk_up")
+		elseif self.current_direction == DIRECTION.DOWN  then
+			setAnimation(self.host, "walk_down")
+		elseif self.current_direction == DIRECTION.LEFT  then
+			setAnimation(self.host, "walk_left")
+		elseif self.current_direction == DIRECTION.RIGHT then
+			setAnimation(self.host, "walk_right")
 		end
 	end,
 	onHit = function (self,other)
@@ -123,5 +146,10 @@ GameObject = {
 			print("HP: ", self.HP)
 		end
 
+	end,
+	shoot = function(self)
+		local proj = createScriptableGO(self.host,"scripts/alien_projectile.lua",self.x,self.y)
+		local proj_lua = getLuaObject(proj)
+		proj_lua.setDirection(proj_lua,self.current_direction)	
 	end
 }

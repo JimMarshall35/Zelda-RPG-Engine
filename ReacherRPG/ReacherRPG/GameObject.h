@@ -85,6 +85,7 @@ public:
 	virtual void    draw(const Shader& s, const Camera* camera) {};
 	virtual void    freeData() {};
 	void            setGamePtr(Game* g) { game = g; }
+
 protected:
 	Game*       game = nullptr;
 };
@@ -229,6 +230,7 @@ public:
 	static int      l_getLuaObject(lua_State* L);                // getLuaObject(host)
 	static int      l_deleteGO(lua_State* L);                    // deleteGO(host)
 	static int      l_loadArea(lua_State* L);                    // loadArea(host,folder,file)
+	static int      l_createScriptableGO(lua_State* L);          // createScriptableGO(host,script,x,y) -> returns ptr to created GO
 private:
 	static inline bool     getLuaTableNumber(lua_State* L, std::string key, int tableIndex, float& out);
 	int             luaRef = LUA_NOREF;

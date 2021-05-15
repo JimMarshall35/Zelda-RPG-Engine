@@ -232,7 +232,7 @@ GameObject = {
 		self.HP = self.HP - 1
 		if self.HP <= 0 then
 			print("PLAYER: I'm Dead")
-			--deleteGO(self.host)
+			deleteGO(self.host)
 		else
 			print("PLAYER HP: ", self.HP)
 		end
