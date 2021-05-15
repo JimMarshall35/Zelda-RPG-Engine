@@ -18,7 +18,7 @@ GameObject = {
 	wait_time = 1,
 	wait_timer = 0,
 	player_ptr = 0,
-	attack_distance = 0.25,
+	activate_distance = 0.25,
 	HP = 1,
 
 	hit = false,
@@ -53,7 +53,7 @@ GameObject = {
 
 				local mag = vec2_mag(me_2_player)
 
-				if mag <= self.attack_distance then
+				if mag <= self.activate_distance then
 
 					me_2_player = vec2_normalize(me_2_player)
 
@@ -90,7 +90,7 @@ GameObject = {
  		setAnimation(self.host, "walk_down")
  		
  		setCollidableBG(self.host, true)
- 		--setCollidableGO(self.host, true)
+ 		setCollidableGO(self.host, true)
  		setDrawable(self.host, true)
  		setFloorCollider(self.host, self.collider)
  		setGOType(self.host, GO_TYPE.ENEMY)

@@ -42,13 +42,13 @@ GameObject = {
 			newkeys = keys;                    
 		end
 
-		if newkeys & (1 << INPUT.UP_BIT) > 0 then
+		if     newkeys & (1 << INPUT.UP_BIT) > 0    then
 			self.direction = DIRECTION.UP
 			
-		elseif newkeys & (1 << INPUT.DOWN_BIT) > 0 then
+		elseif newkeys & (1 << INPUT.DOWN_BIT) > 0  then
 			self.direction = DIRECTION.DOWN
 			
-		elseif newkeys & (1 << INPUT.LEFT_BIT) > 0 then
+		elseif newkeys & (1 << INPUT.LEFT_BIT) > 0  then
 			self.direction = DIRECTION.LEFT
 			
 		elseif newkeys & (1 << INPUT.RIGHT_BIT) > 0 then
@@ -56,13 +56,15 @@ GameObject = {
 			
 		end
 
-		if (keys & (1 << INPUT.UP_BIT) == 0) and
-			(keys & (1 << INPUT.DOWN_BIT) == 0) and
-		   	(keys & (1 << INPUT.LEFT_BIT) == 0) and
+		if  (keys & (1 << INPUT.UP_BIT) == 0)    and
+			(keys & (1 << INPUT.DOWN_BIT) == 0)  and
+		   	(keys & (1 << INPUT.LEFT_BIT) == 0)  and
 		   	(keys & (1 << INPUT.RIGHT_BIT) == 0) then
 		   	if self.direction ~= self.NONE then
 		   		self.lastdirection = self.direction
-		   		animatorStop(self.host)
+		   		if self.attacking == false then
+		   			animatorStop(self.host)
+		   		end
 		   	end
 		   	self.direction = self.NONE
 		end
@@ -84,8 +86,16 @@ GameObject = {
 			self.hittimer = self.hittimer + delta
 			if self.hittimer >= self.hittime then
 				self.hit = false
+				self.HP = self.HP - 1
+				if self.HP <= 0 then
+					print("PLAYER: I'm Dead")
+					deleteGO(self.host)
+				else
+					print("PLAYER HP: ", self.HP)
+				end
 			end
 			vel = vec2_scalar_mul(self.knockback_vec,((self.hittime - self.hittimer) / self.hittime)*delta)
+			
 
 		elseif self.hit == false then
 		
@@ -149,31 +159,33 @@ GameObject = {
 					self.detectAttackHits(self)
 
 				end
-				if keys & (1<<INPUT.SELECT_BIT) == 0 then
-					self.canattack = true
-				end
-
 				
-			elseif self.attacking == true then
-				local isanimating = getIsAnimating(self.host)
-				print(isanimating)
-				if isanimating == false then
-					self.attacking = false
-					
-					if self.lastdirection == DIRECTION.UP then
-						setAnimation(self.host, "walk_up")
-					elseif self.lastdirection == DIRECTION.DOWN then
-						setAnimation(self.host, "walk_down")
-					elseif self.lastdirection == DIRECTION.LEFT then
-						setAnimation(self.host, "walk_left")
-					elseif self.lastdirection == DIRECTION.RIGHT then
-						setAnimation(self.host, "walk_right")
-					end
-					animatorStop(self.host)
-					print(self.isanimating)
-				end
-				vel = {x=0,y=0}
+
 			end
+			
+		end
+		if self.attacking == true then
+			local isanimating = getIsAnimating(self.host)
+			--print(isanimating)
+			if isanimating == false then
+				self.attacking = false
+				
+				if self.lastdirection == DIRECTION.UP then
+					setAnimation(self.host, "walk_up")
+				elseif self.lastdirection == DIRECTION.DOWN then
+					setAnimation(self.host, "walk_down")
+				elseif self.lastdirection == DIRECTION.LEFT then
+					setAnimation(self.host, "walk_left")
+				elseif self.lastdirection == DIRECTION.RIGHT then
+					setAnimation(self.host, "walk_right")
+				end
+				animatorStop(self.host)
+				print(self.isanimating)
+			end
+			vel = {x=0,y=0}
+		end
+		if keys & (1<<INPUT.SELECT_BIT) == 0 and self.attacking == false then
+			self.canattack = true
 		end
 		setCamClamped(self.x,self.y)
 		setVelocity(self.host,vel.x, vel.y)
@@ -194,10 +206,10 @@ GameObject = {
  		pushAnimation(self.host, "walk_right", tileset, 10, true, { 8,  9, 10, 11})
  		pushAnimation(self.host, "walk_left",  tileset, 10, true, {12, 13, 14, 15})
 
- 		pushAnimation(self.host, "attack_up",    tileset, 12, false, {16, 17})
- 		pushAnimation(self.host, "attack_down",  tileset, 12, false, {18, 19})
- 		pushAnimation(self.host, "attack_right", tileset, 12, false, {20, 21})
- 		pushAnimation(self.host, "attack_left",  tileset, 12, false, {22, 23})
+ 		pushAnimation(self.host, "attack_up",    tileset, 10, false, {16, 17})
+ 		pushAnimation(self.host, "attack_down",  tileset, 10, false, {18, 19})
+ 		pushAnimation(self.host, "attack_right", tileset, 10, false, {20, 21})
+ 		pushAnimation(self.host, "attack_left",  tileset, 10, false, {22, 23})
 
  		setAnimation(self.host, "walk_down")
  		
@@ -209,8 +221,6 @@ GameObject = {
  		self.direction = DIRECTION.DOWN
  		self.lastdirection = DIRECTION.DOWN
  		self.cam_zoom = getCamZoom();
- 		
-
 	end,
 	onInteract = function ( self,other )
 		--print("collision!")
@@ -225,12 +235,14 @@ GameObject = {
 		  	enemypos.x, enemypos.y = getPos(enemy_ptr)
 		  	local me_2_enemy = vec2_sub(enemypos,mypos)
 
+		  	local distance = vec2_mag(me_2_enemy)
 		  	local direction = getNearestCardDir(me_2_enemy)
 		  	if direction == self.lastdirection then
 		  		if vec2_mag(me_2_enemy) <= self.hitrange then
-		  			print("enemy hit!!")
 		  			self.processAttackHit(self,enemy_ptr)
 		  		end
+		  	elseif distance <= self.hitrange / 3 then
+		  		self.processAttackHit(self,enemy_ptr)
 		  	end
 		end
 	end,
@@ -248,13 +260,7 @@ GameObject = {
 			self.hittimer = 0
 			self.hit = true
 
-			self.HP = self.HP - 1
-			if self.HP <= 0 then
-				print("PLAYER: I'm Dead")
-				deleteGO(self.host)
-			else
-				print("PLAYER HP: ", self.HP)
-			end
+			
 		end
 
 	end

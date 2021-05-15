@@ -59,7 +59,7 @@ GameObject = {
  		setAnimation(self.host, "main")
  		
  		setCollidableBG(self.host, true)
- 		--setCollidableGO(self.host, true)
+ 		setCollidableGO(self.host, true)
  		setDrawable(self.host, true)
  		setFloorCollider(self.host, self.collider)
  		setGOType(self.host, GO_TYPE.ENEMY)

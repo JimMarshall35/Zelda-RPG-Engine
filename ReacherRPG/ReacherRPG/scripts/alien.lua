@@ -14,8 +14,9 @@ GameObject = {
 	move_timer = 0,
 	change_after_seconds = 2,
 	move_speed = 0.1,
+	activate_distance = 0.5,
 
-	wait_time = 1,
+	wait_time = 0.5,
 	wait_timer = 0,
 	enemies = {},
 
@@ -25,10 +26,16 @@ GameObject = {
 	hittime = 0.2,
 	hitstrength = 1,
 
+	player_ptr = 0,
+
 	HP = 2,
 
 	update = function( self,delta,keys )
 		self.x, self.y = getPos(self.host)
+		local px, py = getPos(self.player_ptr)
+		local mypos = { x = self.x, y = self.y}
+		local playerpos = {x = px, y = py}
+
 		if self.wait_timer >= self.wait_time then
 			self.move_timer = self.move_timer + delta 
 			local vel = {x=0, y=0}
@@ -46,30 +53,35 @@ GameObject = {
 				end
 				vel = vec2_scalar_mul(self.knockback_vec,((self.hittime - self.hittimer) / self.hittime)*delta)
 			elseif self.hit == false then
-				if self.move_timer >= self.change_after_seconds then
-					self.move_timer = 0
-					--self.randomDirection(self)
-					self.change_after_seconds = math.random() * 3.0 
-					self.setDirection(self)
-					self.shoot(self)
-				end
-				if     self.current_direction == DIRECTION.UP    then
-					--setAnimation(self.host, "walk_up")
-					vel.y = 1
-				elseif self.current_direction == DIRECTION.DOWN  then
-					--setAnimation(self.host, "walk_down")
-					vel.y = -1
-				elseif self.current_direction == DIRECTION.LEFT  then
-					--setAnimation(self.host, "walk_left")
-					vel.x = -1
-				elseif self.current_direction == DIRECTION.RIGHT then
-					--setAnimation(self.host, "walk_right")
-					vel.x = 1
-				end
+				local me_2_player = vec2_sub(playerpos,mypos)
+				local mag = vec2_mag(me_2_player)
 
-				vel = vec2_scalar_mul(vel,delta*self.move_speed)
+				if mag <= self.activate_distance then
+					if self.move_timer >= self.change_after_seconds then
+						self.move_timer = 0
+						--self.randomDirection(self)
+						self.change_after_seconds = math.random() * 3.0 
+						self.setDirection(self)
+						self.shoot(self)
+					end
+					if     self.current_direction == DIRECTION.UP    then
+						--setAnimation(self.host, "walk_up")
+						vel.y = 1
+					elseif self.current_direction == DIRECTION.DOWN  then
+						--setAnimation(self.host, "walk_down")
+						vel.y = -1
+					elseif self.current_direction == DIRECTION.LEFT  then
+						--setAnimation(self.host, "walk_left")
+						vel.x = -1
+					elseif self.current_direction == DIRECTION.RIGHT then
+						--setAnimation(self.host, "walk_right")
+						vel.x = 1
+					end
+
+					vel = vec2_scalar_mul(vel,delta*self.move_speed)
+						
 					
-				
+				end
 			end
 			setVelocity(self.host, vel.x, vel.y)
 		else
@@ -105,7 +117,7 @@ GameObject = {
 		math.random() math.random() math.random()
 		self.current_direction = self.randomDirection(self)
 
-
+		self.player_ptr = getPlayerPtr(self.host)
 
 	end,
 	onInteract = function ( self,other )

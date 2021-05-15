@@ -2352,6 +2352,114 @@
                  "width":0,
                  "x":464,
                  "y":576
+                }, 
+                {
+                 "height":0,
+                 "id":92,
+                 "name":"alien",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"scripts",
+                         "type":"string",
+                         "value":"scripts\/alien.lua"
+                        }],
+                 "rotation":0,
+                 "type":"sciptable_gameobject",
+                 "visible":true,
+                 "width":0,
+                 "x":112,
+                 "y":592
+                }, 
+                {
+                 "height":0,
+                 "id":93,
+                 "name":"alien",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"scripts",
+                         "type":"string",
+                         "value":"scripts\/alien.lua"
+                        }],
+                 "rotation":0,
+                 "type":"sciptable_gameobject",
+                 "visible":true,
+                 "width":0,
+                 "x":64,
+                 "y":608
+                }, 
+                {
+                 "height":0,
+                 "id":94,
+                 "name":"alien2",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"scripts",
+                         "type":"string",
+                         "value":"scripts\/alien2.lua"
+                        }],
+                 "rotation":0,
+                 "type":"sciptable_gameobject",
+                 "visible":true,
+                 "width":0,
+                 "x":96,
+                 "y":480
+                }, 
+                {
+                 "height":0,
+                 "id":95,
+                 "name":"alien2",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"scripts",
+                         "type":"string",
+                         "value":"scripts\/alien2.lua"
+                        }],
+                 "rotation":0,
+                 "type":"sciptable_gameobject",
+                 "visible":true,
+                 "width":0,
+                 "x":16,
+                 "y":512
+                }, 
+                {
+                 "height":0,
+                 "id":96,
+                 "name":"alien2",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"scripts",
+                         "type":"string",
+                         "value":"scripts\/alien2.lua"
+                        }],
+                 "rotation":0,
+                 "type":"sciptable_gameobject",
+                 "visible":true,
+                 "width":0,
+                 "x":160,
+                 "y":544
+                }, 
+                {
+                 "height":0,
+                 "id":97,
+                 "name":"alien2",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"scripts",
+                         "type":"string",
+                         "value":"scripts\/alien2.lua"
+                        }],
+                 "rotation":0,
+                 "type":"sciptable_gameobject",
+                 "visible":true,
+                 "width":0,
+                 "x":144,
+                 "y":496
                 }],
          "opacity":0.97,
          "type":"objectgroup",
@@ -2360,7 +2468,7 @@
          "y":0
         }],
  "nextlayerid":99,
- "nextobjectid":92,
+ "nextobjectid":98,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.5.0",
