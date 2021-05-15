@@ -44,20 +44,16 @@ GameObject = {
 
 		if newkeys & (1 << INPUT.UP_BIT) > 0 then
 			self.direction = DIRECTION.UP
-			setAnimation(self.host, "walk_up")
-			animatorStart(self.host)
+			
 		elseif newkeys & (1 << INPUT.DOWN_BIT) > 0 then
 			self.direction = DIRECTION.DOWN
-			setAnimation(self.host, "walk_down")
-			animatorStart(self.host)
+			
 		elseif newkeys & (1 << INPUT.LEFT_BIT) > 0 then
 			self.direction = DIRECTION.LEFT
-			setAnimation(self.host, "walk_left")
-			animatorStart(self.host)
+			
 		elseif newkeys & (1 << INPUT.RIGHT_BIT) > 0 then
 			self.direction = DIRECTION.RIGHT
-			setAnimation(self.host, "walk_right")
-			animatorStart(self.host)
+			
 		end
 
 		if (keys & (1 << INPUT.UP_BIT) == 0) and
@@ -94,18 +90,24 @@ GameObject = {
 		elseif self.hit == false then
 		
 			if self.attacking == false then
+				
+
 				if self.direction == DIRECTION.UP then
 					vel.y = 1
-					
+					setAnimation(self.host, "walk_up")
+					animatorStart(self.host)
 				elseif self.direction == DIRECTION.DOWN then
 					vel.y = -1
-					
+					setAnimation(self.host, "walk_down")
+					animatorStart(self.host)
 				elseif self.direction == DIRECTION.LEFT then
 					vel.x = -1
-					
+					setAnimation(self.host, "walk_left")
+					animatorStart(self.host)
 				elseif self.direction == DIRECTION.RIGHT then
 					vel.x = 1
-					
+					setAnimation(self.host, "walk_right")
+					animatorStart(self.host)
 				end
 				vel = vec2_scalar_mul(vel,self.TEST_SPEED*delta)
 
@@ -122,7 +124,7 @@ GameObject = {
 					setCamZoom(self.cam_zoom)
 				end
 
-				if keys & (1<<INPUT.SELECT_BIT) > 0  and self.canattack == true then
+				if  keys & (1<<INPUT.SELECT_BIT) > 0 and self.canattack == true then
 					self.attacking = true
 					self.canattack = false
 					local direc = self.direction
@@ -145,16 +147,19 @@ GameObject = {
 					end
 					self.lastdirection = direc
 					self.detectAttackHits(self)
-				elseif keys & (1<<INPUT.SELECT_BIT) == 0  and self.canattack == false then
+
+				end
+				if keys & (1<<INPUT.SELECT_BIT) == 0 then
 					self.canattack = true
 				end
 
 				
 			elseif self.attacking == true then
 				local isanimating = getIsAnimating(self.host)
-				--print(isanimating)
+				print(isanimating)
 				if isanimating == false then
 					self.attacking = false
+					
 					if self.lastdirection == DIRECTION.UP then
 						setAnimation(self.host, "walk_up")
 					elseif self.lastdirection == DIRECTION.DOWN then
@@ -165,6 +170,7 @@ GameObject = {
 						setAnimation(self.host, "walk_right")
 					end
 					animatorStop(self.host)
+					print(self.isanimating)
 				end
 				vel = {x=0,y=0}
 			end
