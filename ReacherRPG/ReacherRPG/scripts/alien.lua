@@ -19,43 +19,59 @@ GameObject = {
 	wait_timer = 0,
 	enemies = {},
 
-	HP = 1,
+	hit = false,
+	knockback_vec = {x=0,y=0},
+	hittimer = 0,
+	hittime = 0.2,
+	hitstrength = 1,
+
+	HP = 2,
 
 	update = function( self,delta,keys )
 		self.x, self.y = getPos(self.host)
 		if self.wait_timer >= self.wait_time then
-			local velx = 0
-			local vely = 0 
 			self.move_timer = self.move_timer + delta 
-			if self.move_timer >= self.change_after_seconds then
-				self.move_timer = 0
-				--self.randomDirection(self)
-				self.change_after_seconds = math.random() * 3.0 
-				self.setDirection(self)
-				self.shoot(self)
-			end
-			if     self.current_direction == DIRECTION.UP    then
-				--setAnimation(self.host, "walk_up")
-				velx = 0
-				vely = 1
-			elseif self.current_direction == DIRECTION.DOWN  then
-				--setAnimation(self.host, "walk_down")
-				velx = 0
-				vely = -1
-			elseif self.current_direction == DIRECTION.LEFT  then
-				--setAnimation(self.host, "walk_left")
-				velx = -1
-				vely = 0
-			elseif self.current_direction == DIRECTION.RIGHT then
-				--setAnimation(self.host, "walk_right")
-				velx = 1
-				vely = 0
-			end
+			local vel = {x=0, y=0}
+			if self.hit == true then
+				self.hittimer = self.hittimer + delta
+				if self.hittimer >= self.hittime then
+					self.hit = false
+					self.HP = self.HP - 1
+					if self.HP <= 0 then
+						print("I'm Dead")
+						deleteGO(self.host)
+					else
+						print("HP: ", self.HP)
+					end
+				end
+				vel = vec2_scalar_mul(self.knockback_vec,((self.hittime - self.hittimer) / self.hittime)*delta)
+			elseif self.hit == false then
+				if self.move_timer >= self.change_after_seconds then
+					self.move_timer = 0
+					--self.randomDirection(self)
+					self.change_after_seconds = math.random() * 3.0 
+					self.setDirection(self)
+					self.shoot(self)
+				end
+				if     self.current_direction == DIRECTION.UP    then
+					--setAnimation(self.host, "walk_up")
+					vel.y = 1
+				elseif self.current_direction == DIRECTION.DOWN  then
+					--setAnimation(self.host, "walk_down")
+					vel.y = -1
+				elseif self.current_direction == DIRECTION.LEFT  then
+					--setAnimation(self.host, "walk_left")
+					vel.x = -1
+				elseif self.current_direction == DIRECTION.RIGHT then
+					--setAnimation(self.host, "walk_right")
+					vel.x = 1
+				end
 
-			velx = velx * delta * self.move_speed
-			vely = vely * delta * self.move_speed
+				vel = vec2_scalar_mul(vel,delta*self.move_speed)
+					
 				
-			setVelocity(self.host, velx, vely)
+			end
+			setVelocity(self.host, vel.x, vel.y)
 		else
 			self.wait_timer = self.wait_timer + delta
 		end
@@ -138,12 +154,17 @@ GameObject = {
 		end
 	end,
 	onHit = function (self,other)
-		self.HP = self.HP - 1
-		if self.HP <= 0 then
-			print("I'm Dead")
-			deleteGO(self.host)
-		else
-			print("HP: ", self.HP)
+		if self.hit == false then
+
+			local otherpos = {x = other.x, y = other.y}
+			local mypos    = {x = self.x,  y = self.y }
+			local other2me = vec2_sub(mypos,otherpos)
+			other2me = vec2_normalize(other2me)
+			self.knockback_vec = vec2_scalar_mul(other2me, self.hitstrength)
+			self.hittimer = 0
+			self.hit = true
+
+			
 		end
 
 	end,

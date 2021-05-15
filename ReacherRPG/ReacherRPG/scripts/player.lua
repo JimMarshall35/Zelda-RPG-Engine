@@ -14,13 +14,14 @@ GameObject = {
 	attacking = false,
 	canattack = true,
 	enemies = {},
-	hitrange = 0.1,
+	hitrange = 0.15,
 	HP = 5,
 
 	hit = false,
+	knockback_vec = {x=0,y=0},
 	hittimer = 0,
 	hittime = 0.2,
-	hitstrength = 2,
+	hitstrength = 1,
 
 	collider = {
 		left_offset = 7.0,
@@ -43,12 +44,20 @@ GameObject = {
 
 		if newkeys & (1 << INPUT.UP_BIT) > 0 then
 			self.direction = DIRECTION.UP
+			setAnimation(self.host, "walk_up")
+			animatorStart(self.host)
 		elseif newkeys & (1 << INPUT.DOWN_BIT) > 0 then
 			self.direction = DIRECTION.DOWN
+			setAnimation(self.host, "walk_down")
+			animatorStart(self.host)
 		elseif newkeys & (1 << INPUT.LEFT_BIT) > 0 then
 			self.direction = DIRECTION.LEFT
+			setAnimation(self.host, "walk_left")
+			animatorStart(self.host)
 		elseif newkeys & (1 << INPUT.RIGHT_BIT) > 0 then
 			self.direction = DIRECTION.RIGHT
+			setAnimation(self.host, "walk_right")
+			animatorStart(self.host)
 		end
 
 		if (keys & (1 << INPUT.UP_BIT) == 0) and
@@ -57,6 +66,7 @@ GameObject = {
 		   	(keys & (1 << INPUT.RIGHT_BIT) == 0) then
 		   	if self.direction ~= self.NONE then
 		   		self.lastdirection = self.direction
+		   		animatorStop(self.host)
 		   	end
 		   	self.direction = self.NONE
 		end
@@ -73,90 +83,93 @@ GameObject = {
 
 		local vel = {x=0, y=0}
 		self.setDirection(self,keys)
+
+		if self.hit == true then
+			self.hittimer = self.hittimer + delta
+			if self.hittimer >= self.hittime then
+				self.hit = false
+			end
+			vel = vec2_scalar_mul(self.knockback_vec,((self.hittime - self.hittimer) / self.hittime)*delta)
+
+		elseif self.hit == false then
 		
-		
-		if self.attacking == false then
-			if self.direction == self.NONE then
-
-			   	animatorStop(self.host)
-			elseif self.direction == DIRECTION.UP then
-				vel.y = 1
-				setAnimation(self.host, "walk_up")
-				animatorStart(self.host)
-			elseif self.direction == DIRECTION.DOWN then
-				vel.y = -1
-				setAnimation(self.host, "walk_down")
-				animatorStart(self.host)
-			elseif self.direction == DIRECTION.LEFT then
-				vel.x = -1
-				setAnimation(self.host, "walk_left")
-				animatorStart(self.host)
-			elseif self.direction == DIRECTION.RIGHT then
-				vel.x = 1
-				setAnimation(self.host, "walk_right")
-				animatorStart(self.host)
-			end
-			vel = vec2_scalar_mul(vel,self.TEST_SPEED*delta)
-
-			
-
-			if keys & (1<<INPUT.ZOOM_IN_BIT) > 0 then
-				self.cam_zoom = self.cam_zoom + (self.TEST_ZOOM_SPEED*delta)
-				setCamZoom(self.cam_zoom)
-			elseif keys & (1<<INPUT.ZOOM_OUT_BIT) > 0 then
-				self.cam_zoom = self.cam_zoom - (self.TEST_ZOOM_SPEED*delta)
-				if self.cam_zoom < 1.0 then
-					self.cam_zoom = 1.0
+			if self.attacking == false then
+				if self.direction == DIRECTION.UP then
+					vel.y = 1
+					
+				elseif self.direction == DIRECTION.DOWN then
+					vel.y = -1
+					
+				elseif self.direction == DIRECTION.LEFT then
+					vel.x = -1
+					
+				elseif self.direction == DIRECTION.RIGHT then
+					vel.x = 1
+					
 				end
-				setCamZoom(self.cam_zoom)
-			end
+				vel = vec2_scalar_mul(vel,self.TEST_SPEED*delta)
 
-			if keys & (1<<INPUT.SELECT_BIT) > 0  and self.canattack == true then
-				self.attacking = true
-				self.canattack = false
-				local direc = self.direction
-				if self.direction == self.NONE then 
-					direc = self.lastdirection 
+				
+
+				if keys & (1<<INPUT.ZOOM_IN_BIT) > 0 then
+					self.cam_zoom = self.cam_zoom + (self.TEST_ZOOM_SPEED*delta)
+					setCamZoom(self.cam_zoom)
+				elseif keys & (1<<INPUT.ZOOM_OUT_BIT) > 0 then
+					self.cam_zoom = self.cam_zoom - (self.TEST_ZOOM_SPEED*delta)
+					if self.cam_zoom < 1.0 then
+						self.cam_zoom = 1.0
+					end
+					setCamZoom(self.cam_zoom)
 				end
 
-				if direc == DIRECTION.UP then
-					setAnimation(self.host, "attack_up")
-					animatorStart(self.host)
-				elseif direc == DIRECTION.DOWN then
-					setAnimation(self.host, "attack_down")
-					animatorStart(self.host)
-				elseif direc == DIRECTION.LEFT then
-					setAnimation(self.host, "attack_left")
-					animatorStart(self.host)
-				elseif direc == DIRECTION.RIGHT then
-					setAnimation(self.host, "attack_right")
-					animatorStart(self.host)
-				end
-				self.lastdirection = direc
-				self.detectAttackHits(self)
-			elseif keys & (1<<INPUT.SELECT_BIT) == 0  and self.canattack == false then
-				self.canattack = true
-			end
+				if keys & (1<<INPUT.SELECT_BIT) > 0  and self.canattack == true then
+					self.attacking = true
+					self.canattack = false
+					local direc = self.direction
+					if self.direction == self.NONE then 
+						direc = self.lastdirection 
+					end
 
-			setCamClamped(self.x,self.y)
-		elseif self.attacking == true then
-			local isanimating = getIsAnimating(self.host)
-			--print(isanimating)
-			if isanimating == false then
-				self.attacking = false
-				if self.lastdirection == DIRECTION.UP then
-					setAnimation(self.host, "walk_up")
-				elseif self.lastdirection == DIRECTION.DOWN then
-					setAnimation(self.host, "walk_down")
-				elseif self.lastdirection == DIRECTION.LEFT then
-					setAnimation(self.host, "walk_left")
-				elseif self.lastdirection == DIRECTION.RIGHT then
-					setAnimation(self.host, "walk_right")
+					if direc == DIRECTION.UP then
+						setAnimation(self.host, "attack_up")
+						animatorStart(self.host)
+					elseif direc == DIRECTION.DOWN then
+						setAnimation(self.host, "attack_down")
+						animatorStart(self.host)
+					elseif direc == DIRECTION.LEFT then
+						setAnimation(self.host, "attack_left")
+						animatorStart(self.host)
+					elseif direc == DIRECTION.RIGHT then
+						setAnimation(self.host, "attack_right")
+						animatorStart(self.host)
+					end
+					self.lastdirection = direc
+					self.detectAttackHits(self)
+				elseif keys & (1<<INPUT.SELECT_BIT) == 0  and self.canattack == false then
+					self.canattack = true
 				end
-				animatorStop(self.host)
+
+				
+			elseif self.attacking == true then
+				local isanimating = getIsAnimating(self.host)
+				--print(isanimating)
+				if isanimating == false then
+					self.attacking = false
+					if self.lastdirection == DIRECTION.UP then
+						setAnimation(self.host, "walk_up")
+					elseif self.lastdirection == DIRECTION.DOWN then
+						setAnimation(self.host, "walk_down")
+					elseif self.lastdirection == DIRECTION.LEFT then
+						setAnimation(self.host, "walk_left")
+					elseif self.lastdirection == DIRECTION.RIGHT then
+						setAnimation(self.host, "walk_right")
+					end
+					animatorStop(self.host)
+				end
+				vel = {x=0,y=0}
 			end
-			vel = {x=0,y=0}
 		end
+		setCamClamped(self.x,self.y)
 		setVelocity(self.host,vel.x, vel.y)
 		
 	end,
@@ -220,21 +233,22 @@ GameObject = {
 		enemy_lua.onHit(enemy_lua,self)
 	end,
 	onHit = function (self,other)
-		--[[
-		local otherpos = {x = other.x, y = other.y}
-		local mypos    = {x = self.x,  y = self.y }
-		local other2me = vec2_sub(mypos,otherpos)
-		other2me = vec2_normalize(other2me)
-		other2me = vec2_scalar_mul(other2me,self.delta * self.hitstrength)
-		print(other2me.x,other2me.y)
-		setVelocity(self.host,other2me.x,other2me.y)
-		]]--
-		self.HP = self.HP - 1
-		if self.HP <= 0 then
-			print("PLAYER: I'm Dead")
-			deleteGO(self.host)
-		else
-			print("PLAYER HP: ", self.HP)
+		if self.hit == false then
+			local otherpos = {x = other.x, y = other.y}
+			local mypos    = {x = self.x,  y = self.y }
+			local other2me = vec2_sub(mypos,otherpos)
+			other2me = vec2_normalize(other2me)
+			self.knockback_vec = vec2_scalar_mul(other2me, self.hitstrength)
+			self.hittimer = 0
+			self.hit = true
+
+			self.HP = self.HP - 1
+			if self.HP <= 0 then
+				print("PLAYER: I'm Dead")
+				deleteGO(self.host)
+			else
+				print("PLAYER HP: ", self.HP)
+			end
 		end
 
 	end

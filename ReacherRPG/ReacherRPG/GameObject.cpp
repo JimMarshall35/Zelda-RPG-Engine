@@ -598,7 +598,7 @@ Scripting::Scripting::Scripting()
 	
 	registerFunction(ScriptableGameObject::l_getLuaObject, "getLuaObject");                     // (lua object)         getLuaObject(host)
 	registerFunction(ScriptableGameObject::l_deleteGO, "deleteGO");                             // void                 deleteGO(host)
-	registerFunction(ScriptableGameObject::l_createScriptableGO, "createScriptableGO");                   // GameObject*          createScriptableGO(host,script,x,y)
+	registerFunction(ScriptableGameObject::l_createScriptableGO, "createScriptableGO");         // GameObject*          createScriptableGO(host,script,x,y)
 	
 	registerFunction(ScriptableGameObject::l_loadArea, "loadArea");                             // void                 loadArea(host,folder,file)
 

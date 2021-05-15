@@ -14,12 +14,18 @@ GameObject = {
 	move_timer = 0,
 	change_after_seconds = 0.5,
 	move_speed = 0.25,
-	wait_time = 3,
+
+	wait_time = 1,
 	wait_timer = 0,
 	player_ptr = 0,
 	attack_distance = 0.25,
 	HP = 1,
-	knockback = 0.5,
+
+	hit = false,
+	knockback_vec = {x=0,y=0},
+	hittimer = 0,
+	hittime = 0.2,
+	hitstrength = 1,
 
 	update = function( self,delta,keys )
 		self.x, self.y = getPos(self.host)
@@ -28,22 +34,39 @@ GameObject = {
 		local playerpos = {x = px, y = py}
 
 		if self.wait_timer >= self.wait_time then
-			local me_2_player = vec2_sub(playerpos,mypos)
+			local vel = {x=0,y=0}
+			if self.hit == true then
+				self.hittimer = self.hittimer + delta
+				if self.hittimer >= self.hittime then
+					self.hit = false
+					self.HP = self.HP - 1
+					if self.HP <= 0 then
+						print("I'm Dead")
+						deleteGO(self.host)
+					else
+						print("HP: ", self.HP)
+					end
+				end
+				vel = vec2_scalar_mul(self.knockback_vec,((self.hittime - self.hittimer) / self.hittime)*delta)
+			elseif self.hit == false then
+				local me_2_player = vec2_sub(playerpos,mypos)
 
-			local mag = vec2_mag(me_2_player)
+				local mag = vec2_mag(me_2_player)
 
-			if mag <= self.attack_distance then
+				if mag <= self.attack_distance then
 
-				me_2_player = vec2_normalize(me_2_player)
+					me_2_player = vec2_normalize(me_2_player)
 
-				self.setAnimation(self,me_2_player)
+					self.setAnimation(self,me_2_player)
 
-				me_2_player = vec2_scalar_mul(me_2_player, delta * self.move_speed)
-				setVelocity(self.host, me_2_player.x, me_2_player.y)
-			else
-				setVelocity(self.host, 0, 0)
-				animatorStop(self.host)
+					vel = vec2_scalar_mul(me_2_player, delta * self.move_speed)
+					
+				else
+					vel = {x=0,y=0}
+					animatorStop(self.host)
+				end
 			end
+			setVelocity(self.host, vel.x, vel.y)
 		else
 			self.wait_timer = self.wait_timer + delta
 		end
@@ -101,12 +124,17 @@ GameObject = {
 		animatorStart(self.host)
 	end,
 	onHit = function (self,other)
-		self.HP = self.HP - 1
-		if self.HP <= 0 then
-			print("I'm Dead")
-			deleteGO(self.host)
-		else
-			print("HP: ", self.HP)
+		if self.hit == false then
+
+			local otherpos = {x = other.x, y = other.y}
+			local mypos    = {x = self.x,  y = self.y }
+			local other2me = vec2_sub(mypos,otherpos)
+			other2me = vec2_normalize(other2me)
+			self.knockback_vec = vec2_scalar_mul(other2me, self.hitstrength)
+			self.hittimer = 0
+			self.hit = true
+
+			
 		end
 
 	end
