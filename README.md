@@ -23,4 +23,4 @@ To Do:
 - add lua scripting to the ui overlay
 - add cutscene mode - lua coroutine scriptable cutscenes
 
-https://www.youtube.com/watch?v=awqd1HGW3wA
+<iframe width="560" height="315" src="https://www.youtube.com/embed/g_QxpIHQ8Xw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
