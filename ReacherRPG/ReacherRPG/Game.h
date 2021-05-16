@@ -15,6 +15,7 @@ public:
 	void enqueueMsgBoxes(std::string text) { ui.emqueueMsgBoxes(text, msgboxQ); } // convert an arbitrary length string into a series of MessageBox structs and store in queue
 	void freeData();
 	Area* getAreaPtr() { return &area; }
+	void UINotify(UIEvent e) { ui.onNotify(e); }
 private:
 	std::queue<MessageBox> msgboxQ;
 	Area                   area;

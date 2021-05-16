@@ -20,7 +20,7 @@ void Game::loadArea(std::string folder, std::string file)
 
 void Game::update(float delta, GLuint keys)
 {
-	ui.update(delta);
+	ui.update(delta,keys);
 	if (msgboxQ.size() == 0) {
 		area.update(delta, keys);
 	}

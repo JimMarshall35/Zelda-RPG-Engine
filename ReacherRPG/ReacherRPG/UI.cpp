@@ -2,8 +2,13 @@
 #include <vector>
 
 
+
 UI::UI()
 {
+	L = luaL_newstate();
+	luaL_openlibs(L);
+
+	if (checkLua(L, luaL_dofile(L, "scripts/engine_defs.lua"))) {}
 	text_renderer.init("fonts/Final_Fantasy_VII.ttf");
 	sprite_renderer.SetVAOandVBO(text_renderer.getVAO(), text_renderer.getVBO()); // need to make a third separate class that 
 																				  // contains the vao and vbo's used for ui rendering
@@ -22,12 +27,13 @@ UI::UI(std::string font)
 	sprite_renderer.init();
 	sprite_renderer.loadUISprite("Spritesheet/heart pixel art 32x32.png", "heart");
 	sprite_renderer.loadUISprite("Spritesheet/msg_box_3.png", "msgbox");
+	
 }
 UI::~UI()
 {
 }
 
-void UI::update(float delta)
+void UI::update(float delta, unsigned int keys)
 {
 	updateFPS(delta);
 }
@@ -35,6 +41,11 @@ void UI::update(float delta)
 void UI::draw()
 {
 	drawFPS();
+	float startx = 25;
+	float incr = 32;
+	for (size_t i = 0; i < player_HP; i++) {
+		sprite_renderer.RenderSprite("heart", startx + i * incr, 960, 1);
+	}
 	renderMsgBox();
 }
 
@@ -43,10 +54,7 @@ void UI::drawFPS()
 	
 	std::string fps_str = std::to_string(fps).substr(0,6) + " fps";
 	text_renderer.RenderText(fps_str, 25.0f, 970, 1.2f, glm::vec3(0.5, 0.8f, 0.2f));
-	sprite_renderer.RenderSprite("heart", 25.0, 960, 1);
-	sprite_renderer.RenderSprite("heart", 57, 960, 1);
-	sprite_renderer.RenderSprite("heart", 89, 960, 1);
-	//renderMsgBox("hello world! The quick brown fox jumped over the lazy dog. Good game mate - when's it coming out? Can i get it on steam? No?!");
+
 }
 
 void UI::freeData()
@@ -117,6 +125,24 @@ void UI::emqueueMsgBoxes(std::string text, std::queue<MessageBox>& queue)
 	}
 	m.lines.push_back(string_being_built);
 	queue.push(m);
+}
+
+void UI::onNotify(UIEvent msg)
+{
+	switch (msg.sendertype)
+	{
+	case GO_TYPE::PLAYER:
+		if (msg.type == "health_set") {
+			if (msg.data.checkInt()) {
+				player_HP = msg.data.getInt();
+			}
+			
+		}
+		break;
+	default:
+		break;
+	}
+
 }
 
 void UI::updateFPS(float delta)

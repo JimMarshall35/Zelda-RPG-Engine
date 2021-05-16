@@ -231,6 +231,8 @@ public:
 	static int      l_deleteGO(lua_State* L);                    // deleteGO(host)
 	static int      l_loadArea(lua_State* L);                    // loadArea(host,folder,file)
 	static int      l_createScriptableGO(lua_State* L);          // createScriptableGO(host,script,x,y) -> returns ptr to created GO
+	
+	static int      l_uiNotifyInt(lua_State* L);                 // uiNotifyInt(host, string event_type, int data) 
 private:
 	static inline bool     getLuaTableNumber(lua_State* L, std::string key, int tableIndex, float& out);
 	int             luaRef = LUA_NOREF;

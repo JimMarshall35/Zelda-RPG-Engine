@@ -1,7 +1,7 @@
 #pragma once
 #include "Rendering.h"
 #include <queue>
-\
+#include "GameObject.h"
 struct MessageBox {                         
 	std::vector<std::string> lines;
 	float text_x_offset = 35;
@@ -13,18 +13,67 @@ struct MessageBox {
 	float ypos;
 };
 
+class UIMessageData {
+#define UI_EVENT_INT    0
+#define UI_EVENT_STRING 1
+#define UI_EVENT_FLOAT  2
+#define UI_EVENT_BOOL   3
+
+public:
+	inline void setInt(int i) {
+		whichmember = UI_EVENT_INT;
+		u.i = i;
+	}
+	inline void setString(const char* s) {
+		whichmember = UI_EVENT_STRING;
+		u.s = s;
+	}
+	inline void setFloat(float f) {
+		whichmember = UI_EVENT_FLOAT;
+		u.f = f;
+	}
+	inline void setBool(bool b) {
+		whichmember = UI_EVENT_BOOL;
+		u.b = b;
+	}
+	inline bool        checkInt()    { return whichmember == UI_EVENT_INT; }
+	inline bool        checkString() { return whichmember == UI_EVENT_STRING; }
+	inline bool        checkFloat()  { return whichmember == UI_EVENT_FLOAT; }
+	inline bool        checkBool()   { return whichmember == UI_EVENT_BOOL; }
+
+	inline const char* getString()   { return u.s; }
+	inline int         getInt()      { return u.i; }
+	inline float       getFloat()    { return u.f; }
+	inline bool        getBool()     { return u.b; }
+private:
+	int whichmember;
+	union {
+		int         i;
+		const char* s;
+		float       f;
+		bool        b;
+	}u;
+};
+enum class GO_TYPE;
+struct UIEvent {
+	std::string   type;
+	GO_TYPE       sendertype;
+	UIMessageData data;
+	
+};
 class UI
 {
 public:
 	UI();
 	UI(std::string font);
 	~UI();
-	void             update(float delta);
+	void             update(float delta, unsigned int keys);
 	void             draw();
 	void             drawFPS();
 	void             freeData();
 	void             emqueueMsgBoxes(std::string text, std::queue<MessageBox>& queue);
 	void             setMsgBox(MessageBox* m) { currentMsgBox = m; }
+	void             onNotify(UIEvent msg);
 private:
 	void             updateFPS(float delta);
 	TextRenderer     text_renderer;
@@ -32,6 +81,7 @@ private:
 	void             renderMsgBox();
 	MessageBox*      currentMsgBox = nullptr;
 	float            fps;
-	
+	unsigned int     player_HP = 5;
+	lua_State*       L;
 };
 

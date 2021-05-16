@@ -509,6 +509,20 @@ int ScriptableGameObject::l_createScriptableGO(lua_State * L)
 	return 1;
 }
 
+int ScriptableGameObject::l_uiNotifyInt(lua_State * L)
+{
+	ScriptableGameObject* go = (ScriptableGameObject*)lua_touserdata(L, 1);
+	std::string event_type = luaL_checkstring(L, 2);
+	int data = luaL_checkinteger (L, 3);
+	UIEvent e;
+	e.data.setInt(data);
+	e.type = event_type;
+	e.sendertype = go->type;
+	go->game->UINotify(e);
+
+	return 0;
+}
+
 inline bool ScriptableGameObject::getLuaTableNumber(lua_State * L, std::string key, int tableIndex, float& out)
 {
 	lua_pushstring(L, key.c_str());
@@ -601,6 +615,8 @@ Scripting::Scripting::Scripting()
 	registerFunction(ScriptableGameObject::l_createScriptableGO, "createScriptableGO");         // GameObject*          createScriptableGO(host,script,x,y)
 	
 	registerFunction(ScriptableGameObject::l_loadArea, "loadArea");                             // void                 loadArea(host,folder,file)
+
+	registerFunction(ScriptableGameObject::l_uiNotifyInt, "uiNotifyInt");                       // void                 uiNotifyInt(host, string event_type, int data) 
 
 }
 

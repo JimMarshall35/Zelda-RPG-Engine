@@ -87,6 +87,7 @@ GameObject = {
 			if self.hittimer >= self.hittime then
 				self.hit = false
 				self.HP = self.HP - 1
+				uiNotifyInt(self.host,"health_set",self.HP)
 				if self.HP <= 0 then
 					print("PLAYER: I'm Dead")
 					deleteGO(self.host)
@@ -180,7 +181,7 @@ GameObject = {
 					setAnimation(self.host, "walk_right")
 				end
 				animatorStop(self.host)
-				print(self.isanimating)
+				--print(self.isanimating)
 			end
 			vel = {x=0,y=0}
 		end
@@ -220,7 +221,8 @@ GameObject = {
  		setGOType(self.host, GO_TYPE.PLAYER)
  		self.direction = DIRECTION.DOWN
  		self.lastdirection = DIRECTION.DOWN
- 		self.cam_zoom = getCamZoom();
+ 		self.cam_zoom = getCamZoom()
+ 		uiNotifyInt(self.host,"health_set",self.HP)
 	end,
 	onInteract = function ( self,other )
 		--print("collision!")
@@ -247,8 +249,12 @@ GameObject = {
 		end
 	end,
 	processAttackHit = function(self,enemy)
-		local enemy_lua = getLuaObject(enemy)
-		enemy_lua.onHit(enemy_lua,self)
+		if getGOType(enemy) == GO_TYPE.ENEMY then
+			local enemy_lua = getLuaObject(enemy)
+			if enemy_lua.onHit ~= nil then
+				enemy_lua.onHit(enemy_lua,self)
+			end
+		end
 	end,
 	onHit = function (self,other)
 		if self.hit == false then
