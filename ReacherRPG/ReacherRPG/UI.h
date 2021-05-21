@@ -67,7 +67,7 @@ public:
 	UI();
 	UI(std::string font);
 	~UI();
-	void             update(float delta, unsigned int keys);
+	void             update(float delta, unsigned int keys); 
 	void             draw();
 	void             drawFPS();
 	void             freeData();
@@ -75,13 +75,13 @@ public:
 	void             setMsgBox(MessageBox* m) { currentMsgBox = m; }
 	void             onNotify(UIEvent msg);
 private:
-	void             updateFPS(float delta);
+	void             updateFPS(float delta); // will be in lua script
 	TextRenderer     text_renderer;
 	UISpriteRenderer sprite_renderer;
 	void             renderMsgBox();
 	MessageBox*      currentMsgBox = nullptr;
-	float            fps;
-	unsigned int     player_HP = 5;
+	float            fps;           // will be in lua script
+	unsigned int     player_HP = 5; // will be in lua script
 	lua_State*       L;
 };
 

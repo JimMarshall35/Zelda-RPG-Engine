@@ -9,13 +9,14 @@ UI::UI()
 	luaL_openlibs(L);
 
 	if (checkLua(L, luaL_dofile(L, "scripts/engine_defs.lua"))) {}
-	text_renderer.init("fonts/Final_Fantasy_VII.ttf");
+	// there will be an init function in lua script
+	text_renderer.init("fonts/Final_Fantasy_VII.ttf"); // will be in lua script
 	sprite_renderer.SetVAOandVBO(text_renderer.getVAO(), text_renderer.getVBO()); // need to make a third separate class that 
 																				  // contains the vao and vbo's used for ui rendering
 																				  // to prevent this weird  bit
 	sprite_renderer.init();
-	sprite_renderer.loadUISprite("Spritesheet/heart pixel art 32x32.png", "heart");
-	sprite_renderer.loadUISprite("Spritesheet/msg_box_3.png", "msgbox");
+	sprite_renderer.loadUISprite("Spritesheet/heart pixel art 32x32.png", "heart");// will be in lua script
+	sprite_renderer.loadUISprite("Spritesheet/msg_box_3.png", "msgbox");// will be in lua script
 }
 
 UI::UI(std::string font)
@@ -25,8 +26,8 @@ UI::UI(std::string font)
 	                                                                              // contains the vao and vbo's used for ui rendering
 	                                                                              // to prevent this weird  bit
 	sprite_renderer.init();
-	sprite_renderer.loadUISprite("Spritesheet/heart pixel art 32x32.png", "heart");
-	sprite_renderer.loadUISprite("Spritesheet/msg_box_3.png", "msgbox");
+	sprite_renderer.loadUISprite("Spritesheet/heart pixel art 32x32.png", "heart");// will be in lua script
+	sprite_renderer.loadUISprite("Spritesheet/msg_box_3.png", "msgbox");// will be in lua script
 	
 }
 UI::~UI()
@@ -38,7 +39,7 @@ void UI::update(float delta, unsigned int keys)
 	updateFPS(delta);
 }
 
-void UI::draw()
+void UI::draw()// implementation will be in lua script
 {
 	drawFPS();
 	float startx = 25;
@@ -49,7 +50,7 @@ void UI::draw()
 	renderMsgBox();
 }
 
-void UI::drawFPS()
+void UI::drawFPS()// will be in lua script
 {
 	
 	std::string fps_str = std::to_string(fps).substr(0,6) + " fps";
@@ -127,7 +128,7 @@ void UI::emqueueMsgBoxes(std::string text, std::queue<MessageBox>& queue)
 	queue.push(m);
 }
 
-void UI::onNotify(UIEvent msg)
+void UI::onNotify(UIEvent msg)// implementation will be in lua script
 {
 	switch (msg.sendertype)
 	{
@@ -145,7 +146,7 @@ void UI::onNotify(UIEvent msg)
 
 }
 
-void UI::updateFPS(float delta)
+void UI::updateFPS(float delta)// will be in lua script
 {
 	const int fpscount_period = 25;
 	static int onfpscount = 0;
