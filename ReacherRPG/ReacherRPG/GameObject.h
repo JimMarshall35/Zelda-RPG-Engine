@@ -91,6 +91,7 @@ protected:
 };
 
 class Player : public GameObject {
+	// class not used - replaced by lua script
 public:
 	Player();
 	~Player();

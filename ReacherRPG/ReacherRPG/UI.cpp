@@ -39,7 +39,7 @@ void UI::update(float delta, unsigned int keys)
 	updateFPS(delta);
 }
 
-void UI::draw()// implementation will be in lua script
+void UI::draw()// implementation NOT will be in lua script
 {
 	drawFPS();
 	float startx = 25;
