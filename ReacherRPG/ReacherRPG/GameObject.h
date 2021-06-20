@@ -25,7 +25,7 @@ namespace Scripting {
 	protected:
 		inline void registerFunction(int(*func)(lua_State*L), std::string func_name);
 		inline bool getLuaTableNumber(lua_State* L, std::string key, int tableIndex, float& out);
-		void        init();
+		void        baseInit();
 		lua_State*  L;
 	};
 	class GameObjectVM : public LuaVMBase

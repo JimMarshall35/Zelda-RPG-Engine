@@ -8,6 +8,7 @@ UI::UI()
 	init();
 }
 void UI::init() {
+
 	// there will be an init function in lua script
 	text_renderer.init("fonts/Final_Fantasy_VII.ttf"); // will be in lua script
 	sprite_renderer.SetVAOandVBO(text_renderer.getVAO(), text_renderer.getVBO()); // need to make a third separate class that 

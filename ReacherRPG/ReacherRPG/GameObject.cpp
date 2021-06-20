@@ -560,14 +560,14 @@ bool DialogueTrigger::onInteract(GameObject * other)
 	}
 	return false;
 }
-void Scripting::LuaVMBase::init() {
+void Scripting::LuaVMBase::baseInit() {
 	L = luaL_newstate();
 	luaL_openlibs(L);
 }
 Scripting::GameObjectVM::GameObjectVM()
 {
 	
-	init();
+	baseInit();
 	if (checkLua(L, luaL_dofile(L, "scripts/engine_defs.lua"))) {}
 	registerFunction(ScriptableGameObject::l_getTilesetByName, "getTilesetByName");             // TileSet*             getTilesetByName(host,name) 
 	registerFunction(ScriptableGameObject::l_enqueueMsgBoxes, "enqueueMsgBoxes");               // void                 enqueueMsgBoxes(host,msg)
