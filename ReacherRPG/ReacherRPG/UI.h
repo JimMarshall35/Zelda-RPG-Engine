@@ -79,7 +79,7 @@ public:
 	void             init();
 	static int       l_loadUISprite(lua_State*L);   // host, path, name                                => void
 	static int       l_loadFont(lua_State*L);       // host, font                                      => void
-	static int       l_pushToDraw(lua_State*L);     // host, font                                      => void
+	static int       l_pushToDraw(lua_State*L);     // host, uisprite                                  => void
 	static int       l_setToDraw(lua_State*L);      // host, (array of uiSprite equivalent lua tables) => void
 	static int       l_clearToDraw(lua_State*L);    // host                                            => void
 private:

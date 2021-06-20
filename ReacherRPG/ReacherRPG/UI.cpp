@@ -19,8 +19,7 @@ UI::UI()
 }
 void UI::init() {
 
-	// there will be an init function in lua script
-	
+	// (text renderer initialized in its constructor)	
 	sprite_renderer.SetVAOandVBO(text_renderer.getVAO(), text_renderer.getVBO()); // need to make a third separate class that 
 																				  // contains the vao and vbo's used for ui rendering
 																				  // to prevent this weird  bit
@@ -44,9 +43,44 @@ int UI::l_loadFont(lua_State * L)
 	return 0;
 }
 
+int UI::l_pushToDraw(lua_State * L)
+{
+	UI* ptr = (UI*)lua_touserdata(L, 1);
+	if (!lua_istable(L, 2)) { std::cerr << "2nd param l_pushToDraw not a table" << std::endl; return 0; }
+	UISprite s;
+	int type;
+	// name
+	type = lua_getfield(L, -1, "name");
+	if (!ptr->checkTypeValue(type, LUA_TSTRING, "name")) { return 0; }
+	s.name = lua_tostring(L, -1);
+	// x
+	type = lua_getfield(L, -2, "x");
+	if (!ptr->checkTypeValue(type, LUA_TNUMBER, "x")) { return 0; }
+	s.x = lua_tonumber(L, -1);
+	// y
+	type = lua_getfield(L, -3, "y");
+	if (!ptr->checkTypeValue(type, LUA_TNUMBER, "y")) { return 0; }
+	s.y = lua_tonumber(L, -1);
+	// scale
+	type = lua_getfield(L, -4, "scale");
+	if (!ptr->checkTypeValue(type, LUA_TNUMBER, "scale")) { return 0; }
+	s.scale = lua_tonumber(L, -1);
+	// shoulddraw
+	type = lua_getfield(L, -5, "shouldDraw");
+	if (!ptr->checkTypeValue(type, LUA_TBOOLEAN, "shouldDraw")) { return 0; }
+	s.shouldDraw = lua_toboolean(L, -1);
+
+	// push sprite
+	ptr->toDraw.push_back(s);
+	return 0;
+}
+
 int UI::l_setToDraw(lua_State * L)
 {
 	/*
+	Sets the array of UISprite structs which will be drawn 
+	when UI::draw gets called
+
 	struct UISprite {
 		std::string name;
 		float       x;
@@ -96,6 +130,13 @@ int UI::l_setToDraw(lua_State * L)
 			return 0;
 		}
 	}
+	return 0;
+}
+
+int UI::l_clearToDraw(lua_State * L)
+{
+	UI*    ptr = (UI*)lua_touserdata(L, 1);
+	ptr->toDraw.clear();
 	return 0;
 }
 
@@ -169,6 +210,8 @@ void UI::registerLuaFunctions()
 	registerFunction(l_loadUISprite, "loadUISprite"); // host, path, name => void
 	registerFunction(l_loadFont,     "loadFont");     // host, font       => void
 	registerFunction(l_setToDraw,    "setToDraw");    // host, UISprite[] => void
+	registerFunction(l_clearToDraw,  "clearToDraw");  // host             => void 
+	registerFunction(l_pushToDraw,   "pushToDraw");   // host,UISprite    => void
 }
 
 
