@@ -1,4 +1,5 @@
 
+--Just an implementation to test
 host = nil
 local player_hp = 5
 local toDraw = {}
