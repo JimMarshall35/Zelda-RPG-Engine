@@ -255,7 +255,6 @@ bool AreaLoader::loadLayers(const rapidjson::Document & doc, Area & arearef)
 				}
 				
 				if (objtype == "static_metasprite_object") {
-
 					TiledProperty tileset_name_value, metasprite_name_value, t_offset, b_offset, l_offset, r_offset, collidable;
 					StaticSprite* s_sprite = new StaticSprite();
 					if (!getTiledObjectProperty(object["properties"], "tileset_name", tileset_name_value)) {}//continue; }

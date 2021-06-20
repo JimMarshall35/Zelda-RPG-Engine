@@ -27,16 +27,13 @@ void Animator::draw(const glm::vec2 pos, const glm::vec2 scale, const Shader & s
 		if (onframe < current_animation->numframes) {
 			current_frame->draw(pos, glm::vec3(scale, 1.0), s, camera);
 		}
-		
 	}
-	
 }
 
 void Animator::update(float delta)
 {
 	//static int onframe = 0; 
 	if (isanimating) {
-		
 		timer += delta;
 		if (timer > 1 / current_animation->fps) {
 			timer = 0;
@@ -55,7 +52,6 @@ void Animator::update(float delta)
 		if(current_animation != nullptr)
 			current_frame = current_animation->frames[0];
 	}
-	
 }
 
 void Animator::push_animation(std::string anim_name, Sprite ** frames, int numframes, float fps, bool loop)
@@ -79,7 +75,6 @@ void Animator::stop_anim()
 	if (current_animation != nullptr) {
 		current_frame = current_animation->frames[0];
 	}
-	
 	timer = 0;
 }
 
@@ -95,10 +90,8 @@ void Animator::set_anim(std::string anim_name)
 			onframe = 0;
 			last = anim_name;
 		}
-		
 	}
 	else {
 		std::cout << "Error: animation key " << anim_name << " not found" << std::endl;
 	}
-	
 }

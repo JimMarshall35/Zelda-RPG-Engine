@@ -111,7 +111,7 @@ void FloorCollider::init(GameObject* parent)
 
 ScriptableGameObject::ScriptableGameObject()
 {
-	L = Scripting::s_instance.getL();
+	L = Scripting::gameobject_vm.getL();
 }
 
 bool ScriptableGameObject::onInteract(GameObject * other)
@@ -124,7 +124,7 @@ bool ScriptableGameObject::onInteract(GameObject * other)
 	if (lua_isfunction(L, -1)) {
 		lua_rawgeti(L, LUA_REGISTRYINDEX, luaRef);           // pushes the corresponding lua object 
 		lua_pushlightuserdata(L, other);                     // pushes delta 
-		if (!checkLua(L, lua_pcall(L, 2, 0, 0))) {           // pops keys, delta, self, update
+		if (!Scripting::checkLua(L, lua_pcall(L, 2, 0, 0))) {           // pops keys, delta, self, update
 			std::cerr << "lua onInteract call failed" << std::endl;
 		}
 
@@ -149,7 +149,7 @@ void ScriptableGameObject::update(float delta, GLuint keys)
 		lua_rawgeti(L, LUA_REGISTRYINDEX, luaRef);           // pushes the corresponding lua object 
 		lua_pushnumber(L,delta);                             // pushes delta 
 		lua_pushinteger(L, keys);                            // pushes keys
-		if (!checkLua(L, lua_pcall(L, 3, 0, 0))) {           // pops keys, delta, self, update
+		if (!Scripting::checkLua(L, lua_pcall(L, 3, 0, 0))) {           // pops keys, delta, self, update
 			std::cerr << "lua update call failed" << std::endl;
 		}
 
@@ -162,8 +162,8 @@ void ScriptableGameObject::update(float delta, GLuint keys)
 
 void ScriptableGameObject::init(std::string script)
 {
-	L = Scripting::s_instance.getL();
-	if (checkLua(L, luaL_dofile(L,script.c_str()))) {
+	L = Scripting::gameobject_vm.getL();
+	if (Scripting::checkLua(L, luaL_dofile(L,script.c_str()))) {
 		lua_getglobal(L, "GameObject");           // pushes gameobject onto stack
 		if (!lua_istable(L, -1)) {
 			std::cerr << "GameObject is not a table in file " << script << std::endl;
@@ -177,7 +177,7 @@ void ScriptableGameObject::init(std::string script)
 			return;
 		}
 		lua_getglobal(L, "GameObject");                        // pushes gameobject onto stack
-		if (!checkLua(L, lua_pcall(L, 1, 0, 0))) {             // pops init function, gameobject
+		if (!Scripting::checkLua(L, lua_pcall(L, 1, 0, 0))) {             // pops init function, gameobject
 			std::cerr << "lua init call failed, script: " << script << std::endl;
 		}
 		luaRef = luaL_ref(L, LUA_REGISTRYINDEX);               // pops gameobject table from stack
@@ -357,12 +357,12 @@ int ScriptableGameObject::l_setFloorCollider(lua_State * L)
 		return 0;
 	}
 	float l_offset, r_offset, t_offset, b_offset, px_width, px_height;
-	if (!getLuaTableNumber(L, "left_offset", 2, l_offset)) { return false; }
-	if (!getLuaTableNumber(L, "right_offset", 2, r_offset)) { return false; }
-	if (!getLuaTableNumber(L, "top_offset", 2, t_offset)) { return false; }
-	if (!getLuaTableNumber(L, "bottom_offset", 2, b_offset)) { return false; }
-	if (!getLuaTableNumber(L, "pixelswidth", 2, px_width)) { return false; }
-	if (!getLuaTableNumber(L, "pixelsheight", 2, px_height)) { return false; }
+	if (!Scripting::gameobject_vm.getTableNumber(L, "left_offset", 2, l_offset)) { return false; }
+	if (!Scripting::gameobject_vm.getTableNumber(L, "right_offset", 2, r_offset)) { return false; }
+	if (!Scripting::gameobject_vm.getTableNumber(L, "top_offset", 2, t_offset)) { return false; }
+	if (!Scripting::gameobject_vm.getTableNumber(L, "bottom_offset", 2, b_offset)) { return false; }
+	if (!Scripting::gameobject_vm.getTableNumber(L, "pixelswidth", 2, px_width)) { return false; }
+	if (!Scripting::gameobject_vm.getTableNumber(L, "pixelsheight", 2, px_height)) { return false; }
 
 	go->collider.left_offset   = l_offset;
 	go->collider.right_offset  = r_offset;
@@ -523,7 +523,7 @@ int ScriptableGameObject::l_uiNotifyInt(lua_State * L)
 	return 0;
 }
 
-inline bool ScriptableGameObject::getLuaTableNumber(lua_State * L, std::string key, int tableIndex, float& out)
+inline bool Scripting::LuaVMBase::getLuaTableNumber(lua_State * L, std::string key, int tableIndex, float& out)
 {
 	lua_pushstring(L, key.c_str());
 	int type = lua_gettable(L, 2);
@@ -536,7 +536,7 @@ inline bool ScriptableGameObject::getLuaTableNumber(lua_State * L, std::string k
 	return true;
 }
 
-bool checkLua(lua_State * L, int r)
+bool Scripting::checkLua(lua_State * L, int r)
 {
 	if (r != LUA_OK) {
 		std::string error_msg = lua_tostring(L, -1);
@@ -560,11 +560,14 @@ bool DialogueTrigger::onInteract(GameObject * other)
 	}
 	return false;
 }
-Scripting::Scripting::Scripting()
-{
+void Scripting::LuaVMBase::init() {
 	L = luaL_newstate();
 	luaL_openlibs(L);
-
+}
+Scripting::GameObjectVM::GameObjectVM()
+{
+	
+	init();
 	if (checkLua(L, luaL_dofile(L, "scripts/engine_defs.lua"))) {}
 	registerFunction(ScriptableGameObject::l_getTilesetByName, "getTilesetByName");             // TileSet*             getTilesetByName(host,name) 
 	registerFunction(ScriptableGameObject::l_enqueueMsgBoxes, "enqueueMsgBoxes");               // void                 enqueueMsgBoxes(host,msg)
@@ -621,18 +624,18 @@ Scripting::Scripting::Scripting()
 }
 
 
-Scripting::Scripting::~Scripting()
+Scripting::GameObjectVM::~GameObjectVM()
 {
 	freeData();
 }
 
-inline void Scripting::Scripting::registerFunction(int(*func)(lua_State *L), std::string func_name)
+inline void Scripting::LuaVMBase::registerFunction(int(*func)(lua_State *L), std::string func_name)
 {
 	lua_pushcfunction(L, func);
 	lua_setglobal(L, func_name.c_str());
 }
 
-void Scripting::Scripting::freeData()
+void Scripting::LuaVMBase::freeData()
 {
 	lua_close(L);
 }

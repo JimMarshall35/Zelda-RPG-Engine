@@ -2,6 +2,7 @@
 #include "Rendering.h"
 #include <queue>
 #include "GameObject.h"
+#define MAX_HP 5
 struct MessageBox {                         
 	std::vector<std::string> lines;
 	float text_x_offset = 35;
@@ -61,7 +62,8 @@ struct UIEvent {
 	UIMessageData data;
 	
 };
-class UI
+
+class UI : public Scripting::LuaVMBase
 {
 public:
 	UI();
@@ -74,14 +76,17 @@ public:
 	void             emqueueMsgBoxes(std::string text, std::queue<MessageBox>& queue);
 	void             setMsgBox(MessageBox* m) { currentMsgBox = m; }
 	void             onNotify(UIEvent msg);
+	void             init();
 private:
-	void             updateFPS(float delta); // will be in lua script
-	TextRenderer     text_renderer;
-	UISpriteRenderer sprite_renderer;
-	void             renderMsgBox();
-	MessageBox*      currentMsgBox = nullptr;
-	float            fps;           // will be in lua script
-	unsigned int     player_HP = 5; // will be in lua script
-	lua_State*       L;
+	std::vector<UISprite> toDraw;
+	void                  updateFPS(float delta); // will be in lua script
+	TextRenderer          text_renderer;
+	UISpriteRenderer      sprite_renderer;
+	void                  renderMsgBox();
+	MessageBox*           currentMsgBox = nullptr;
+	float                 fps;           // will be in lua script
+	unsigned int          player_HP = 5; // will be in lua script
+
+	void                  setupNormalUI();
 };
 

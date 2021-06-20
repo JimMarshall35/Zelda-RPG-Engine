@@ -12,20 +12,32 @@ extern "C" {
 }
 
 namespace Scripting {
-	class Scripting
-	{
+	bool checkLua(lua_State* L, int r);
+	class LuaVMBase {
 	public:
-		Scripting();
-		~Scripting();
+		LuaVMBase(){}
+		~LuaVMBase() {}
 		lua_State* getL() { return L; }
 
-		inline void registerFunction(int(*func)(lua_State*L), std::string func_name);
+		
 		void freeData();
-	private:
-		lua_State* L;
+		
+	protected:
+		inline void registerFunction(int(*func)(lua_State*L), std::string func_name);
+		inline bool getLuaTableNumber(lua_State* L, std::string key, int tableIndex, float& out);
+		void        init();
+		lua_State*  L;
+	};
+	class GameObjectVM : public LuaVMBase
+	{
+	public:
+		GameObjectVM();
+		~GameObjectVM();
+		inline bool getTableNumber(lua_State* L, std::string key, int tableIndex, float& out) { return getLuaTableNumber(L, key, tableIndex, out); }
 
 	};
-	static Scripting s_instance;
+	
+	static GameObjectVM gameobject_vm;
 }
 enum class GO_TYPE {
 	NONE = 0,
@@ -188,7 +200,7 @@ private:
 
 };
 
-bool checkLua(lua_State* L, int r);
+
 class ScriptableGameObject : public GameObject {
 public:
 	ScriptableGameObject();
@@ -198,7 +210,7 @@ public:
 	virtual void    update(float delta, GLuint keys);
 	virtual void    draw(const Shader& s, const Camera* camera) { animator.draw(position, scale, s, camera); }
 	virtual void    freeData() { 
-		luaL_unref(Scripting::s_instance.getL(), LUA_REGISTRYINDEX, luaRef); 
+		luaL_unref(Scripting::gameobject_vm.getL(), LUA_REGISTRYINDEX, luaRef);
 		animator.freeData();
 	};
 	void            init(std::string script);
@@ -235,7 +247,6 @@ public:
 	
 	static int      l_uiNotifyInt(lua_State* L);                 // uiNotifyInt(host, string event_type, int data) 
 private:
-	static inline bool     getLuaTableNumber(lua_State* L, std::string key, int tableIndex, float& out);
 	int             luaRef = LUA_NOREF;
 	lua_State*      L;
 };

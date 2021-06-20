@@ -102,10 +102,17 @@ private:
 	GLuint VAO, VBO;
 	Shader shader;
 };
-
+struct UISprite {
+	std::string name;
+	float       x;
+	float       y;
+	float       scale;
+	bool        shouldDraw = false;
+};
 class UISpriteRenderer {
 public:
 	void RenderSprite(std::string name, float x, float y, float scale);
+	void RenderSprite(UISprite s) { RenderSprite(s.name, s.x, s.y, s.scale); }
 	void SetVAOandVBO(GLuint pVAO, GLuint pVBO) { VAO = pVAO; VBO = pVBO; }
 	bool loadUISprite(std::string img_path, std::string name);
 	void init();

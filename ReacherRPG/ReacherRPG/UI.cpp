@@ -5,10 +5,9 @@
 
 UI::UI()
 {
-	L = luaL_newstate();
-	luaL_openlibs(L);
-
-	if (checkLua(L, luaL_dofile(L, "scripts/engine_defs.lua"))) {}
+	init();
+}
+void UI::init() {
 	// there will be an init function in lua script
 	text_renderer.init("fonts/Final_Fantasy_VII.ttf"); // will be in lua script
 	sprite_renderer.SetVAOandVBO(text_renderer.getVAO(), text_renderer.getVBO()); // need to make a third separate class that 
@@ -17,8 +16,8 @@ UI::UI()
 	sprite_renderer.init();
 	sprite_renderer.loadUISprite("Spritesheet/heart pixel art 32x32.png", "heart");// will be in lua script
 	sprite_renderer.loadUISprite("Spritesheet/msg_box_3.png", "msgbox");// will be in lua script
+	setupNormalUI();
 }
-
 UI::UI(std::string font)
 {
 	text_renderer.init(font);
@@ -33,9 +32,17 @@ UI::UI(std::string font)
 UI::~UI()
 {
 }
-
+#define MAX_HP 5
 void UI::update(float delta, unsigned int keys)
 {
+	for (size_t i = 0; i < toDraw.size(); i++) {
+		if (i >= player_HP) {
+			toDraw[i].shouldDraw = false;
+		}
+		else {
+			toDraw[i].shouldDraw = true;
+		}
+	}
 	updateFPS(delta);
 }
 
@@ -44,18 +51,22 @@ void UI::draw()// implementation NOT will be in lua script
 	drawFPS();
 	float startx = 25;
 	float incr = 32;
-	for (size_t i = 0; i < player_HP; i++) {
-		sprite_renderer.RenderSprite("heart", startx + i * incr, 960, 1);
+	//for (size_t i = 0; i < player_HP; i++) {
+	//	sprite_renderer.RenderSprite("heart", startx + i * incr, 960, 1);
+	//}
+	for (size_t i = 0; i < toDraw.size(); i++) {
+		UISprite s = toDraw[i];
+		if (toDraw[i].shouldDraw) {
+			sprite_renderer.RenderSprite(s);
+		}
 	}
 	renderMsgBox();
 }
 
 void UI::drawFPS()// will be in lua script
 {
-	
 	std::string fps_str = std::to_string(fps).substr(0,6) + " fps";
 	text_renderer.RenderText(fps_str, 25.0f, 970, 1.2f, glm::vec3(0.5, 0.8f, 0.2f));
-
 }
 
 void UI::freeData()
@@ -67,7 +78,6 @@ void UI::freeData()
 
 void UI::renderMsgBox()
 {
-
 	if (currentMsgBox == nullptr) {
 		return;
 	}
@@ -81,9 +91,23 @@ void UI::renderMsgBox()
 		std::string line = m.lines[i];
 		text_renderer.RenderText(line, xpos + m.text_x_offset, ypos - m.text_y_offset - (i*base_text_height*m.text_scale), m.text_scale, glm::vec3(1.0, 1.0, 0.0));
 	}
-	
-	
 }
+
+void UI::setupNormalUI()
+{
+	float startx = 25;
+	float incr = 32;
+	for (size_t i = 0; i < MAX_HP; i++) {
+		UISprite sprite;
+		sprite.name  = "heart";
+		sprite.x     = startx + i * incr;
+		sprite.y     = 960;
+		sprite.scale = 1;
+		toDraw.push_back(sprite);
+		//sprite_renderer.RenderSprite("heart", startx + i * incr, 960, 1);
+	}
+}
+
 
 void UI::emqueueMsgBoxes(std::string text, std::queue<MessageBox>& queue)
 {
