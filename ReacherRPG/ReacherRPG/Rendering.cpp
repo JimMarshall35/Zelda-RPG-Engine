@@ -226,14 +226,9 @@ void cleanupRendering()
 
 
 
-void TextRenderer::init( std::string font)
+void TextRenderer::loadFont( std::string font)
 {
-	GLClearErrors();
-	shader = Shader("shaders/text_vert.glsl", "shaders/text_frag.glsl");
-	shader.use();
-	glm::mat4 projection = glm::ortho(0.0f, 1024.0f, 0.0f, 1024.0f);
-	shader.setMat4("projection", projection);
-
+	
 	FT_Library ft;
 	if (FT_Init_FreeType(&ft))
 	{
@@ -274,14 +269,19 @@ void TextRenderer::init( std::string font)
 	}
 	FT_Done_Face(face);
 	FT_Done_FreeType(ft);
-	genBuffers();
+	
 	std::cout << "text renderer initialized successfully" << std::endl;
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 TextRenderer::TextRenderer()
 {
-	
+	GLClearErrors();
+	shader = Shader("shaders/text_vert.glsl", "shaders/text_frag.glsl");
+	shader.use();
+	glm::mat4 projection = glm::ortho(0.0f, 1024.0f, 0.0f, 1024.0f);
+	shader.setMat4("projection", projection);
+	genBuffers();
 }
 void TextRenderer::RenderText(std::string text, float x, float y, float scale, glm::vec3 colour)
 {

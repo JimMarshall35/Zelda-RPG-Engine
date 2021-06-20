@@ -46,8 +46,9 @@ public:
 	inline int         getInt()      { return u.i; }
 	inline float       getFloat()    { return u.f; }
 	inline bool        getBool()     { return u.b; }
+	int                whichmember;
 private:
-	int whichmember;
+	
 	union {
 		int         i;
 		const char* s;
@@ -67,7 +68,6 @@ class UI : public Scripting::LuaVMBase
 {
 public:
 	UI();
-	UI(std::string font);
 	~UI();
 	void             update(float delta, unsigned int keys); 
 	void             draw();
@@ -77,6 +77,11 @@ public:
 	void             setMsgBox(MessageBox* m) { currentMsgBox = m; }
 	void             onNotify(UIEvent msg);
 	void             init();
+	static int       l_loadUISprite(lua_State*L);   // host, path, name                                => void
+	static int       l_loadFont(lua_State*L);       // host, font                                      => void
+	static int       l_pushToDraw(lua_State*L);     // host, font                                      => void
+	static int       l_setToDraw(lua_State*L);      // host, (array of uiSprite equivalent lua tables) => void
+	static int       l_clearToDraw(lua_State*L);    // host                                            => void
 private:
 	std::vector<UISprite> toDraw;
 	void                  updateFPS(float delta); // will be in lua script
@@ -87,6 +92,6 @@ private:
 	float                 fps;           // will be in lua script
 	unsigned int          player_HP = 5; // will be in lua script
 
-	void                  setupNormalUI();
+	void                  registerLuaFunctions();
 };
 

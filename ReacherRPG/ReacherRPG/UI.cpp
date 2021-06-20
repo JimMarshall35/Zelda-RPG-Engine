@@ -5,37 +5,107 @@
 
 UI::UI()
 {
-	init();
+	baseInit();// init lua vm
+	init();    // init renderers 
+	if (Scripting::checkLua(L, luaL_dofile(L, "scripts/ui.lua"))) {
+		lua_pushlightuserdata(L, this);
+		lua_setglobal(L, "host");
+		registerLuaFunctions();
+		lua_getglobal(L, "init");
+		lua_call(L, 0, 0);
+		//setupNormalUI();
+	}
+	
 }
 void UI::init() {
 
 	// there will be an init function in lua script
-	text_renderer.init("fonts/Final_Fantasy_VII.ttf"); // will be in lua script
+	
 	sprite_renderer.SetVAOandVBO(text_renderer.getVAO(), text_renderer.getVBO()); // need to make a third separate class that 
 																				  // contains the vao and vbo's used for ui rendering
 																				  // to prevent this weird  bit
 	sprite_renderer.init();
-	sprite_renderer.loadUISprite("Spritesheet/heart pixel art 32x32.png", "heart");// will be in lua script
-	sprite_renderer.loadUISprite("Spritesheet/msg_box_3.png", "msgbox");// will be in lua script
-	setupNormalUI();
-}
-UI::UI(std::string font)
-{
-	text_renderer.init(font);
-	sprite_renderer.SetVAOandVBO(text_renderer.getVAO(), text_renderer.getVBO()); // need to make a third separate class that 
-	                                                                              // contains the vao and vbo's used for ui rendering
-	                                                                              // to prevent this weird  bit
-	sprite_renderer.init();
-	sprite_renderer.loadUISprite("Spritesheet/heart pixel art 32x32.png", "heart");// will be in lua script
-	sprite_renderer.loadUISprite("Spritesheet/msg_box_3.png", "msgbox");// will be in lua script
 	
 }
+int UI::l_loadUISprite(lua_State * L)
+{
+	UI*         ptr  = (UI*)lua_touserdata(L, 1);
+	std::string path = luaL_checkstring(L, 2);
+	std::string name = luaL_checkstring(L, 3);
+	ptr->sprite_renderer.loadUISprite(path, name);
+	return 0;
+}
+
+int UI::l_loadFont(lua_State * L)
+{
+	UI*         ptr  = (UI*)lua_touserdata(L, 1);
+	std::string path = luaL_checkstring(L, 2);
+	ptr->text_renderer.loadFont(path);
+	return 0;
+}
+
+int UI::l_setToDraw(lua_State * L)
+{
+	/*
+	struct UISprite {
+		std::string name;
+		float       x;
+		float       y;
+		float       scale;
+		bool        shouldDraw = false;
+	};
+	*/
+	UI*    ptr = (UI*)lua_touserdata(L, 1);
+	// clear list to draw
+	ptr->toDraw.clear();
+	if (!lua_istable(L, 2)) {
+		std::cerr << "lua argument 2 is not a table l_setToDraw" << std::endl;
+	}
+	size_t frames_size = lua_rawlen(L, 2);
+	for (size_t i = 1; i <= frames_size; i++) { // lua starts at 1
+		int type = lua_rawgeti(L, 2, i);
+		UISprite s;
+		if (type == LUA_TTABLE) {
+			// name
+			type = lua_getfield(L, -1, "name");
+			if (!ptr->checkTypeValue(type, LUA_TSTRING, "name")) { return 0; }
+			s.name = lua_tostring(L, -1);
+			// x
+			type = lua_getfield(L, -2, "x");
+			if (!ptr->checkTypeValue(type, LUA_TNUMBER, "x")) { return 0; }
+			s.x = lua_tonumber(L, -1);
+			// y
+			type = lua_getfield(L, -3, "y");
+			if (!ptr->checkTypeValue(type, LUA_TNUMBER, "y")) { return 0; }
+			s.y = lua_tonumber(L, -1);
+			// scale
+			type = lua_getfield(L, -4, "scale");
+			if (!ptr->checkTypeValue(type, LUA_TNUMBER, "scale")) { return 0; }
+			s.scale = lua_tonumber(L, -1);
+			// shoulddraw
+			type = lua_getfield(L, -5, "shouldDraw");
+			if (!ptr->checkTypeValue(type, LUA_TBOOLEAN, "shouldDraw")) { return 0; }
+			s.shouldDraw = lua_toboolean(L, -1);
+			// clear stack
+			lua_pop(L, 5);
+			// push sprite
+			ptr->toDraw.push_back(s);
+		}
+		else {
+			std::cerr << "sprite at index " << i << " is not a table" << std::endl;
+			return 0;
+		}
+	}
+	return 0;
+}
+
 UI::~UI()
 {
 }
 #define MAX_HP 5
 void UI::update(float delta, unsigned int keys)
 {
+	/*
 	for (size_t i = 0; i < toDraw.size(); i++) {
 		if (i >= player_HP) {
 			toDraw[i].shouldDraw = false;
@@ -44,17 +114,14 @@ void UI::update(float delta, unsigned int keys)
 			toDraw[i].shouldDraw = true;
 		}
 	}
+	*/
 	updateFPS(delta);
 }
 
 void UI::draw()// implementation NOT will be in lua script
 {
 	drawFPS();
-	float startx = 25;
-	float incr = 32;
-	//for (size_t i = 0; i < player_HP; i++) {
-	//	sprite_renderer.RenderSprite("heart", startx + i * incr, 960, 1);
-	//}
+
 	for (size_t i = 0; i < toDraw.size(); i++) {
 		UISprite s = toDraw[i];
 		if (toDraw[i].shouldDraw) {
@@ -94,19 +161,14 @@ void UI::renderMsgBox()
 	}
 }
 
-void UI::setupNormalUI()
+
+
+void UI::registerLuaFunctions()
 {
-	float startx = 25;
-	float incr = 32;
-	for (size_t i = 0; i < MAX_HP; i++) {
-		UISprite sprite;
-		sprite.name  = "heart";
-		sprite.x     = startx + i * incr;
-		sprite.y     = 960;
-		sprite.scale = 1;
-		toDraw.push_back(sprite);
-		//sprite_renderer.RenderSprite("heart", startx + i * incr, 960, 1);
-	}
+	                                                  
+	registerFunction(l_loadUISprite, "loadUISprite"); // host, path, name => void
+	registerFunction(l_loadFont,     "loadFont");     // host, font       => void
+	registerFunction(l_setToDraw,    "setToDraw");    // host, UISprite[] => void
 }
 
 
@@ -155,6 +217,36 @@ void UI::emqueueMsgBoxes(std::string text, std::queue<MessageBox>& queue)
 
 void UI::onNotify(UIEvent msg)// implementation will be in lua script
 {
+	lua_getglobal(L, "onNotify");
+	if (!lua_isfunction(L, -1)) { std::cerr << "onNotify is not a function" << std::endl; return; }
+	// make lua table
+	lua_createtable(L, 0, 3);
+	// set type field
+	lua_pushstring(L, msg.type.c_str());
+	lua_setfield(L, -2, "type");
+	// set sendertype
+	lua_pushinteger(L, (int)msg.sendertype);
+	lua_setfield(L, -2, "sendertype");
+	switch (msg.data.whichmember) {
+	case UI_EVENT_BOOL:
+		lua_pushboolean(L, msg.data.getBool());
+		break;
+	case UI_EVENT_FLOAT:
+		lua_pushnumber(L, msg.data.getFloat());
+		break;
+	case UI_EVENT_INT:
+		lua_pushinteger(L, msg.data.getInt());
+		break;
+	case UI_EVENT_STRING:
+		lua_pushstring(L, msg.data.getString());
+		break;
+	default:
+		std::cerr << "invalid ui event data type " << msg.data.whichmember;
+		return;
+	}
+	lua_setfield(L, -2, "data");
+	lua_call(L, 1, 0);
+	/*
 	switch (msg.sendertype)
 	{
 	case GO_TYPE::PLAYER:
@@ -168,7 +260,7 @@ void UI::onNotify(UIEvent msg)// implementation will be in lua script
 	default:
 		break;
 	}
-
+	*/
 }
 
 void UI::updateFPS(float delta)// will be in lua script

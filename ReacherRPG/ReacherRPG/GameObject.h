@@ -26,12 +26,18 @@ namespace Scripting {
 		inline void registerFunction(int(*func)(lua_State*L), std::string func_name);
 		inline bool getLuaTableNumber(lua_State* L, std::string key, int tableIndex, float& out);
 		void        baseInit();
+		bool        checkTypeValue(int type, int expected_type,std::string name);
 		lua_State*  L;
 	};
+
+	/* 
+		GameObjectVM - is a lua instance that all ScriptableGameObjects 
+		register themselves with 
+	*/
 	class GameObjectVM : public LuaVMBase
 	{
 	public:
-		GameObjectVM();
+		GameObjectVM(); // registers all C functions avaliable to scripted game objects
 		~GameObjectVM();
 		inline bool getTableNumber(lua_State* L, std::string key, int tableIndex, float& out) { return getLuaTableNumber(L, key, tableIndex, out); }
 

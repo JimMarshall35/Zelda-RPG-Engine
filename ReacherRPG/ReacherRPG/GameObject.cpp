@@ -563,12 +563,27 @@ bool DialogueTrigger::onInteract(GameObject * other)
 void Scripting::LuaVMBase::baseInit() {
 	L = luaL_newstate();
 	luaL_openlibs(L);
+	if (checkLua(L, luaL_dofile(L, "scripts/engine_defs.lua"))) {}
 }
+
+bool Scripting::LuaVMBase::checkTypeValue(int type, int expected_type, std::string name)
+{
+	if (type == LUA_TNIL || type == LUA_TNONE) {
+		std::cerr << "field " << name << " does not exist" << std::endl;
+		return false;
+	}
+	if (type != expected_type) {
+		std::cerr << "field " << name << "is the wrong type" << std::endl;
+		return false;
+	}
+	return true;
+}
+
 Scripting::GameObjectVM::GameObjectVM()
 {
 	
 	baseInit();
-	if (checkLua(L, luaL_dofile(L, "scripts/engine_defs.lua"))) {}
+	
 	registerFunction(ScriptableGameObject::l_getTilesetByName, "getTilesetByName");             // TileSet*             getTilesetByName(host,name) 
 	registerFunction(ScriptableGameObject::l_enqueueMsgBoxes, "enqueueMsgBoxes");               // void                 enqueueMsgBoxes(host,msg)
 

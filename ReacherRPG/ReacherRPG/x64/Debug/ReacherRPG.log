@@ -1,41 +1,7 @@
-﻿  Area.cpp
+﻿  UI.cpp
 c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\shader.h(58): warning C4101: 'e': unreferenced local variable
-c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\area.cpp(190): warning C4101: 'bottom1': unreferenced local variable
-c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\area.cpp(190): warning C4101: 'right1': unreferenced local variable
-c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\area.cpp(194): warning C4101: 'right2': unreferenced local variable
-c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\area.cpp(194): warning C4101: 'bottom2': unreferenced local variable
-c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\area.cpp(221): warning C4101: 'bottom1': unreferenced local variable
-c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\area.cpp(221): warning C4101: 'right1': unreferenced local variable
-c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\area.cpp(228): warning C4101: 'right2': unreferenced local variable
-c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\area.cpp(228): warning C4101: 'bottom2': unreferenced local variable
-  AreaLoader.cpp
-c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\shader.h(58): warning C4101: 'e': unreferenced local variable
-c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\arealoader.cpp(180): warning C4018: '<': signed/unsigned mismatch
-c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\arealoader.cpp(198): warning C4018: '<': signed/unsigned mismatch
-  Game.cpp
-c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\shader.h(58): warning C4101: 'e': unreferenced local variable
-  GameObject.cpp
-c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\shader.h(58): warning C4101: 'e': unreferenced local variable
-c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\gameobject.cpp(210): warning C4244: 'initializing': conversion from 'lua_Number' to 'float', possible loss of data
-c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\gameobject.cpp(211): warning C4244: 'initializing': conversion from 'lua_Number' to 'float', possible loss of data
-c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\gameobject.cpp(246): warning C4244: 'initializing': conversion from 'lua_Number' to 'float', possible loss of data
-c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\gameobject.cpp(259): warning C4244: 'initializing': conversion from 'lua_Integer' to 'int', possible loss of data
-c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\gameobject.cpp(263): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\gameobject.cpp(270): warning C4244: 'initializing': conversion from 'lua_Number' to 'float', possible loss of data
-c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\gameobject.cpp(271): warning C4244: 'initializing': conversion from 'lua_Number' to 'float', possible loss of data
-c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\gameobject.cpp(293): warning C4244: 'initializing': conversion from 'lua_Number' to 'float', possible loss of data
-c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\gameobject.cpp(294): warning C4244: 'initializing': conversion from 'lua_Number' to 'float', possible loss of data
-c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\gameobject.cpp(325): warning C4244: 'initializing': conversion from 'lua_Number' to 'float', possible loss of data
-c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\gameobject.cpp(326): warning C4244: 'initializing': conversion from 'lua_Number' to 'float', possible loss of data
-c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\gameobject.cpp(501): warning C4244: 'initializing': conversion from 'lua_Number' to 'float', possible loss of data
-c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\gameobject.cpp(502): warning C4244: 'initializing': conversion from 'lua_Number' to 'float', possible loss of data
-c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\gameobject.cpp(516): warning C4244: 'initializing': conversion from 'lua_Integer' to 'int', possible loss of data
-c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\gameobject.cpp(534): warning C4244: '=': conversion from 'lua_Number' to 'float', possible loss of data
-  UI.cpp
-c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\shader.h(58): warning C4101: 'e': unreferenced local variable
-c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\ui.cpp(148): warning C4244: '+=': conversion from 'float' to 'unsigned int', possible loss of data
-  Generating Code...
-  Main.cpp
-c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\shader.h(58): warning C4101: 'e': unreferenced local variable
-c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\main.cpp(56): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\ui.cpp(76): warning C4244: '=': conversion from 'lua_Number' to 'float', possible loss of data
+c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\ui.cpp(80): warning C4244: '=': conversion from 'lua_Number' to 'float', possible loss of data
+c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\ui.cpp(84): warning C4244: '=': conversion from 'lua_Number' to 'float', possible loss of data
+c:\users\user1\source\repos\reacherrpg\reacherrpg\reacherrpg\reacherrpg\ui.cpp(210): warning C4244: '+=': conversion from 'float' to 'unsigned int', possible loss of data
   ReacherRPG.vcxproj -> C:\Users\User1\source\repos\ReacherRPG\ReacherRPG\ReacherRPG\x64\Debug\ReacherRPG.exe

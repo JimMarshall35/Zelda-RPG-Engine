@@ -82,7 +82,7 @@ class TextRenderer {
 public:
 	TextRenderer();
 	void RenderText(std::string text, float x, float y, float scale, glm::vec3 color);
-	void init(std::string font);
+	void loadFont(std::string font);
 	GLuint getVAO() { return VAO; }
 	GLuint getVBO() { return VBO; }
 	void freeData();
