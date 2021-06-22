@@ -140,22 +140,35 @@ int UI::l_clearToDraw(lua_State * L)
 	return 0;
 }
 
+int UI::l_togglePause(lua_State * L)
+{
+	UI*    ptr = (UI*)lua_touserdata(L, 1);
+
+	return 0;
+}
+#include "Game.h"
+int UI::l_pause(lua_State * L)
+{
+	UI*    ptr = (UI*)lua_touserdata(L, 1);
+	Game* g = ptr->game;
+	if (!g->paused)
+		g->paused = true;
+	else
+		g->paused = false;
+	return 0;
+}
+
 UI::~UI()
 {
 }
 #define MAX_HP 5
 void UI::update(float delta, unsigned int keys)
 {
-	/*
-	for (size_t i = 0; i < toDraw.size(); i++) {
-		if (i >= player_HP) {
-			toDraw[i].shouldDraw = false;
-		}
-		else {
-			toDraw[i].shouldDraw = true;
-		}
-	}
-	*/
+	lua_getglobal(L, "update");
+	if (!lua_isfunction(L, -1)) { std::cerr << "need a function called update in ui.lua" << std::endl; return; }
+	lua_pushnumber(L, delta);
+	lua_pushinteger(L, keys);
+	lua_call(L, 2, 0);
 	updateFPS(delta);
 }
 
@@ -212,6 +225,7 @@ void UI::registerLuaFunctions()
 	registerFunction(l_setToDraw,    "setToDraw");    // host, UISprite[] => void
 	registerFunction(l_clearToDraw,  "clearToDraw");  // host             => void 
 	registerFunction(l_pushToDraw,   "pushToDraw");   // host,UISprite    => void
+	registerFunction(l_pause,        "togglePause");  // host             => void
 }
 
 
@@ -258,7 +272,7 @@ void UI::emqueueMsgBoxes(std::string text, std::queue<MessageBox>& queue)
 	queue.push(m);
 }
 
-void UI::onNotify(UIEvent msg)// implementation will be in lua script
+void UI::onNotify(UIEvent msg)
 {
 	lua_getglobal(L, "onNotify");
 	if (!lua_isfunction(L, -1)) { std::cerr << "onNotify is not a function" << std::endl; return; }
@@ -270,6 +284,7 @@ void UI::onNotify(UIEvent msg)// implementation will be in lua script
 	// set sendertype
 	lua_pushinteger(L, (int)msg.sendertype);
 	lua_setfield(L, -2, "sendertype");
+	// set data field
 	switch (msg.data.whichmember) {
 	case UI_EVENT_BOOL:
 		lua_pushboolean(L, msg.data.getBool());
@@ -289,21 +304,6 @@ void UI::onNotify(UIEvent msg)// implementation will be in lua script
 	}
 	lua_setfield(L, -2, "data");
 	lua_call(L, 1, 0);
-	/*
-	switch (msg.sendertype)
-	{
-	case GO_TYPE::PLAYER:
-		if (msg.type == "health_set") {
-			if (msg.data.checkInt()) {
-				player_HP = msg.data.getInt();
-			}
-			
-		}
-		break;
-	default:
-		break;
-	}
-	*/
 }
 
 void UI::updateFPS(float delta)// will be in lua script

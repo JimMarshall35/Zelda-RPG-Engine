@@ -2,7 +2,9 @@
 #include "Rendering.h"
 #include <queue>
 #include "GameObject.h"
+
 #define MAX_HP 5
+class Game;
 struct MessageBox {                         
 	std::vector<std::string> lines;
 	float text_x_offset = 35;
@@ -67,6 +69,7 @@ struct UIEvent {
 class UI : public Scripting::LuaVMBase
 {
 public:
+	//friend class Game;
 	UI();
 	~UI();
 	void             update(float delta, unsigned int keys); 
@@ -77,11 +80,14 @@ public:
 	void             setMsgBox(MessageBox* m) { currentMsgBox = m; }
 	void             onNotify(UIEvent msg);
 	void             init();
+	void             setGame(Game* g) { game = g; }
 	static int       l_loadUISprite(lua_State*L);   // host, path, name                                => void
 	static int       l_loadFont(lua_State*L);       // host, font                                      => void
 	static int       l_pushToDraw(lua_State*L);     // host, uisprite                                  => void
 	static int       l_setToDraw(lua_State*L);      // host, (array of uiSprite equivalent lua tables) => void
 	static int       l_clearToDraw(lua_State*L);    // host                                            => void
+	static int       l_togglePause(lua_State*L);    // host                                            => void
+	static int       l_pause(lua_State*L);          // host                                            => void
 private:
 	std::vector<UISprite> toDraw;
 	void                  updateFPS(float delta); // will be in lua script
@@ -90,8 +96,8 @@ private:
 	void                  renderMsgBox();
 	MessageBox*           currentMsgBox = nullptr;
 	float                 fps;           // will be in lua script
-	unsigned int          player_HP = 5; // will be in lua script
-
+	//unsigned int          player_HP = 5; // will be in lua script
+	Game*                 game;
 	void                  registerLuaFunctions();
 };
 

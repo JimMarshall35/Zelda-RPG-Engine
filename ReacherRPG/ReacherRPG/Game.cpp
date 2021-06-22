@@ -4,11 +4,13 @@
 
 Game::Game()
 {
+	ui.setGame(this);
 }
 
 
 Game::~Game()
 {
+	
 }
 
 void Game::loadArea(std::string folder, std::string file)
@@ -21,6 +23,7 @@ void Game::loadArea(std::string folder, std::string file)
 void Game::update(float delta, GLuint keys)
 {
 	ui.update(delta,keys);
+	if (paused) { return; }
 	if (msgboxQ.size() == 0) {
 		area.update(delta, keys);
 	}

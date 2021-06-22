@@ -16,6 +16,7 @@ public:
 	void freeData();
 	Area* getAreaPtr() { return &area; }
 	void UINotify(UIEvent e) { ui.onNotify(e); }
+	bool paused = false;
 private:
 	std::queue<MessageBox> msgboxQ;
 	Area                   area;

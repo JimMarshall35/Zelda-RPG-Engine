@@ -46,7 +46,8 @@ int main(void)
 	double delta;
 	double last = glfwGetTime();
 	do {
-
+		if(joystick_present)
+			pollController(window);
 		//delta time
 		double now = glfwGetTime();
 		delta = now - last;

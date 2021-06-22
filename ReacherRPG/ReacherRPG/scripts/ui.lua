@@ -3,6 +3,7 @@
 host = nil
 local player_hp = 5
 local toDraw = {}
+local lastkeys = 0
 function onNotify(event)
 	if event.type == "health_set" then
 		player_hp = event.data
@@ -15,6 +16,17 @@ function init()
 	loadUISprite(host,"Spritesheet/heart pixel art 32x32.png", "heart")
 	loadUISprite(host,"Spritesheet/msg_box_3.png", "msgbox")
 	setupNormalUI()
+end
+function update(delta,keys)
+	-- body
+	local newkeys = keys & (~lastkeys)
+	if newkeys == 0 and keys ~= lastkeys then
+		newkeys = keys;                    
+	end
+	lastkeys = keys
+	if newkeys & (1 << INPUT.PAUSE_BIT) > 0 then
+		togglePause(host)
+	end
 end
 function setupNormalUI( )
 	
