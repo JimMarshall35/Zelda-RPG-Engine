@@ -88,7 +88,7 @@ void TileSet::genMetaSprite(const unsigned int * tiles, const unsigned int width
 {
 	unsigned int pixelsheight = (numtiles / width) * tileheight;
 	unsigned int pixelswidth = width * tilewidth;
-	std::cout << name << std::endl;
+	//std::cout << name << std::endl;
 	unsigned char* tex_data = new unsigned char[pixelsheight*pixelswidth*NUM_CHANNELS];
 	unsigned char* single_tile_buffer = new unsigned char[tileheight*tilewidth*NUM_CHANNELS];
 	memset(tex_data, 0, pixelsheight*pixelswidth*NUM_CHANNELS);

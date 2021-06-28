@@ -140,21 +140,89 @@ int UI::l_clearToDraw(lua_State * L)
 	return 0;
 }
 
-int UI::l_togglePause(lua_State * L)
-{
-	UI*    ptr = (UI*)lua_touserdata(L, 1);
-
-	return 0;
-}
 #include "Game.h"
 int UI::l_pause(lua_State * L)
 {
 	UI*    ptr = (UI*)lua_touserdata(L, 1);
 	Game* g = ptr->game;
-	if (!g->paused)
+	if (!g->paused) {
 		g->paused = true;
-	else
+		lua_pushboolean(L, true);
+	}
+	else {
 		g->paused = false;
+		lua_pushboolean(L, false);
+	}
+		
+
+	return 1;
+}
+
+int UI::l_setTextToDraw(lua_State * L)
+{
+	/*
+	Sets the array of UIText structs which will be drawn
+	when UI::draw gets called
+
+	struct UIText {
+		std::string text;
+		float       x;
+		float       y;
+		float       scale;
+		glm::vec3   colour;
+		bool        shouldDraw = false;
+	};
+	*/
+	UI*    ptr = (UI*)lua_touserdata(L, 1);
+	// clear list to draw
+	ptr->textToDraw.clear();
+	if (!lua_istable(L, 2)) {
+		std::cerr << "lua argument 2 is not a table l_setTextToDraw" << std::endl;
+	}
+	size_t frames_size = lua_rawlen(L, 2);
+	for (size_t i = 1; i <= frames_size; i++) { // lua starts at 1
+		int type = lua_rawgeti(L, 2, i);
+		UIText s;
+		if (type == LUA_TTABLE) {
+			// name
+			type = lua_getfield(L, -1, "text");
+			if (!ptr->checkTypeValue(type, LUA_TSTRING, "text")) { return 0; }
+			s.text = lua_tostring(L, -1);
+			// x
+			type = lua_getfield(L, -2, "x");
+			if (!ptr->checkTypeValue(type, LUA_TNUMBER, "x")) { return 0; }
+			s.x = lua_tonumber(L, -1);
+			// y
+			type = lua_getfield(L, -3, "y");
+			if (!ptr->checkTypeValue(type, LUA_TNUMBER, "y")) { return 0; }
+			s.y = lua_tonumber(L, -1);
+			// scale
+			type = lua_getfield(L, -4, "scale");
+			if (!ptr->checkTypeValue(type, LUA_TNUMBER, "scale")) { return 0; }
+			s.scale = lua_tonumber(L, -1);
+			// shoulddraw
+			type = lua_getfield(L, -5, "shouldDraw");
+			if (!ptr->checkTypeValue(type, LUA_TBOOLEAN, "shouldDraw")) { return 0; }
+			s.shouldDraw = lua_toboolean(L, -1);
+			// colour (not implemented... yet)
+			s.colour = glm::vec3(0.5, 0.8f, 0.2f);
+			// clear stack
+			lua_pop(L, 5);
+			// push sprite
+			ptr->textToDraw.push_back(s);
+		}
+		else {
+			std::cerr << "sprite at index " << i << " is not a table" << std::endl;
+			return 0;
+		}
+	}
+	return 0;
+}
+
+int UI::l_clearTextToDraw(lua_State * L)
+{
+	UI*    ptr = (UI*)lua_touserdata(L, 1);
+	ptr->textToDraw.clear();
 	return 0;
 }
 
@@ -165,7 +233,7 @@ UI::~UI()
 void UI::update(float delta, unsigned int keys)
 {
 	lua_getglobal(L, "update");
-	if (!lua_isfunction(L, -1)) { std::cerr << "need a function called update in ui.lua" << std::endl; return; }
+	if (!lua_isfunction(L, -1)) { std::cerr << "you need a function called update in ui.lua" << std::endl; return; }
 	lua_pushnumber(L, delta);
 	lua_pushinteger(L, keys);
 	lua_call(L, 2, 0);
@@ -180,6 +248,12 @@ void UI::draw()// implementation NOT will be in lua script
 		UISprite s = toDraw[i];
 		if (toDraw[i].shouldDraw) {
 			sprite_renderer.RenderSprite(s);
+		}
+	}
+	for (size_t i = 0; i < textToDraw.size(); i++) {
+		UIText s = textToDraw[i];
+		if (textToDraw[i].shouldDraw) {
+			text_renderer.RenderText(s);
 		}
 	}
 	renderMsgBox();
@@ -219,13 +293,14 @@ void UI::renderMsgBox()
 
 void UI::registerLuaFunctions()
 {
-	                                                  
-	registerFunction(l_loadUISprite, "loadUISprite"); // host, path, name => void
-	registerFunction(l_loadFont,     "loadFont");     // host, font       => void
-	registerFunction(l_setToDraw,    "setToDraw");    // host, UISprite[] => void
-	registerFunction(l_clearToDraw,  "clearToDraw");  // host             => void 
-	registerFunction(l_pushToDraw,   "pushToDraw");   // host,UISprite    => void
-	registerFunction(l_pause,        "togglePause");  // host             => void
+	registerFunction(l_loadUISprite,    "loadUISprite");        // host, path, name => void
+	registerFunction(l_loadFont,        "loadFont");            // host, font       => void
+	registerFunction(l_setToDraw,       "setSpritesToDraw");    // host, UISprite[] => void
+	registerFunction(l_clearToDraw,     "clearSpritesToDraw");  // host             => void 
+	registerFunction(l_pushToDraw,      "pushSpriteToDraw");    // host,UISprite    => void
+	registerFunction(l_pause,           "togglePause");         // host             => bool
+	registerFunction(l_setTextToDraw,   "setTextToDraw");       // host,UIText      => void
+	registerFunction(l_clearTextToDraw, "clearTextToDraw");     // host             => void
 }
 
 

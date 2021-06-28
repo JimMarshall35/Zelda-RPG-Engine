@@ -19,4 +19,4 @@ enum class JSONTYPE {
 	NUMBER,
 	ANY
 };
-bool checkJSONValue(const char* variablename, const JSONTYPE type, const rapidjson::Value& value);
+bool checkJSONValue(const char* variablename, const JSONTYPE type, const rapidjson::Value& value, bool log = true);

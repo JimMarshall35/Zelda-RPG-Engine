@@ -81,15 +81,17 @@ public:
 	void             onNotify(UIEvent msg);
 	void             init();
 	void             setGame(Game* g) { game = g; }
-	static int       l_loadUISprite(lua_State*L);   // host, path, name                                => void
-	static int       l_loadFont(lua_State*L);       // host, font                                      => void
-	static int       l_pushToDraw(lua_State*L);     // host, uisprite                                  => void
-	static int       l_setToDraw(lua_State*L);      // host, (array of uiSprite equivalent lua tables) => void
-	static int       l_clearToDraw(lua_State*L);    // host                                            => void
-	static int       l_togglePause(lua_State*L);    // host                                            => void
-	static int       l_pause(lua_State*L);          // host                                            => void
+	static int       l_loadUISprite(lua_State*L);    // host, path, name                                => void
+	static int       l_loadFont(lua_State*L);        // host, font                                      => void
+	static int       l_pushToDraw(lua_State*L);      // host, UISprite                                  => void
+	static int       l_setToDraw(lua_State*L);       // host, UISprite[]                                => void
+	static int       l_clearToDraw(lua_State*L);     // host                                            => void
+	static int       l_pause(lua_State*L);           // host                                            => void
+	static int       l_setTextToDraw(lua_State*L);   // host, UIText[]                                  => void
+	static int       l_clearTextToDraw(lua_State*L); // host                                            => void 
 private:
 	std::vector<UISprite> toDraw;
+	std::vector<UIText>   textToDraw;
 	void                  updateFPS(float delta); // will be in lua script
 	TextRenderer          text_renderer;
 	UISpriteRenderer      sprite_renderer;

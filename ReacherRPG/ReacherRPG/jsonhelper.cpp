@@ -30,53 +30,61 @@ bool loadJSONFile(rapidjson::Document &jsonDoc, const char *pFileName)
     return true;
 }
 
-bool checkJSONValue(const char * variablename, const JSONTYPE type, const rapidjson::Value& value)
+bool checkJSONValue(const char * variablename, const JSONTYPE type, const rapidjson::Value& value, bool log)
 {
 	if (!value.HasMember(variablename)) {
-		std::cerr << "no variable: " << variablename << std::endl;
+		if(log)
+			std::cerr << "no variable: " << variablename << std::endl;
 		return false;
 	}
 	switch (type) {
 	case JSONTYPE::INT:
 		if (!value[variablename].IsInt()) {
-			std::cerr << variablename << " is not an int" << std::endl;
+			if (log)
+				std::cerr << variablename << " is not an int" << std::endl;
 			return false;
 		}
 		break;
 	case JSONTYPE::FLOAT:
 		if (!value[variablename].IsFloat()) {
-			std::cerr << variablename << " is not a float" << std::endl;
+			if (log)
+				std::cerr << variablename << " is not a float" << std::endl;
 			return false;
 		}
 		break;
 	case JSONTYPE::STRING:
 		if (!value[variablename].IsString()) {
-			std::cerr << variablename << " is not a string" << std::endl;
+			if (log)
+				std::cerr << variablename << " is not a string" << std::endl;
 			return false;
 		}
 		break;
 	case JSONTYPE::BOOL:
 		if (!value[variablename].IsBool()) {
-			std::cerr << variablename << " is not a boolean" << std::endl;
+			if (log)
+				std::cerr << variablename << " is not a boolean" << std::endl;
 			return false;
 		}
 		break;
 	case JSONTYPE::ARRAY:
 		if (!value[variablename].IsArray()) {
-			std::cerr << variablename << " is not an array" << std::endl;
+			if (log)
+				std::cerr << variablename << " is not an array" << std::endl;
 			return false;
 		}
 		break;
 
 	case JSONTYPE::OBJECT:
 		if (!value[variablename].IsObject()) {
-			std::cerr << variablename << " is not an object" << std::endl;
+			if (log)
+				std::cerr << variablename << " is not an object" << std::endl;
 			return false;
 		}
 		break;
 	case JSONTYPE::DOUBLE:
 		if (!value[variablename].IsDouble()) {
-			std::cerr << variablename << " is not a double" << std::endl;
+			if (log)
+				std::cerr << variablename << " is not a double" << std::endl;
 			return false;
 		}
 		break;
@@ -84,7 +92,8 @@ bool checkJSONValue(const char * variablename, const JSONTYPE type, const rapidj
 		if (!value[variablename].IsInt() &&
 			!value[variablename].IsFloat() &&
 			!value[variablename].IsDouble()) {
-			std::cerr << variablename << " is not a number" << std::endl;
+			if (log)
+				std::cerr << variablename << " is not a number" << std::endl;
 			return false;
 		}
 		break;

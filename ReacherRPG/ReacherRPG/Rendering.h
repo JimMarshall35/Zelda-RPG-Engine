@@ -76,12 +76,20 @@ private:
 	static GLuint FullImgVAO;
 
 };
-
+struct UIText {
+	std::string text;
+	float       x;
+	float       y;
+	float       scale;
+	glm::vec3   colour;
+	bool        shouldDraw = false;
+};
 class TextRenderer {
 	// code mostly copy and pasted from learnopengl.com section on text rendering and made into this class 
 public:
 	TextRenderer();
 	void RenderText(std::string text, float x, float y, float scale, glm::vec3 color);
+	void RenderText(UIText s) { RenderText(s.text, s.x, s.y, s.scale, s.colour); };
 	void loadFont(std::string font);
 	GLuint getVAO() { return VAO; }
 	GLuint getVBO() { return VBO; }

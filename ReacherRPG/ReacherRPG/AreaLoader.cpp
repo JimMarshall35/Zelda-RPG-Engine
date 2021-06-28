@@ -53,7 +53,7 @@ bool AreaLoader::loadArea(std::string folder, std::string file, Area & arearef)
 
 	
 
-	std::cout << "loading file " << folder << "/" << file << std::endl;
+	//std::cout << "loading file " << folder << "/" << file << std::endl;
 	std::chrono::high_resolution_clock::time_point t0 = std::chrono::high_resolution_clock::now();
 	arearef.freeData();
 	Document doc;
@@ -78,8 +78,8 @@ bool AreaLoader::loadArea(std::string folder, std::string file, Area & arearef)
 	arearef.tilelayers.setInitialScale();
 	std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
 	std::chrono::duration<double> time_span = std::chrono::duration_cast<std::chrono::duration<double>>(t1 - t0);
-	std::cout << "area loading done in " << time_span.count() * 1000 << " ms" << std::endl;
-	std::cout << std::endl << std::endl;
+	std::cout << "area "<< file << " loading done in " << time_span.count() * 1000 << " ms" << std::endl;
+	//std::cout << std::endl << std::endl;
 	/*
 	ScriptableGameObject* testgo1 = new ScriptableGameObject("scripts/test1.lua");
 	ScriptableGameObject* testgo2 = new ScriptableGameObject("scripts/test2.lua");
@@ -123,14 +123,14 @@ bool AreaLoader::loadTilesets(const rapidjson::Document & doc, Area & arearef, s
 		tileset.tilewidth = doc["tilewidth"].GetInt();
 		
 		if (!loadTilesetImgData(tileset)) { return false; }
-		if (checkJSONValue("gensprites", JSONTYPE::BOOL, doc)) {
+		if (checkJSONValue("gensprites", JSONTYPE::BOOL, doc, false)) {
 			if (doc["gensprites"].GetBool()) {
 				tileset.genTexture();
 				tileset.genSprites();
 			}
 		}
 
-		if (checkJSONValue("metasprites", JSONTYPE::ARRAY, doc)) {
+		if (checkJSONValue("metasprites", JSONTYPE::ARRAY, doc, false)) {
 			for (SizeType j = 0; j < doc["metasprites"].Size(); j++) {
 				const Value& metasprite = doc["metasprites"][j];
 				if (!checkJSONValue("name", JSONTYPE::STRING, metasprite)) {
@@ -274,8 +274,8 @@ bool AreaLoader::loadLayers(const rapidjson::Document & doc, Area & arearef)
 					);
 
 					s_sprite->position += glm::vec2(
-						(s_sprite->scale.x * 2.0f) / 2.0f,
-						(s_sprite->scale.y * 2.0f) / 2.0f
+						(s_sprite->scale.x),
+						(s_sprite->scale.y)
 					);
 
 					s_sprite->collider.top_offset = t_offset.f;
@@ -303,8 +303,8 @@ bool AreaLoader::loadLayers(const rapidjson::Document & doc, Area & arearef)
 					);
 
 					d_trigger->position += glm::vec2(             // need to properly sort out translation from tiled coordinates to this game's
-						(d_trigger->scale.x * (2.0f)) / 2.0f,
-						-(d_trigger->scale.y * (2.0f)) / 2.0f
+						(d_trigger->scale.x),
+						-(d_trigger->scale.y) 
 					);
 					d_trigger->setString(text.s);
 					d_trigger->collider.pixelswidth = object["width"].GetFloat();
@@ -330,8 +330,8 @@ bool AreaLoader::loadLayers(const rapidjson::Document & doc, Area & arearef)
 					);
 
 					a_trigger->position += glm::vec2(             // need to properly sort out translation from tiled coordinates to this game's
-						(a_trigger->scale.x * (2.0f)) / 2.0f,
-						-(a_trigger->scale.y * (2.0f)) / 2.0f
+						(a_trigger->scale.x),
+						-(a_trigger->scale.y)
 					);
 					a_trigger->collider.pixelswidth = object["width"].GetFloat();
 					a_trigger->collider.pixelsheight = object["height"].GetFloat();
@@ -384,12 +384,12 @@ glm::vec2 AreaLoader::tiledPosToGameEnginePos(glm::vec2 tiledpos, const Area & a
 {
 	float json_x = tiledpos.x;
 	float json_y = tiledpos.y;
-	float tl_x = ((arearef.tilelayers.width / 40) * -2.0f) / 2;
-	float tl_y = ((arearef.tilelayers.height / 40) * 2.0f) / 2;
+	float tl_x = -1.0 * (arearef.tilelayers.width / 40.0f);
+	float tl_y = (arearef.tilelayers.height / 40.0f);
 
 	glm::vec2 map_tl(tl_x, tl_y);
-	float worldx = map_tl.x + (json_x / (arearef.tilelayers.tilewidth*arearef.tilelayers.width))*(arearef.tilelayers.width / 40)*2.0f;
-	float worldy = map_tl.y - (json_y / (arearef.tilelayers.tileheight*arearef.tilelayers.height))*(arearef.tilelayers.height / 40)*2.0f;
+	float worldx = map_tl.x + (json_x / (arearef.tilelayers.tilewidth*arearef.tilelayers.width))*(arearef.tilelayers.width / 40.0f)*2.0f;
+	float worldy = map_tl.y - (json_y / (arearef.tilelayers.tileheight*arearef.tilelayers.height))*(arearef.tilelayers.height / 40.0f)*2.0f;
 	return glm::vec2(worldx, worldy);
 }
 AreaLoader::AreaLoader()

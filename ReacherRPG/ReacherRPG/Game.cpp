@@ -47,6 +47,7 @@ void Game::update(float delta, GLuint keys)
 			std::cout << "failed to load level" << std::endl;
 		}
 		std::cout << area.gameobjects.size() << " game objects" << std::endl;
+		std::cout << std::endl << std::endl;
 	}
 	lastkeys = keys;
 }

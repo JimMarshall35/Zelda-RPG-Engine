@@ -41,10 +41,10 @@ GameObject = {
 					self.hit = false
 					self.HP = self.HP - 1
 					if self.HP <= 0 then
-						print("I'm Dead")
+						--print("I'm Dead")
 						deleteGO(self.host)
-					else
-						print("HP: ", self.HP)
+					--else
+						--print("HP: ", self.HP)
 					end
 				end
 				vel = vec2_scalar_mul(self.knockback_vec,((self.hittime - self.hittimer) / self.hittime)*delta)
@@ -72,7 +72,7 @@ GameObject = {
 		end
 	end,
 	init = function( self )
-		print("this is aliens")
+		--print("this is aliens")
 		local tileset = getTilesetByName(self.host,"aliens")
  		local tile_w = 24
  		local tile_h = 24

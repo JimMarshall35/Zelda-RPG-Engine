@@ -89,10 +89,10 @@ GameObject = {
 				self.HP = self.HP - 1
 				uiNotifyInt(self.host,"health_set",self.HP)
 				if self.HP <= 0 then
-					print("PLAYER: I'm Dead")
+					--print("PLAYER: I'm Dead")
 					deleteGO(self.host)
-				else
-					print("PLAYER HP: ", self.HP)
+				--else
+					--print("PLAYER HP: ", self.HP)
 				end
 			end
 			vel = vec2_scalar_mul(self.knockback_vec,((self.hittime - self.hittimer) / self.hittime)*delta)

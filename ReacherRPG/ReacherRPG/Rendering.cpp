@@ -46,7 +46,7 @@ void Sprite::generateFullImgVAO() {
 	GLPrintErrors("glBindBuffer(GL_ARRAY_BUFFER, 0);");
 	glBindVertexArray(0); // Unbind VAO (it's always a good thing to unbind any buffer/array to prevent strange bugs)
 	GLPrintErrors("glBindVertexArray(0);");
-	std::cout << "Static full img VAO = " << FullImgVAO << std::endl;
+	//std::cout << "Static full img VAO = " << FullImgVAO << std::endl;
 }
 
 
@@ -111,7 +111,7 @@ void Sprite::setup(
 		sheet_w, sheet_h
 	);
 	GPULoadTexture(img_data, img_width, img_height, &TextureID);
-	std::cout << "TEX_ID = " << TextureID << std::endl;
+	//std::cout << "TEX_ID = " << TextureID << std::endl;
 	genbuffers();
 }
 
@@ -260,7 +260,7 @@ void TextRenderer::loadFont( std::string font)
 		GPULoadUITexture(face->glyph->bitmap.buffer, face->glyph->bitmap.width, face->glyph->bitmap.rows, &texture);
 		// now store character for later use
 		Character character = {
-			texture,
+			texture,                                 
 			glm::ivec2(face->glyph->bitmap.width, face->glyph->bitmap.rows),
 			glm::ivec2(face->glyph->bitmap_left, face->glyph->bitmap_top),
 			face->glyph->advance.x
@@ -270,7 +270,7 @@ void TextRenderer::loadFont( std::string font)
 	FT_Done_Face(face);
 	FT_Done_FreeType(ft);
 	
-	std::cout << "text renderer initialized successfully" << std::endl;
+	//std::cout << "text renderer initialized successfully" << std::endl;
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
