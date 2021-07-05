@@ -16,11 +16,11 @@ game engine for 2d top down games written in c++
 
 To Do:
 - make an in-engine level editor (using imgui?)
-- add sound
+- add sound                                              - IN PROGRESS
 - add particle effects system
 - add screen shake effect
 - add shader based visual effects
-- add lua scripting to the ui overlay
+- add lua scripting to the ui overlay                    - IN PROGRESS
 - add cutscene mode - lua coroutine scriptable cutscenes
 - 
 https://www.youtube.com/watch?v=g_QxpIHQ8Xw
