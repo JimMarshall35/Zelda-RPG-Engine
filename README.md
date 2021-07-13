@@ -15,7 +15,7 @@ game engine for 2d top down games written in c++
 - automatically split arbitrary lengths of string into a series of message boxes 
 
 To Do:
-- make an in-engine level editor (using imgui?)
+- make an in-engine level editor using imgui
 - add sound                                              - IN PROGRESS
 - add particle effects system
 - add screen shake effect
